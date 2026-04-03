@@ -1,0 +1,12 @@
+[package]
+name = "glorfindel-schemas"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Core message type definitions for the Glorfindel agentic AI framework"
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }

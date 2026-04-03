@@ -1,0 +1,58 @@
+services:
+  # ===========================================
+  # GLORFINDEL ORCHESTRATOR
+  # ===========================================
+  glorfindel:
+    build: .
+    container_name: glorfindel
+    restart: unless-stopped
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+      - GLORFINDEL_MODELS=mistral
+      - DDS_DOMAIN_ID=0
+      - ZMQ_TOOL_CALL_ENDPOINT=tcp://0.0.0.0:5555
+      - ZMQ_TOOL_RESULT_ENDPOINT=tcp://0.0.0.0:5556
+      - RUST_LOG=info
+    ports:
+      - "5555:5555"   # ZMQ tool calls
+      - "5556:5556"   # ZMQ tool results
+    networks:
+      - glorfindel
+    depends_on:
+      ollama:
+        condition: service_healthy
+
+  # ===========================================
+  # AI ENGINE
+  # ===========================================
+  ollama:
+    image: ollama/ollama:latest
+    container_name: glorfindel-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    networks:
+      - glorfindel
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+
+networks:
+  glorfindel:
+    driver: bridge
+
+volumes:
+  ollama_data:
+    driver: local

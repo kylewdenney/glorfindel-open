@@ -1,0 +1,16 @@
+[package]
+name = "glorfindel-tools"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Tool interface and built-in tool implementations"
+
+[dependencies]
+glorfindel-schemas = { path = "../glorfindel-schemas" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+async-trait = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
