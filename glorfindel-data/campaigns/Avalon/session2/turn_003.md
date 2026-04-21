@@ -1,0 +1,11 @@
+In the twilight of the training yard, Elen's fingers delved into the cold, ashen remnants of the fire. The air grew heavy with a silence that was not quite still, and her heartbeat echoed in her ears like the tolling of distant bells. As her fingertips brushed against the cold earth, a tremble rippled through her, as if she'd struck some ancient, hidden chord.
+
+The Veil parted before her, revealing a world that was both familiar and alien. The Other-shape of the training yard lay before her, distorted by the veil between worlds. Time seemed to slow, and the world around her took on a surreal, dreamlike quality. Shadows twisted and contorted, taking on lives of their own as they danced in the eerie light that emanated from the Veil.
+
+Then, she saw it. A figure stood atop one of the training pillars, its silhouette as dark and ominous as the night itself. Elen felt her breath catch in her throat, and a shiver ran down her spine. The figure's eyes seemed to pierce through the Veil, locking onto hers, and she felt an overwhelming sense of dread wash over her.
+
+With a quiet determination, Elen stepped closer to the Veil, her gaze never leaving the figure on the pillar. As she drew nearer, the figure began to descend from its perch, each step it took causing the ground beneath Elen's feet to tremble. When it reached the edge of the Veil, it paused, and the air grew colder still.
+
+Elen reached out, her hand trembling as she touched the cold, hard surface of the Veil. In that moment, she could feel a surge of power course through her, like lightning coursing through her veins. The figure on the other side of the Veil took a step closer, and Elen felt her resolve waver for the briefest of moments before it solidified once more.
+
+With a cry that seemed to echo across the ages, Elen pushed against the Veil with all her might. It shimmered and buckled under the force of her will, and then, with a final, thunderous crash, it gave way. The figure on the other side stepped into the training yard, its presence radiating an aura of darkness and malev

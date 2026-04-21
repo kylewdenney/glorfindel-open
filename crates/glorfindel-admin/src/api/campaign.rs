@@ -120,7 +120,7 @@ pub async fn list_files(
     Ok(Json(files))
 }
 
-// Recursively collect files, one level of subdirectories deep.
+// Recursively collect files, up to two directory levels deep (session/ and session/scene/).
 #[async_recursion::async_recursion]
 async fn collect_files(
     root: &std::path::Path,
@@ -128,23 +128,22 @@ async fn collect_files(
     out: &mut Vec<CampaignFile>,
 ) {
     let Ok(mut entries) = tokio::fs::read_dir(dir).await else { return };
+    let depth = dir.components().count().saturating_sub(root.components().count());
     while let Ok(Some(entry)) = entries.next_entry().await {
         let Ok(ft) = entry.file_type().await else { continue };
         let name = entry.file_name();
         let Some(name_str) = name.to_str() else { continue };
+        if name_str.starts_with('.') { continue; }
 
         if ft.is_file() {
             let rel = entry.path()
                 .strip_prefix(root)
                 .map(|p| p.to_string_lossy().replace('\\', "/"))
                 .unwrap_or_default();
-            let subdir = if dir == root {
-                None
-            } else {
-                dir.file_name()
-                    .and_then(|n| n.to_str())
-                    .map(String::from)
-            };
+            let subdir = dir.strip_prefix(root)
+                .map(|p| p.to_string_lossy().replace('\\', "/"))
+                .ok()
+                .filter(|s| !s.is_empty());
             let size = entry.metadata().await.map(|m| m.len()).unwrap_or(0);
             out.push(CampaignFile {
                 filename: name_str.to_string(),
@@ -152,8 +151,7 @@ async fn collect_files(
                 subdir,
                 size_bytes: size,
             });
-        } else if ft.is_dir() && dir == root {
-            // One level of subdirectory only
+        } else if ft.is_dir() && depth < 2 {
             collect_files(root, &entry.path(), out).await;
         }
     }
@@ -1095,7 +1093,10 @@ pub async fn session_turn(
             if parts.len() < 6 { continue; }
             let (char_name, ability, notation, dc_str, reason) =
                 (parts[1].trim(), parts[2].trim(), parts[3].trim(), parts[4].trim(), parts[5].trim());
-            let dc: i32 = dc_str.parse().unwrap_or(14);
+            // Handle |DC|22 (model uses "DC" as label) by falling back to reason field
+            let dc: i32 = dc_str.parse()
+                .or_else(|_| reason.trim().parse())
+                .unwrap_or(14);
 
             if let Some((rolls, modifier, total)) = roll_inline(notation) {
                 let rolls_str = rolls.iter().map(|r| r.to_string()).collect::<Vec<_>>().join(", ");
@@ -1466,11 +1467,11 @@ pub async fn player_turn(
             grounding_files.push(("world/npcs.md".into(), snippet));
         }
 
-        // world/party.md — know who the players are
-        if let Ok(text) = tokio::fs::read_to_string(campaign_path.join("world/party.md")).await {
-            let snippet = text.chars().take(2000).collect::<String>();
+        // world/party.md — read in full (no truncation: bounded reference doc, not AI prose)
+        let party_text = tokio::fs::read_to_string(campaign_path.join("world/party.md")).await.unwrap_or_default();
+        if !party_text.is_empty() {
             emit_tool!("campaign.read", "world/party.md", "character sheet read");
-            grounding_files.push(("world/party.md".into(), snippet));
+            grounding_files.push(("world/party.md".into(), party_text.clone()));
         }
 
         let grounding_block = grounding_files.iter()
@@ -1488,35 +1489,30 @@ pub async fn player_turn(
         meta!("🔍 What Happened", &critic_context);
         emit_step!("🔍 What Happened", &critic_context);
 
-        // ── 2. RULES LAWYER — does this action require a check? ───────────────
-        let mut rules_text = String::new();
-        if let Ok(mut rd) = tokio::fs::read_dir(campaign_path.join("rules")).await {
-            while let Ok(Some(e)) = rd.next_entry().await {
-                let p = e.path();
-                if p.extension().map_or(false, |x| x == "md") {
-                    if let Ok(content) = tokio::fs::read_to_string(&p).await {
-                        let name = p.file_name().unwrap_or_default().to_string_lossy().to_string();
-                        emit_tool!("campaign.read", &format!("rules/{name}"), "rules read");
-                        rules_text.push_str(&format!("### rules/{name}\n{content}\n\n"));
-                    }
-                }
-            }
+        // ── 2. RULES LAWYER — dice_and_abilities.md only (keep it focused) ──────
+        let dice_rules = tokio::fs::read_to_string(campaign_path.join("rules/dice_and_abilities.md"))
+            .await.unwrap_or_default();
+        if !dice_rules.is_empty() {
+            emit_tool!("campaign.read", "rules/dice_and_abilities.md", "rules read");
         }
 
         let rules_output = ollama_chat_once(&ollama_host, &model,
-            "You are a TTRPG rules assessor. A player is taking an action. Determine if a check is needed.\n\
-             If yes, output ONE line per check:\n\
-             ROLL|CharacterName|ABILITY|1d20+N|DC|what success/failure determines\n\
-             Use the character's modifier from world/party.md (e.g. BLADE +4 → 1d20+4).\n\
-             Include Devotion bonus if the action is in accordance with their Devotion.\n\
-             STRICT RULES:\n\
-             - notation MUST be exactly 1d20+N or 1d20\n\
-             - character name must match exactly\n\
-             - if the action is ambiguous, trivial, or no clear DC exists, output: NO_ROLL\n\
-             - DC must be a number (10, 14, 18, 22) — never output the literal word 'DC'\n\
-             - if unsure of DC, default to 14\n\
-             Output ONLY ROLL| lines or the single word NO_ROLL. No prose. No JSON. No explanation.",
-            &format!("Character: {character}\nAction: {action}\n\nContext:\n{critic_context}\n\nRules:\n{rules_text}"),
+            "You are a TTRPG rules assessor. Output ONLY a ROLL| line or NO_ROLL. No prose.",
+            &format!(
+                "Character: {character}\nAction: {action}\n\n\
+                 Party Stats:\n{party_text}\n\n\
+                 Rules:\n{dice_rules}\n\n\
+                 Does this action need a check? If yes, output exactly:\n\
+                 ROLL|{character}|STAT_NAME|1d20+N|22|what it determines\n\
+                 Replace STAT_NAME with the ability used (e.g. OFFERING, PRESENCE, BLADE).\n\
+                 Replace N with the integer from the stat line. Examples:\n\
+                 OFFERING +3 → 1d20+3\n\
+                 PRESENCE +3 with Devotion rating 1 → 1d20+4\n\
+                 BLADE +4 → 1d20+4\n\
+                 Replace 22 with the appropriate difficulty: 10, 14, 18, 22, or 26\n\
+                 If no check needed: NO_ROLL\n\
+                 RESPOND WITH ONLY THE ROLL| LINE OR NO_ROLL:"
+            ),
         ).await.unwrap_or_default();
         meta!("⚖ Rules Assessor", &rules_output);
         emit_step!("⚖ Rules Assessor", &rules_output);
@@ -1532,7 +1528,10 @@ pub async fn player_turn(
             if parts.len() < 6 { continue; }
             let (char_name, ability, notation, dc_str, reason) =
                 (parts[1].trim(), parts[2].trim(), parts[3].trim(), parts[4].trim(), parts[5].trim());
-            let dc: i32 = dc_str.parse().unwrap_or(14);
+            // Handle |DC|22 (model uses "DC" as label) by falling back to reason field
+            let dc: i32 = dc_str.parse()
+                .or_else(|_| reason.trim().parse())
+                .unwrap_or(14);
 
             if let Some((rolls, modifier, total)) = roll_inline(notation) {
                 let rolls_str = rolls.iter().map(|r| r.to_string()).collect::<Vec<_>>().join(", ");
@@ -1598,10 +1597,11 @@ pub async fn player_turn(
         let text_for_summary = written_text.chars().take(2000).collect::<String>();
         let action_summary = ollama_chat_once(&ollama_host, &model,
             "Write one sentence: who did what, and what was the outcome. \
-             Past tense. Name the characters. If a roll shaped the scene, say so briefly. \
+             Past tense. Use the character's full name exactly as given. \
+             If a roll shaped the scene, say so briefly. \
              Do NOT start with 'In turn', 'In this scene', or any meta-framing. \
              One sentence only.",
-            &text_for_summary,
+            &format!("Character full name: {character}\n\nScene:\n{text_for_summary}"),
         ).await.unwrap_or_else(|e| format!("(summarizer error: {e})"));
         meta!("📋 Summary", &action_summary);
         emit_step!("📋 Summary", &action_summary);
@@ -1754,79 +1754,114 @@ pub async fn session_summary(
             }};
         }
 
-        // Collect turn files — skip TURNS.md, summaries, and anything that isn't a turn prose file
-        let mut turn_files: Vec<std::path::PathBuf> = Vec::new();
+        // Check if session uses scene subdirectories; if so aggregate their scene_summary.md files
+        let mut scene_summaries: Vec<(String, String)> = Vec::new();
         if let Ok(mut rd) = tokio::fs::read_dir(&session_path).await {
             while let Ok(Some(e)) = rd.next_entry().await {
-                let p = e.path();
-                if p.extension().and_then(|s| s.to_str()) != Some("md") { continue; }
-                let name = p.file_name().and_then(|s| s.to_str()).unwrap_or("").to_string();
-                // Only process turn files — skip indices, summaries, interruptions
-                if name.starts_with("turn") {
-                    turn_files.push(p);
+                if !e.file_type().await.map(|t| t.is_dir()).unwrap_or(false) { continue; }
+                let sname = e.file_name().to_string_lossy().to_string();
+                if !sname.starts_with("scene") { continue; }
+                let summary_p = e.path().join("scene_summary.md");
+                if let Ok(t) = tokio::fs::read_to_string(&summary_p).await {
+                    scene_summaries.push((sname, t));
                 }
             }
         }
-        turn_files.sort();
+        scene_summaries.sort_by(|(a, _), (b, _)| a.cmp(b));
 
-        if turn_files.is_empty() {
+        // Collect turn files — skip TURNS.md, summaries, and anything that isn't a turn prose file
+        let mut turn_files: Vec<std::path::PathBuf> = Vec::new();
+        if scene_summaries.is_empty() {
+            if let Ok(mut rd) = tokio::fs::read_dir(&session_path).await {
+                while let Ok(Some(e)) = rd.next_entry().await {
+                    let p = e.path();
+                    if p.extension().and_then(|s| s.to_str()) != Some("md") { continue; }
+                    let name = p.file_name().and_then(|s| s.to_str()).unwrap_or("").to_string();
+                    if name.starts_with("turn") {
+                        turn_files.push(p);
+                    }
+                }
+            }
+            turn_files.sort();
+        }
+
+        if turn_files.is_empty() && scene_summaries.is_empty() {
             let _ = tx.send(crate::state::TaskEvent {
                 task_id,
-                kind: TaskEventKind::Failed { message: "No turn files found in session dir".into() },
+                kind: TaskEventKind::Failed { message: "No turn files or scene summaries found in session dir".into() },
             });
             return;
         }
 
-        // ── MAP: summarize each turn individually ────────────────────────────
-        meta!("📚 Turn Files", turn_files.iter()
-            .filter_map(|p| p.file_name().and_then(|s| s.to_str()).map(String::from))
-            .collect::<Vec<_>>().join("\n"));
+        // ── MAP: summarize each turn individually (or use scene summaries) ───
+        meta!("📚 Turn Files", if !scene_summaries.is_empty() {
+            scene_summaries.iter().map(|(s, _)| s.clone()).collect::<Vec<_>>().join("\n")
+        } else {
+            turn_files.iter()
+                .filter_map(|p| p.file_name().and_then(|s| s.to_str()).map(String::from))
+                .collect::<Vec<_>>().join("\n")
+        });
 
-        let mut turn_summaries: Vec<(String, String)> = Vec::new(); // (filename, mini-summary)
+        let mut turn_summaries: Vec<(String, String)> = Vec::new(); // (label, mini-summary)
 
-        for path in &turn_files {
-            let fname = path.file_name().and_then(|s| s.to_str()).unwrap_or("").to_string();
-            let text = match tokio::fs::read_to_string(path).await {
-                Ok(t) => t,
-                Err(_) => continue,
-            };
-            let _ = tx.send(crate::state::TaskEvent {
-                task_id,
-                kind: TaskEventKind::ToolCall {
-                    tool: "campaign.read".into(),
-                    input: format!("{session_dir}/{fname}"),
-                    output: format!("{} chars", text.len()),
-                },
-            });
-            let _ = tx.send(crate::state::TaskEvent {
-                task_id,
-                kind: TaskEventKind::PipelineStep {
-                    step: "Turn Summarizer".into(),
-                    body: format!("Condensing {fname}…"),
-                },
-            });
+        if !scene_summaries.is_empty() {
+            // Scene-based session: use each scene's pre-computed summary directly
+            for (sname, text) in &scene_summaries {
+                let _ = tx.send(crate::state::TaskEvent {
+                    task_id,
+                    kind: TaskEventKind::PipelineStep {
+                        step: "Scene Aggregator".into(),
+                        body: format!("Using {sname}/scene_summary.md ({} chars)", text.len()),
+                    },
+                });
+                meta!(format!("📖 {sname}"), text.chars().take(400).collect::<String>());
+                turn_summaries.push((sname.clone(), text.clone()));
+            }
+        } else {
+            for path in &turn_files {
+                let fname = path.file_name().and_then(|s| s.to_str()).unwrap_or("").to_string();
+                let text = match tokio::fs::read_to_string(path).await {
+                    Ok(t) => t,
+                    Err(_) => continue,
+                };
+                let _ = tx.send(crate::state::TaskEvent {
+                    task_id,
+                    kind: TaskEventKind::ToolCall {
+                        tool: "campaign.read".into(),
+                        input: format!("{session_dir}/{fname}"),
+                        output: format!("{} chars", text.len()),
+                    },
+                });
+                let _ = tx.send(crate::state::TaskEvent {
+                    task_id,
+                    kind: TaskEventKind::PipelineStep {
+                        step: "Turn Summarizer".into(),
+                        body: format!("Condensing {fname}…"),
+                    },
+                });
 
-            let mini = ollama_chat_once_with_tokens(
-                &def.ollama_host,
-                &def.model,
-                "You are condensing one scene from a gothic horror TTRPG session. \
-                 Write 2-3 sentences in past tense describing only what happened: \
-                 who acted, what they found or did, and what changed. \
-                 No commentary. No new events. Only what the text describes.",
-                &format!("Scene: {fname}\n\n{text}"),
-                256,
-            ).await.unwrap_or_else(|_| format!("(failed to summarize {fname})"));
+                let mini = ollama_chat_once_with_tokens(
+                    &def.ollama_host,
+                    &def.model,
+                    "You are condensing one scene from a TTRPG session. \
+                     Write 2-3 sentences in past tense describing only what happened: \
+                     who acted, what they found or did, and what changed. \
+                     No commentary. No new events. Only what the text describes.",
+                    &format!("Scene: {fname}\n\n{text}"),
+                    256,
+                ).await.unwrap_or_else(|_| format!("(failed to summarize {fname})"));
 
-            meta!(format!("✍ {fname}"), &mini);
-            let _ = tx.send(crate::state::TaskEvent {
-                task_id,
-                kind: TaskEventKind::PipelineStep {
-                    step: format!("✍ {fname}"),
-                    body: mini.chars().take(160).collect::<String>(),
-                },
-            });
+                meta!(format!("✍ {fname}"), &mini);
+                let _ = tx.send(crate::state::TaskEvent {
+                    task_id,
+                    kind: TaskEventKind::PipelineStep {
+                        step: format!("✍ {fname}"),
+                        body: mini.chars().take(160).collect::<String>(),
+                    },
+                });
 
-            turn_summaries.push((fname, mini));
+                turn_summaries.push((fname, mini));
+            }
         }
 
         // ── REDUCE: synthesize all mini-summaries into the final recap ───────
@@ -2512,4 +2547,772 @@ async fn collect_file_list(root: &std::path::Path) -> std::io::Result<Vec<String
     let mut files = walk(root, root).await?;
     files.sort();
     Ok(files)
+}
+
+// SCENE OPENER — generates scene_opener.md for a new scene within a session
+// ─────────────────────────────────────────────────────────────────────────────
+
+#[derive(Deserialize)]
+pub struct SceneOpenerBody {
+    pub definition_id: Option<Uuid>,
+    pub scene_name: Option<String>,  // e.g. "scene1"; auto if omitted
+}
+
+#[derive(Serialize)]
+pub struct SceneOpenerResponse {
+    pub task_id: Uuid,
+    pub scene_name: String,
+    pub output_path: String,
+}
+
+pub async fn create_scene_opener(
+    State(state): State<Arc<AppState>>,
+    Path((campaign_name, session_dir)): Path<(String, String)>,
+    Json(body): Json<SceneOpenerBody>,
+) -> Result<Json<SceneOpenerResponse>, ApiError> {
+    if !safe_name(&campaign_name) || !safe_name(&session_dir) {
+        return Err(ApiError::BadRequest("invalid name".into()));
+    }
+
+    let def = {
+        let defs = state.definitions.read().await;
+        if let Some(id) = body.definition_id {
+            defs.get(&id).cloned().ok_or_else(|| ApiError::NotFound("definition not found".into()))?
+        } else {
+            let campaign_path_str = state.data_dir.join("campaigns").join(&campaign_name)
+                .to_string_lossy().to_string();
+            defs.values()
+                .find(|d| d.campaign_dir.as_deref()
+                    .map_or(false, |cd| campaign_path_str.ends_with(cd) || cd.ends_with(&campaign_name)))
+                .or_else(|| defs.values()
+                    .find(|d| d.name.to_lowercase().contains("dm")))
+                .or_else(|| defs.values().next())
+                .cloned()
+                .ok_or_else(|| ApiError::NotFound("no agent definitions found".into()))?
+        }
+    };
+
+    let campaign_path = state.data_dir.join("campaigns").join(&campaign_name);
+    let session_path  = campaign_path.join(&session_dir);
+
+    // Auto-derive scene name if not provided
+    let scene_name = if let Some(n) = body.scene_name.filter(|s| !s.is_empty()) {
+        n
+    } else {
+        let mut max_n = 0u32;
+        if let Ok(mut rd) = tokio::fs::read_dir(&session_path).await {
+            while let Ok(Some(e)) = rd.next_entry().await {
+                if e.file_type().await.map(|t| t.is_dir()).unwrap_or(false) {
+                    let n = e.file_name().to_string_lossy().to_string();
+                    if let Some(rest) = n.strip_prefix("scene") {
+                        if let Ok(num) = rest.parse::<u32>() {
+                            if num > max_n { max_n = num; }
+                        }
+                    }
+                }
+            }
+        }
+        format!("scene{}", max_n + 1)
+    };
+
+    let scene_path   = session_path.join(&scene_name);
+    tokio::fs::create_dir_all(&scene_path).await
+        .map_err(|e| ApiError::Internal(e.to_string()))?;
+    let meta_dir = scene_path.join(".meta");
+    tokio::fs::create_dir_all(&meta_dir).await
+        .map_err(|e| ApiError::Internal(e.to_string()))?;
+
+    let task_id      = Uuid::new_v4();
+    let out_path     = format!("{session_dir}/{scene_name}/scene_opener.md");
+    let out_path_c   = out_path.clone();
+    let scene_name_c = scene_name.clone();
+    let tx           = state.task_events.clone();
+    let data_dir     = state.data_dir.clone();
+
+    tokio::spawn(async move {
+        let _ = tx.send(crate::state::TaskEvent { task_id, kind: TaskEventKind::Started });
+
+        let meta_path = meta_dir.join("scene_opener.log");
+        let header = format!(
+            "# Scene Opener: {session_dir}/{scene_name_c}\n**Campaign:** {campaign_name}  **Session:** {session_dir}  **Scene:** {scene_name_c}  **Time:** {}\n",
+            Utc::now().format("%Y-%m-%d %H:%M:%S UTC")
+        );
+        let _ = tokio::fs::write(&meta_path, header.as_bytes()).await;
+
+        macro_rules! meta {
+            ($label:expr, $body:expr) => {{
+                let line = format!("\n## {}\n{}\n", $label, $body);
+                if let Ok(mut f) = tokio::fs::OpenOptions::new().append(true).open(&meta_path).await {
+                    let _ = f.write_all(line.as_bytes()).await;
+                }
+            }};
+        }
+        macro_rules! emit_step {
+            ($step:expr, $body:expr) => {{
+                let _ = tx.send(crate::state::TaskEvent {
+                    task_id,
+                    kind: TaskEventKind::PipelineStep { step: $step.to_string(), body: $body.to_string() },
+                });
+            }};
+        }
+
+        // ── Read prior context ─────────────────────────────────────────────────
+        let mut context_parts: Vec<String> = Vec::new();
+
+        // Party roster
+        if let Ok(t) = tokio::fs::read_to_string(campaign_path.join("world/party.md")).await {
+            context_parts.push(format!("### world/party.md\n{}\n", t.chars().take(2000).collect::<String>()));
+        }
+
+        // World lore
+        for fname in &["world.md", "lore.md", "factions.md"] {
+            if let Ok(t) = tokio::fs::read_to_string(campaign_path.join("world").join(fname)).await {
+                context_parts.push(format!("### world/{fname}\n{}\n", t.chars().take(1000).collect::<String>()));
+            }
+        }
+
+        // Prior scene summary (most recent scene_summary.md in this session)
+        let mut prior_scene_summaries: Vec<(String, String)> = Vec::new();
+        if let Ok(mut rd) = tokio::fs::read_dir(&session_path).await {
+            while let Ok(Some(e)) = rd.next_entry().await {
+                if !e.file_type().await.map(|t| t.is_dir()).unwrap_or(false) { continue; }
+                let sname = e.file_name().to_string_lossy().to_string();
+                if sname == scene_name_c { continue; }
+                let summary_path = e.path().join("scene_summary.md");
+                if let Ok(t) = tokio::fs::read_to_string(&summary_path).await {
+                    prior_scene_summaries.push((sname, t));
+                }
+            }
+        }
+        prior_scene_summaries.sort_by(|(a, _), (b, _)| a.cmp(b));
+        for (sname, text) in &prior_scene_summaries {
+            context_parts.push(format!("### Prior scene: {sname}/scene_summary.md\n{}\n",
+                text.chars().take(1500).collect::<String>()));
+        }
+
+        // Session summary (if this isn't the first scene)
+        if let Ok(t) = tokio::fs::read_to_string(session_path.join("session_summary.md")).await {
+            context_parts.push(format!("### {session_dir}/session_summary.md\n{}\n",
+                t.chars().take(1500).collect::<String>()));
+        }
+
+        let context_block = context_parts.join("\n");
+        meta!("📚 Context", format!("{} chars from {} sources", context_block.len(), context_parts.len()));
+        emit_step!("📚 Context", format!("Loaded {} context sources for scene opener", context_parts.len()));
+
+        // ── Generate scene opener ──────────────────────────────────────────────
+        let opener_prompt = format!(
+            "You are the GM for the {campaign_name} campaign. You are opening a new scene: {session_dir}/{scene_name_c}.\n\n\
+             Context from prior play:\n{context_block}\n\n\
+             Write a scene opener markdown document with EXACTLY this structure (no deviations):\n\n\
+             First: A one-paragraph recap of what has just happened (2-4 sentences, past tense).\n\n\
+             Second: Two paragraphs of opening atmosphere and situation — where the characters find themselves, \
+             what is at stake, what the world looks like right now. Vivid, sensory, present tense.\n\n\
+             Third: Exactly this line (fill in the character names from party.md, only those who are active or present):\n\
+             **Characters:** Name1, Name2, Name3\n\n\
+             Fourth: A section headed exactly:\n\
+             ## Recommended Paths\n\
+             One bullet per character listed above. Format: `- **CharacterName**: [one specific action or investigation the scene naturally invites for them, rooted in their Devotion and the current situation]`\n\n\
+             RULES: Use only names and facts from the context. Do not invent new NPCs. \
+             Do not add headers beyond ## Recommended Paths. Do not add commentary.\n\n\
+             OUTPUT THE DOCUMENT ONLY. No preamble."
+        );
+
+        let opener = match ollama_chat_once_with_tokens(
+            &def.ollama_host,
+            &def.model,
+            &format!("You are a skilled GM for the {campaign_name} campaign. \
+                      Write focused, atmospheric scene openers that ground players in the current situation."),
+            &opener_prompt,
+            1200,
+        ).await {
+            Ok(s) => s,
+            Err(e) => {
+                let _ = tx.send(crate::state::TaskEvent {
+                    task_id,
+                    kind: TaskEventKind::Failed { message: e.to_string() },
+                });
+                return;
+            }
+        };
+
+        meta!("✍ Scene Opener", &opener);
+        emit_step!("✍ Scene Opener", opener.chars().take(200).collect::<String>());
+
+        let out_file_path = scene_path.join("scene_opener.md");
+        let bytes = opener.len();
+        if let Ok(mut f) = tokio::fs::File::create(&out_file_path).await {
+            let _ = f.write_all(opener.as_bytes()).await;
+            let _ = tx.send(crate::state::TaskEvent {
+                task_id,
+                kind: TaskEventKind::FileWrite { path: out_path_c, bytes },
+            });
+        }
+
+        let _ = tx.send(crate::state::TaskEvent {
+            task_id,
+            kind: TaskEventKind::Complete {
+                response: glorfindel_schemas::agent::AgentResponse {
+                    task_id,
+                    status: glorfindel_schemas::types::Status::Complete,
+                    result: serde_json::json!({ "scene": scene_name_c }),
+                    actions_taken: vec![],
+                    delegated_to: vec![],
+                },
+            },
+        });
+    });
+
+    Ok(Json(SceneOpenerResponse { task_id, scene_name, output_path: out_path }))
+}
+
+// SCENE PLAYER TURN — player turn scoped to a scene subdirectory
+// ─────────────────────────────────────────────────────────────────────────────
+
+pub async fn scene_player_turn(
+    State(state): State<Arc<AppState>>,
+    Path((campaign_name, session_dir, scene_dir)): Path<(String, String, String)>,
+    Json(body): Json<PlayerTurnBody>,
+) -> Result<Json<SessionTurnResponse>, ApiError> {
+    if !safe_name(&campaign_name) || !safe_name(&session_dir) || !safe_name(&scene_dir) {
+        return Err(ApiError::BadRequest("invalid name".into()));
+    }
+    let character = body.character.trim().to_string();
+    let action    = body.action.trim().to_string();
+    if character.is_empty() || action.is_empty() {
+        return Err(ApiError::BadRequest("character and action required".into()));
+    }
+
+    let definition = {
+        let defs = state.definitions.read().await;
+        if let Some(id) = body.definition_id {
+            defs.get(&id).cloned()
+                .ok_or_else(|| ApiError::NotFound(format!("definition {id} not found")))?
+        } else {
+            let campaign_path_str = state.data_dir.join("campaigns").join(&campaign_name)
+                .to_string_lossy().to_string();
+            defs.values()
+                .find(|d| d.campaign_dir.as_deref()
+                    .map_or(false, |cd| campaign_path_str.ends_with(cd) || cd.ends_with(&campaign_name)))
+                .or_else(|| defs.values().next())
+                .cloned()
+                .ok_or_else(|| ApiError::NotFound("no definition found".into()))?
+        }
+    };
+
+    let campaign_path = state.data_dir.join("campaigns").join(&campaign_name);
+    let scene_path    = campaign_path.join(&session_dir).join(&scene_dir);
+    tokio::fs::create_dir_all(&scene_path).await
+        .map_err(|e| ApiError::Internal(e.to_string()))?;
+
+    // The session_dir for downstream use — scene-relative
+    let effective_session = format!("{session_dir}/{scene_dir}");
+    let effective_session_ret = effective_session.clone();
+
+    let output_file = match &body.output_file {
+        Some(f) if !f.is_empty() => {
+            let f = f.trim_start_matches('/').replace(['\\', '/', '.', ' '], "_");
+            if f.ends_with("_md") { f.trim_end_matches("_md").to_string() + ".md" }
+            else if !f.ends_with(".md") { f + ".md" }
+            else { f }
+        }
+        _ => {
+            let mut n = 1u32;
+            if let Ok(mut rd) = tokio::fs::read_dir(&scene_path).await {
+                while let Ok(Some(e)) = rd.next_entry().await {
+                    let name = e.file_name().to_string_lossy().into_owned();
+                    if let Some(rest) = name.strip_prefix("turn_") {
+                        if let Ok(num) = rest.trim_end_matches(".md").parse::<u32>() {
+                            if num >= n { n = num + 1; }
+                        }
+                    }
+                }
+            }
+            format!("turn_{n:03}.md")
+        }
+    };
+
+    let task_id     = Uuid::new_v4();
+    let instance_id = Uuid::new_v4();
+    let ollama_host = definition.ollama_host.clone();
+    let model       = definition.model.clone();
+    let out_file    = output_file.clone();
+    let state_clone = state.clone();
+
+    {
+        let mut tasks = state.tasks.write().await;
+        tasks.insert(task_id, TaskRecord {
+            task_id,
+            agent_instance_id: instance_id,
+            agent_name: format!("🎭 {} / {} / {} / {}", campaign_name, session_dir, scene_dir, character),
+            intent: format!("[scene] {character}: {action}"),
+            status: glorfindel_schemas::types::Status::InProgress,
+            submitted_at: Utc::now(),
+            completed_at: None,
+            response: None,
+            error: None,
+        });
+    }
+
+    tokio::spawn(async move {
+        let meta_dir  = scene_path.join(".meta");
+        let _ = tokio::fs::create_dir_all(&meta_dir).await;
+        let meta_path  = meta_dir.join(out_file.replace(".md", ".log"));
+        let prose_path = scene_path.join(&out_file);
+
+        macro_rules! meta {
+            ($label:expr, $body:expr) => {{
+                let line = format!("\n## {}\n{}\n", $label, $body);
+                if let Ok(mut f) = tokio::fs::OpenOptions::new()
+                    .create(true).append(true).open(&meta_path).await
+                {
+                    let _ = f.write_all(line.as_bytes()).await;
+                }
+            }};
+        }
+        macro_rules! emit_step {
+            ($step:expr, $body:expr) => {{
+                let _ = state_clone.task_events.send(crate::state::TaskEvent {
+                    task_id,
+                    kind: TaskEventKind::PipelineStep { step: $step.to_string(), body: $body.to_string() },
+                });
+            }};
+        }
+        macro_rules! emit_tool {
+            ($tool:expr, $input:expr, $output:expr) => {{
+                let _ = state_clone.task_events.send(crate::state::TaskEvent {
+                    task_id,
+                    kind: TaskEventKind::ToolCall {
+                        tool: $tool.to_string(),
+                        input: $input.to_string(),
+                        output: $output.to_string(),
+                    },
+                });
+            }};
+        }
+
+        let _ = state_clone.task_events.send(crate::state::TaskEvent {
+            task_id,
+            kind: TaskEventKind::Started,
+        });
+
+        {
+            let header = format!(
+                "# Player Turn: {character} — {action}\n\
+                 **Campaign:** {campaign_name}  **Session:** {session_dir}  **Scene:** {scene_dir}  **File:** {out_file}  **Time:** {}\n",
+                Utc::now().format("%Y-%m-%d %H:%M:%S UTC")
+            );
+            let _ = tokio::fs::write(&meta_path, header.as_bytes()).await;
+        }
+
+        let campaign_facts = load_campaign_facts(&campaign_path, &campaign_name).await;
+
+        // ── 1. WHAT HAPPENED CRITIC ────────────────────────────────────────────
+        let mut grounding_files: Vec<(String, String)> = Vec::new();
+
+        // Scene opener (deterministic character list + scene context)
+        if let Ok(text) = tokio::fs::read_to_string(scene_path.join("scene_opener.md")).await {
+            emit_tool!("campaign.read", format!("{effective_session}/scene_opener.md"), "scene opener read");
+            grounding_files.push((format!("{effective_session}/scene_opener.md"), text.chars().take(2000).collect()));
+        }
+
+        // Last 2 turns from this scene
+        {
+            let mut entries: Vec<String> = Vec::new();
+            if let Ok(mut rd) = tokio::fs::read_dir(&scene_path).await {
+                while let Ok(Some(e)) = rd.next_entry().await {
+                    let name = e.file_name().to_string_lossy().to_string();
+                    if name.ends_with(".md") && name != out_file && name != "TURNS.md" && name != "scene_opener.md" {
+                        entries.push(name);
+                    }
+                }
+            }
+            entries.sort();
+            for name in entries.iter().rev().take(2) {
+                if let Ok(text) = tokio::fs::read_to_string(scene_path.join(name)).await {
+                    emit_tool!("campaign.read", format!("{effective_session}/{name}"), "grounding read");
+                    grounding_files.push((format!("{effective_session}/{name}"), text.chars().take(1500).collect()));
+                }
+            }
+        }
+
+        // world/party.md — read in full (no truncation: bounded reference doc, not AI prose)
+        let party_text = tokio::fs::read_to_string(campaign_path.join("world/party.md")).await.unwrap_or_default();
+        if !party_text.is_empty() {
+            emit_tool!("campaign.read", "world/party.md", "character sheet read");
+            grounding_files.push(("world/party.md".into(), party_text.clone()));
+        }
+
+        let grounding_block = grounding_files.iter()
+            .map(|(name, text)| format!("### {name}\n{text}\n"))
+            .collect::<Vec<_>>().join("\n");
+
+        let critic_context = ollama_chat_once(&ollama_host, &model,
+            "You are a campaign fact-checker. Read the files below. \
+             CHARACTERS: list every named character with their current situation (one line each). \
+             RECENT EVENTS: 2 sentences on what happened most recently. \
+             ACTING CHARACTER: one paragraph on who {character} is, their stats, their Devotion, and where they stand. \
+             PEDANTIC RULE: only use names and facts that appear verbatim in the files.",
+            &format!("Acting character: {character}\nPlayer action: {action}\n\n{grounding_block}"),
+        ).await.unwrap_or_default();
+        meta!("🔍 What Happened", &critic_context);
+        emit_step!("🔍 What Happened", &critic_context);
+
+        // ── 2. RULES LAWYER — dice_and_abilities.md only (keep it focused) ──────
+        let dice_rules = tokio::fs::read_to_string(campaign_path.join("rules/dice_and_abilities.md"))
+            .await.unwrap_or_default();
+        if !dice_rules.is_empty() {
+            emit_tool!("campaign.read", "rules/dice_and_abilities.md", "rules read");
+        }
+
+        let rules_output = ollama_chat_once(&ollama_host, &model,
+            "You are a TTRPG rules assessor. Output ONLY a ROLL| line or NO_ROLL. No prose.",
+            &format!(
+                "Character: {character}\nAction: {action}\n\n\
+                 Party Stats:\n{party_text}\n\n\
+                 Rules:\n{dice_rules}\n\n\
+                 Does this action need a check? If yes, output exactly:\n\
+                 ROLL|{character}|STAT_NAME|1d20+N|22|what it determines\n\
+                 Replace STAT_NAME with the ability used (e.g. OFFERING, PRESENCE, BLADE).\n\
+                 Replace N with the integer from the stat line. Examples:\n\
+                 OFFERING +3 → 1d20+3\n\
+                 PRESENCE +3 with Devotion rating 1 → 1d20+4\n\
+                 BLADE +4 → 1d20+4\n\
+                 Replace 22 with the appropriate difficulty: 10, 14, 18, 22, or 26\n\
+                 If no check needed: NO_ROLL\n\
+                 RESPOND WITH ONLY THE ROLL| LINE OR NO_ROLL:"
+            ),
+        ).await.unwrap_or_default();
+        meta!("⚖ Rules Assessor", &rules_output);
+        emit_step!("⚖ Rules Assessor", &rules_output);
+
+        // ── 3. DICE EXECUTOR ──────────────────────────────────────────────────
+        let mut dice_lines: Vec<String>   = Vec::new();
+        let mut dice_results: Vec<String> = Vec::new();
+
+        for line in rules_output.lines() {
+            let line = line.trim();
+            if !line.starts_with("ROLL|") { continue; }
+            let parts: Vec<&str> = line.splitn(6, '|').collect();
+            if parts.len() < 6 { continue; }
+            let (char_name, ability, notation, dc_str, reason) =
+                (parts[1].trim(), parts[2].trim(), parts[3].trim(), parts[4].trim(), parts[5].trim());
+            // Handle |DC|22 (model uses "DC" as label) by falling back to reason field
+            let dc: i32 = dc_str.parse()
+                .or_else(|_| reason.trim().parse())
+                .unwrap_or(14);
+            if let Some((rolls, modifier, total)) = roll_inline(notation) {
+                let rolls_str = rolls.iter().map(|r| r.to_string()).collect::<Vec<_>>().join(", ");
+                let mod_str = if modifier > 0 { format!("+{modifier}") }
+                              else if modifier < 0 { modifier.to_string() }
+                              else { String::new() };
+                let outcome = if total >= dc { "SUCCESS" } else { "FAILURE" };
+                let result_line = format!(
+                    "{char_name} {ability}: {notation} → [{rolls_str}]{mod_str} = **{total}** vs DC {dc} → **{outcome}** ({reason})"
+                );
+                dice_lines.push(notation.to_string());
+                dice_results.push(result_line);
+            }
+        }
+
+        let dice_context = if dice_results.is_empty() {
+            format!("No roll required. Focus the scene on: {character} — {action}")
+        } else {
+            dice_results.join("\n")
+        };
+        meta!("🎲 Dice", &dice_context);
+        emit_step!("🎲 Dice", &dice_context);
+
+        // ── 4. DM RESPONSE ────────────────────────────────────────────────────
+        let system_prompt = definition.system_prompt.clone()
+            .unwrap_or_else(|| format!(
+                "You are the DM for the {campaign_name} campaign. \
+                 Respond to player actions with immersive prose true to the campaign's tone."
+            ));
+
+        let dm_prompt = format!(
+            "CAMPAIGN:\n{campaign_facts}\n\n\
+             SCENE: {session_dir}/{scene_dir}\n\n\
+             GROUNDED FACTS (use ONLY these names and events):\n{critic_context}\n\n\
+             DICE OUTCOMES (already happened — let them shape what follows):\n{dice_context}\n\n\
+             PLAYER ACTION: {character} — {action}\n\n\
+             CRITICAL: The grounded facts above are the current state of the world. \
+             The scene picks up from there. Do NOT re-describe or re-resolve events that already happened. \
+             Narrate only what happens next in response to this action. \
+             What does the character experience? What changes? What does the world do back? \
+             Let dice outcomes determine success and failure. \
+             Write in second person (\"you\") if the scene benefits from it, or third if more fitting. \
+             3-5 paragraphs. \
+             OUTPUT ONLY NARRATIVE PROSE. No JSON. No tool calls. No structured data. No explanations. Just the scene."
+        );
+
+        let dm_prose = ollama_chat_once_with_tokens(&ollama_host, &model, &system_prompt, &dm_prompt, 1200)
+            .await.unwrap_or_else(|e| format!("*(DM response error: {e})*"));
+        meta!("✍ DM Response", &dm_prose);
+        emit_step!("✍ DM Response", &dm_prose);
+
+        let prose_bytes = dm_prose.len();
+        let _ = tokio::fs::write(&prose_path, dm_prose.as_bytes()).await;
+        let _ = state_clone.task_events.send(crate::state::TaskEvent {
+            task_id,
+            kind: TaskEventKind::FileWrite {
+                path: format!("{campaign_name}/{effective_session}/{out_file}"),
+                bytes: prose_bytes,
+            },
+        });
+
+        // ── 5. SUMMARIZER ─────────────────────────────────────────────────────
+        let written_text = tokio::fs::read_to_string(&prose_path).await.unwrap_or_default();
+        let action_summary = ollama_chat_once(&ollama_host, &model,
+            "Write one sentence: who did what, and what was the outcome. \
+             Past tense. Use the character's full name exactly as given. \
+             If a roll shaped the scene, say so briefly. \
+             Do NOT start with 'In turn', 'In this scene', or any meta-framing. \
+             One sentence only.",
+            &format!("Character full name: {character}\n\nScene:\n{}", written_text.chars().take(2000).collect::<String>()),
+        ).await.unwrap_or_else(|e| format!("(summarizer error: {e})"));
+        meta!("📋 Summary", &action_summary);
+        emit_step!("📋 Summary", &action_summary);
+
+        // ── Append to scene TURNS.md ──────────────────────────────────────────
+        let index_path  = scene_path.join("TURNS.md");
+        let meta_stem   = out_file.replace(".md", ".log");
+        let dice_inline = if dice_lines.is_empty() { "—".to_string() } else { dice_lines.join(", ") };
+        let summary_short = action_summary.lines().next().unwrap_or("").chars().take(120).collect::<String>();
+
+        let needs_header = !index_path.exists();
+        let index_row = if needs_header {
+            format!(
+                "# {campaign_name} / {effective_session} — Turn Index\n\n\
+                 | # | Time (UTC) | Data plane | Control plane | Dice | Summary |\n\
+                 |---|-----------|-----------|--------------|------|---------|\n\
+                 | 1 | {} | [{out_file}]({out_file}) | [.meta/{meta_stem}](.meta/{meta_stem}) | {dice_inline} | {summary_short} |\n",
+                Utc::now().format("%H:%M:%S")
+            )
+        } else {
+            let existing = tokio::fs::read_to_string(&index_path).await.unwrap_or_default();
+            let turn_num = existing.lines()
+                .filter(|l| l.starts_with("| ") && !l.starts_with("| #") && !l.starts_with("|---"))
+                .count() + 1;
+            format!(
+                "| {turn_num} | {} | [{out_file}]({out_file}) | [.meta/{meta_stem}](.meta/{meta_stem}) | {dice_inline} | {summary_short} |\n",
+                Utc::now().format("%H:%M:%S")
+            )
+        };
+        if let Ok(mut f) = tokio::fs::OpenOptions::new()
+            .create(true).append(true).open(&index_path).await
+        {
+            let _ = f.write_all(index_row.as_bytes()).await;
+        }
+
+        use glorfindel_schemas::agent::AgentResponse;
+        let response = AgentResponse {
+            task_id,
+            status: glorfindel_schemas::types::Status::Complete,
+            result: serde_json::json!({
+                "output_file":    format!("{}/{}", effective_session, out_file),
+                "scene_dir":      scene_dir,
+                "session_dir":    session_dir,
+                "character":      character,
+                "action_summary": action_summary,
+            }),
+            actions_taken: vec![],
+            delegated_to: vec![],
+        };
+
+        let mut tasks = state_clone.tasks.write().await;
+        if let Some(record) = tasks.get_mut(&task_id) {
+            record.status = glorfindel_schemas::types::Status::Complete;
+            record.completed_at = Some(Utc::now());
+            record.response = Some(response.clone());
+            let _ = state_clone.task_events.send(crate::state::TaskEvent {
+                task_id,
+                kind: crate::state::TaskEventKind::Complete { response },
+            });
+        }
+    });
+
+    Ok(Json(SessionTurnResponse {
+        task_id,
+        session_dir: effective_session_ret,
+        output_file,
+    }))
+}
+
+// SCENE SUMMARY — summarizes all turns in a scene subdirectory
+// ─────────────────────────────────────────────────────────────────────────────
+
+pub async fn scene_summary_handler(
+    State(state): State<Arc<AppState>>,
+    Path((campaign_name, session_dir, scene_dir)): Path<(String, String, String)>,
+    Json(body): Json<SessionSummaryBody>,
+) -> Result<Json<SessionSummaryResponse>, ApiError> {
+    if !safe_name(&campaign_name) || !safe_name(&session_dir) || !safe_name(&scene_dir) {
+        return Err(ApiError::BadRequest("invalid name".into()));
+    }
+
+    let def = {
+        let defs = state.definitions.read().await;
+        if let Some(id) = body.definition_id {
+            defs.get(&id).cloned()
+                .ok_or_else(|| ApiError::NotFound("definition not found".into()))?
+        } else {
+            defs.values()
+                .find(|d| d.name.to_lowercase().contains("dm") || d.name.to_lowercase().contains("dungeon"))
+                .or_else(|| defs.values().next())
+                .cloned()
+                .ok_or_else(|| ApiError::NotFound("no agent definitions found".into()))?
+        }
+    };
+
+    let data_dir    = state.data_dir.clone();
+    let task_id     = Uuid::new_v4();
+    let out_filename = body.output_file.clone().unwrap_or_else(|| "scene_summary.md".to_string());
+    let tx          = state.task_events.clone();
+    let out_fn_c    = out_filename.clone();
+
+    tokio::spawn(async move {
+        let _ = tx.send(crate::state::TaskEvent { task_id, kind: TaskEventKind::Started });
+
+        let campaign_path = data_dir.join("campaigns").join(&campaign_name);
+        let scene_path    = campaign_path.join(&session_dir).join(&scene_dir);
+        let meta_dir      = scene_path.join(".meta");
+        let _ = tokio::fs::create_dir_all(&meta_dir).await;
+
+        let meta_path = meta_dir.join(out_fn_c.replace(".md", ".log"));
+        let header = format!(
+            "# Scene Summary: {session_dir}/{scene_dir}\n**Campaign:** {campaign_name}  **Session:** {session_dir}  **Scene:** {scene_dir}  **Time:** {}\n",
+            Utc::now().format("%Y-%m-%d %H:%M:%S UTC")
+        );
+        let _ = tokio::fs::write(&meta_path, header.as_bytes()).await;
+
+        macro_rules! meta {
+            ($label:expr, $body:expr) => {{
+                let line = format!("\n## {}\n{}\n", $label, $body);
+                if let Ok(mut f) = tokio::fs::OpenOptions::new().append(true).open(&meta_path).await {
+                    let _ = f.write_all(line.as_bytes()).await;
+                }
+            }};
+        }
+
+        // Collect turn files in the scene dir
+        let mut turn_files: Vec<std::path::PathBuf> = Vec::new();
+        if let Ok(mut rd) = tokio::fs::read_dir(&scene_path).await {
+            while let Ok(Some(e)) = rd.next_entry().await {
+                let p = e.path();
+                if p.extension().and_then(|s| s.to_str()) != Some("md") { continue; }
+                let name = p.file_name().and_then(|s| s.to_str()).unwrap_or("").to_string();
+                if name.starts_with("turn") {
+                    turn_files.push(p);
+                }
+            }
+        }
+        turn_files.sort();
+
+        if turn_files.is_empty() {
+            let _ = tx.send(crate::state::TaskEvent {
+                task_id,
+                kind: TaskEventKind::Failed { message: "No turn files found in scene dir".into() },
+            });
+            return;
+        }
+
+        // MAP: summarize each turn
+        let mut turn_summaries: Vec<(String, String)> = Vec::new();
+        for path in &turn_files {
+            let fname = path.file_name().and_then(|s| s.to_str()).unwrap_or("").to_string();
+            let Ok(text) = tokio::fs::read_to_string(path).await else { continue };
+            let _ = tx.send(crate::state::TaskEvent {
+                task_id,
+                kind: TaskEventKind::PipelineStep {
+                    step: "Turn Summarizer".into(),
+                    body: format!("Condensing {fname}…"),
+                },
+            });
+            let mini = ollama_chat_once_with_tokens(
+                &def.ollama_host,
+                &def.model,
+                "You are condensing one turn from a TTRPG campaign scene. \
+                 Write 2-3 sentences in past tense describing only what happened: \
+                 who acted, what they found or did, and what changed. \
+                 No commentary. No new events. Only what the text describes.",
+                &format!("Turn: {fname}\n\n{text}"),
+                256,
+            ).await.unwrap_or_else(|_| format!("(failed to summarize {fname})"));
+            meta!(format!("✍ {fname}"), &mini);
+            turn_summaries.push((fname, mini));
+        }
+
+        // REDUCE: synthesize into scene summary
+        let condensed = turn_summaries.iter()
+            .map(|(f, s)| format!("**{f}**: {s}"))
+            .collect::<Vec<_>>()
+            .join("\n\n");
+
+        let _ = tx.send(crate::state::TaskEvent {
+            task_id,
+            kind: TaskEventKind::PipelineStep {
+                step: "Scene Writer".into(),
+                body: format!("Synthesizing {} turn summaries…", turn_summaries.len()),
+            },
+        });
+
+        let summary = match ollama_chat_once_with_tokens(
+            &def.ollama_host,
+            &def.model,
+            "You are chronicling a scene from a tabletop RPG campaign. \
+             You have been given one-sentence summaries for each turn in the scene. \
+             Write a concise 2-3 paragraph scene recap in vivid past-tense prose. \
+             No headers, no bullets. Only flowing paragraphs. \
+             Name the characters. Note what changed. End with the situation the characters are left in.",
+            &format!("Campaign: {campaign_name}\nSession: {session_dir}\nScene: {scene_dir}\n\nTurn summaries:\n{condensed}"),
+            900,
+        ).await {
+            Ok(s) => s,
+            Err(e) => {
+                let _ = tx.send(crate::state::TaskEvent {
+                    task_id,
+                    kind: TaskEventKind::Failed { message: e.to_string() },
+                });
+                return;
+            }
+        };
+
+        meta!("🧠 Scene Writer", &summary);
+        let _ = tx.send(crate::state::TaskEvent {
+            task_id,
+            kind: TaskEventKind::PipelineStep {
+                step: "Scene Writer".into(),
+                body: summary.chars().take(200).collect::<String>(),
+            },
+        });
+
+        let out_path = scene_path.join(&out_fn_c);
+        let bytes = summary.len();
+        if let Ok(mut f) = tokio::fs::File::create(&out_path).await {
+            let _ = f.write_all(summary.as_bytes()).await;
+            let _ = tx.send(crate::state::TaskEvent {
+                task_id,
+                kind: TaskEventKind::FileWrite {
+                    path: format!("{session_dir}/{scene_dir}/{out_fn_c}"),
+                    bytes,
+                },
+            });
+        }
+
+        let _ = tx.send(crate::state::TaskEvent {
+            task_id,
+            kind: TaskEventKind::Complete {
+                response: glorfindel_schemas::agent::AgentResponse {
+                    task_id,
+                    status: glorfindel_schemas::types::Status::Complete,
+                    result: serde_json::json!({ "output": format!("{session_dir}/{scene_dir}/{out_fn_c}") }),
+                    actions_taken: vec![],
+                    delegated_to: vec![],
+                },
+            },
+        });
+    });
+
+    Ok(Json(SessionSummaryResponse { task_id, output_file: out_filename }))
 }

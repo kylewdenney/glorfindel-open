@@ -63,7 +63,10 @@ pub async fn run(addr: &str, data_dir: PathBuf) -> anyhow::Result<()> {
         .route("/campaign/:name/session/:dir/summary", axum::routing::post(campaign::session_summary))
         .route("/campaign/:name/grand-opener", axum::routing::post(campaign::grand_opener))
         .route("/campaign/:name/eucatastrophe", axum::routing::post(campaign::eucatastrophe))
-        .route("/campaign/:name/player-turn", axum::routing::post(campaign::player_turn));
+        .route("/campaign/:name/player-turn", axum::routing::post(campaign::player_turn))
+        .route("/campaign/:name/session/:dir/open-scene", axum::routing::post(campaign::create_scene_opener))
+        .route("/campaign/:name/session/:dir/scene/:scene/player-turn", axum::routing::post(campaign::scene_player_turn))
+        .route("/campaign/:name/session/:dir/scene/:scene/summary", axum::routing::post(campaign::scene_summary_handler));
 
     let app = Router::new()
         .route("/", get(serve_frontend))

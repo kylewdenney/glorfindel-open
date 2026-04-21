@@ -302,18 +302,47 @@
         </div>
       </div>
 
-      <!-- Active session turn list -->
+      <!-- Scene picker -->
+      <div x-show="activeSession" style="border-bottom:1px solid #2a2418;" class="px-2.5 py-2">
+        <div class="flex items-center justify-between mb-1.5">
+          <div class="text-xs font-bold uppercase tracking-widest" style="color:#2a5a3a; letter-spacing:0.08em;">Scenes</div>
+          <div class="flex items-center gap-2">
+            <button @click="summarizeScene()" :disabled="!activeScene || sceneSummarizing"
+              style="color:#2a5a3a; font-size:0.68rem;" class="hover:text-green-400 transition-colors disabled:opacity-30"
+              title="Summarize active scene">
+              <span x-text="sceneSummarizing ? '…' : '∑'"></span>
+            </button>
+            <button @click="newScene()" :disabled="!activeCampaign || !activeSession || creatingScene"
+              style="color:#2a5a3a; font-size:0.68rem;" class="hover:text-green-400 transition-colors disabled:opacity-30"
+              title="Generate new scene opener">
+              <span x-text="creatingScene ? '⟳ …' : '+ scene'"></span>
+            </button>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-1">
+          <template x-for="sc in sceneDirs" :key="sc">
+            <button @click="activeScene = (activeScene === sc ? null : sc)"
+              :class="'session-tab ' + (activeScene === sc ? 'active' : 'inactive')"
+              x-text="sc" style="font-size:0.65rem; padding:2px 7px;"></button>
+          </template>
+          <template x-if="sceneDirs.length === 0">
+            <span class="text-xs" style="color:#1e3a28;">no scenes</span>
+          </template>
+        </div>
+      </div>
+
+      <!-- Active session / scene turn list -->
       <div class="flex-1 overflow-y-auto pb-2">
         <div class="px-2.5 pt-2 pb-1 flex items-center justify-between">
           <div class="text-xs font-bold uppercase tracking-widest" style="color:#5a4a2a;">
-            <span x-text="activeSession || 'Turns'"></span>
+            <span x-text="activeScene ? (activeSession + '/' + activeScene) : (activeSession || 'Turns')"></span>
           </div>
           <div class="flex items-center gap-1.5">
             <button @click="showNewFile = !showNewFile" :disabled="!activeCampaign"
               style="color:#7a6a3a; font-size:0.7rem;" class="hover:text-amber-400 transition-colors disabled:opacity-40">
               + New
             </button>
-            <button @click="summarizeSession()" :disabled="!activeCampaign || !activeSession || summarizing"
+            <button @click="summarizeSession()" :disabled="!activeCampaign || !activeSession || summarizing || !!activeScene"
               style="color:#5a7a3a; font-size:0.7rem;" class="hover:text-green-400 transition-colors disabled:opacity-40"
               :title="'Summarize ' + (activeSession || '')">
               <span x-text="summarizing ? '…' : '∑'"></span>
@@ -663,13 +692,29 @@
       <div x-show="playMode" style="border-bottom:1px solid #2a2418; flex-shrink:0;" class="p-2.5">
         <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:#5a4a2a; letter-spacing:0.1em;">Your Character</div>
 
-        <!-- Character selector pills -->
+        <!-- Active scene filter indicator -->
+        <template x-if="sceneCharacters.length > 0">
+          <div class="mb-2 flex items-center gap-2 rounded px-2 py-1" style="background:#0a1018; border:1px solid #1a2830;">
+            <span class="text-xs" style="color:#3a5a7a;">🎭 scene</span>
+            <span class="text-xs flex-1 truncate" style="color:#507090;"
+                  x-text="sceneCharacters.join(' · ')"></span>
+            <button @click="sceneCharacters = []; sceneFile = null"
+              style="color:#2a4060; font-size:0.62rem; line-height:1;"
+              class="hover:text-blue-400 transition-colors" title="Clear scene filter">✕</button>
+          </div>
+        </template>
+
+        <!-- Character selector pills — greyed out when not in active scene -->
         <div class="flex flex-wrap gap-1 mb-2" x-show="partyMembers.length > 0">
           <template x-for="pc in partyMembers" :key="pc">
-            <button @click="activeCharacter = pc"
-              :style="activeCharacter === pc
-                ? 'background:#2a2010; color:#f0c060; border:1px solid #b48c3c;'
-                : 'background:#1a1808; color:#6a5a3a; border:1px solid #2a2418;'"
+            <button
+              @click="sceneCharacters.length === 0 || sceneCharacters.includes(pc) ? activeCharacter = pc : null"
+              :title="sceneCharacters.length > 0 && !sceneCharacters.includes(pc) ? 'Not in this scene' : ''"
+              :style="sceneCharacters.length > 0 && !sceneCharacters.includes(pc)
+                ? 'background:#111008; color:#1e1a10; border:1px solid #161410; opacity:0.3; cursor:not-allowed;'
+                : (activeCharacter === pc
+                    ? 'background:#2a2010; color:#f0c060; border:1px solid #b48c3c;'
+                    : 'background:#1a1808; color:#6a5a3a; border:1px solid #2a2418;')"
               class="text-xs px-2 py-1 rounded transition-all"
               x-text="pc"></button>
           </template>
@@ -1029,6 +1074,11 @@ function campaign() {
     partyDevotions: {},
     partyCards: [],
     partyLoading: false,
+    sceneCharacters: [],   // characters listed in the currently loaded scene opener
+    sceneFile: null,       // path of the file that set sceneCharacters
+    activeScene: null,     // e.g. "scene1" — scene subdir within activeSession
+    creatingScene: false,
+    sceneSummarizing: false,
 
     // Agents
     runningAgents: [],
@@ -1103,19 +1153,38 @@ function campaign() {
     get runningCount() {
       return this.runningTask ? 1 : 0;
     },
-    // Session directories derived from file subdirs
+    // Session directories derived from file subdirs (top-level only, no slashes)
     get sessionDirs() {
       const dirs = new Set();
       for (const f of this.files) {
-        if (f.subdir && f.subdir.match(/^session\d+/i)) {
+        if (f.subdir && f.subdir.match(/^session\d+$/i)) {
           dirs.add(f.subdir);
         }
       }
       return [...dirs].sort();
     },
-    // Files belonging to the active session
+    // Scene subdirectories within the active session
+    get sceneDirs() {
+      if (!this.activeSession) return [];
+      const prefix = this.activeSession + '/';
+      const dirs = new Set();
+      for (const f of this.files) {
+        if (f.subdir && f.subdir.startsWith(prefix)) {
+          const rest = f.subdir.slice(prefix.length);
+          if (rest && !rest.includes('/') && rest.match(/^scene/i)) {
+            dirs.add(rest);
+          }
+        }
+      }
+      return [...dirs].sort();
+    },
+    // Files belonging to the active session (or active scene when set)
     get sessionFiles() {
       if (!this.activeSession) return [];
+      if (this.activeScene) {
+        const sceneSubdir = this.activeSession + '/' + this.activeScene;
+        return this.files.filter(f => f.subdir === sceneSubdir && !f.filename.startsWith('.'));
+      }
       return this.files.filter(f => f.subdir === this.activeSession && !f.filename.startsWith('.'));
     },
     // All other files (not in active session, not .meta)
@@ -1296,6 +1365,8 @@ function campaign() {
       this.partyCards = [];
       this.partyMembers = [];
       this.partyDevotions = {};
+      this.sceneCharacters = [];
+      this.sceneFile = null;
       await this.refreshFiles();
       this._preselectDmDef();
       // Auto-select latest session
@@ -1314,6 +1385,7 @@ function campaign() {
     setActiveSession(s) {
       this.activeSession = s;
       this.sessionDir = s;
+      this.activeScene = null;
     },
     async summarizeSession() {
       if (!this.activeCampaign || !this.activeSession || this.summarizing) return;
@@ -1332,6 +1404,59 @@ function campaign() {
         alert('Summary failed: ' + e.message);
       } finally {
         this.summarizing = false;
+        setTimeout(() => this.refreshFiles(), 4000);
+      }
+    },
+    async newScene() {
+      if (!this.activeCampaign || !this.activeSession || this.creatingScene) return;
+      const defId = this.selectedDefinitionId();
+      if (!defId) { alert('No DM agent definition found — spawn one first.'); return; }
+      this.creatingScene = true;
+      try {
+        const r = await fetch(
+          `/api/campaign/${enc(this.activeCampaign)}/session/${enc(this.activeSession)}/open-scene`,
+          { method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ definition_id: defId }) }
+        );
+        if (!r.ok) throw new Error(await r.text());
+        const data = await r.json();
+        this.activeScene = data.scene_name;
+        await this.refreshFiles();
+        // Poll for the scene opener file and open it once available
+        let attempts = 0;
+        const poll = setInterval(async () => {
+          attempts++;
+          await this.refreshFiles();
+          const openerPath = `${this.activeSession}/${data.scene_name}/scene_opener.md`;
+          const openerFile = this.files.find(f => f.path === openerPath);
+          if (openerFile || attempts >= 12) {
+            clearInterval(poll);
+            if (openerFile) await this.openFile(openerFile.path);
+          }
+        }, 2500);
+      } catch (e) {
+        alert('Scene creation failed: ' + e.message);
+      } finally {
+        this.creatingScene = false;
+      }
+    },
+    async summarizeScene() {
+      if (!this.activeCampaign || !this.activeSession || !this.activeScene || this.sceneSummarizing) return;
+      const defId = this.selectedDefinitionId();
+      if (!defId) { alert('No DM agent definition found — spawn one first.'); return; }
+      this.sceneSummarizing = true;
+      try {
+        const r = await fetch(
+          `/api/campaign/${enc(this.activeCampaign)}/session/${enc(this.activeSession)}/scene/${enc(this.activeScene)}/summary`,
+          { method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ definition_id: defId }) }
+        );
+        if (!r.ok) throw new Error(await r.text());
+        await this.refreshFiles();
+      } catch (e) {
+        alert('Scene summary failed: ' + e.message);
+      } finally {
+        this.sceneSummarizing = false;
         setTimeout(() => this.refreshFiles(), 4000);
       }
     },
@@ -1404,6 +1529,7 @@ function campaign() {
         const data = await (await fetch(`/api/campaign/${enc(this.activeCampaign)}/file/${encoded}`)).json();
         this.fileContent = data.contents;
         this.editContent = data.contents;
+        this._parseSceneCharacters(data.contents, filePath);
       } catch {
         this.fileContent = '_Error loading file._';
       } finally {
@@ -1598,7 +1724,10 @@ function campaign() {
       this.thinkingPhase = '🔍 What Happened…';
       const savedAction = this.playerAction.trim();
       try {
-        const r = await fetch(`/api/campaign/${enc(this.activeCampaign)}/player-turn`, {
+        const url = this.activeScene
+          ? `/api/campaign/${enc(this.activeCampaign)}/session/${enc(sdir)}/scene/${enc(this.activeScene)}/player-turn`
+          : `/api/campaign/${enc(this.activeCampaign)}/player-turn`;
+        const r = await fetch(url, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
         });
@@ -1664,6 +1793,21 @@ function campaign() {
       if (sessionFiles.length === 0) return;
       const last = sessionFiles[sessionFiles.length - 1];
       await this.openFile(last.path);
+    },
+
+    // Scans opened file content for a "Characters:" line and updates the scene filter.
+    // Only fires when the line is present — opening a regular turn file leaves the filter intact.
+    _parseSceneCharacters(text, filePath) {
+      if (!text) return;
+      const m = text.match(/\*{0,2}Characters:\*{0,2}\s*([^\n]+)/i);
+      if (!m) return;
+      const names = m[1].split(',')
+        .map(n => n.replace(/\*/g, '').trim())
+        .filter(Boolean);
+      if (names.length > 0) {
+        this.sceneCharacters = names;
+        this.sceneFile = filePath || null;
+      }
     },
 
     async runTask() {
