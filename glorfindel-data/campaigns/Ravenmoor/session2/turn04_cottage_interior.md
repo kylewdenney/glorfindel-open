@@ -1,0 +1,9 @@
+As the party tentatively crossed the threshold of Lena's cottage, a pall of unease hung heavy in the air. The dim flicker of candlelight danced off the worn wooden walls, casting eerie shadows that seemed to writhe and twist. A sense of wrongness permeated the very fabric of the room, as if unseen eyes watched from the darkness.
+
+Isolde, her heart pounding in her chest, tried to ignore the feeling that something was watching her. Dorian, ever the investigator, scanned the room meticulously, his gaze lingering on the set table, the untouched food that seemed to defy decay, and the miner's coat hanging on a hook - the same type he had seen before. Emmett, however, felt a chill run down his spine as if an icy hand had wrapped around his heart.
+
+Lena moved with an uncanny grace as she poured tea from a pot that seemed to refill itself. Her eyes, though filled with sincerity, held a glint of something otherworldly. She spoke in a soft voice, her words chilling in their implications. "He went down with the others. But he still comes home. He's just quieter now."
+
+The room fell silent as Lena continued, her voice barely above a whisper. "He told me there's a new one now. Just started listening. He said to tell whoever came — don't answer it. Once you answer, it knows your voice." She looked directly at Emmett, her gaze piercing through the darkness. "You already went down, didn't you?"
+
+The room seemed to hold its breath as Emmett met Lena's gaze, his eyes wide with a mixture of fear and guilt. The others watched him, their own hearts pounding in their chests. This was bad, they knew it. They had come to Ravenmoor seeking answers, but it seemed they had stumbled upon something far more sinister than they could have ever imagined.

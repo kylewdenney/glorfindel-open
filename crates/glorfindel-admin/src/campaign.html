@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DM Dashboard — Glorfindel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    [x-cloak] { display: none !important; }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #1c1a14; }
+    ::-webkit-scrollbar-thumb { background: #5a4a2a; border-radius: 3px; }
+
+    .spinner {
+      border: 2px solid rgba(180,140,60,0.2);
+      border-top-color: #b48c3c;
+      border-radius: 50%;
+      width: 12px; height: 12px;
+      animation: spin 0.7s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @keyframes popIn {
+      0%   { transform: scale(0.85); opacity: 0; }
+      60%  { transform: scale(1.05); }
+      100% { transform: scale(1);    opacity: 1; }
+    }
+    .pop-in { animation: popIn 0.25s ease-out; }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .bus-msg { animation: slideIn 0.2s ease-out; }
+
+    .prose-parchment {
+      color: #e8dfc0;
+      line-height: 1.8;
+      font-size: 0.93rem;
+    }
+    .prose-parchment h1, .prose-parchment h2, .prose-parchment h3 {
+      color: #f0c060; font-weight: 700; margin-top: 1.4em; margin-bottom: 0.4em;
+    }
+    .prose-parchment h1 { font-size: 1.35em; border-bottom: 1px solid #5a4a2a; padding-bottom: 0.2em; }
+    .prose-parchment h2 { font-size: 1.15em; }
+    .prose-parchment h3 { font-size: 1em; color: #d4a840; }
+    .prose-parchment p  { margin-bottom: 0.9em; }
+    .prose-parchment strong { color: #f0c060; font-weight: 600; }
+    .prose-parchment em { color: #c8b87a; font-style: italic; }
+    .prose-parchment ul, .prose-parchment ol { margin-left: 1.5em; margin-bottom: 0.8em; }
+    .prose-parchment li { margin-bottom: 0.3em; }
+    .prose-parchment hr { border-color: #5a4a2a; margin: 1.5em 0; }
+    .prose-parchment blockquote {
+      border-left: 3px solid #b48c3c; padding-left: 1em;
+      color: #b8a870; font-style: italic; margin: 1em 0;
+    }
+    .prose-parchment code {
+      background: #2a2010; padding: 0.1em 0.4em;
+      border-radius: 3px; font-size: 0.88em; color: #c8b87a;
+    }
+    .prose-parchment pre code {
+      display: block; white-space: pre-wrap; padding: 0.8em; line-height: 1.6;
+    }
+
+    .file-row { transition: background 0.1s; cursor: pointer; }
+    .file-row:hover { background: #282210; }
+    .file-row.active { background: #332e12; border-left: 2px solid #b48c3c; }
+
+    .turn-row { transition: background 0.1s; cursor: pointer; border-radius: 3px; }
+    .turn-row:hover { background: #1e1c10; }
+    .turn-row.active { background: #252010; border-left: 2px solid #b48c3c; }
+
+    .badge { font-size: 0.6rem; padding: 1px 5px; border-radius: 3px; font-weight: 700; flex-shrink: 0; }
+    .badge-open  { background: #1a3a2a; color: #60c080; border: 1px solid #2a5a3a; }
+    .badge-end   { background: #3a1a1a; color: #c06060; border: 1px solid #5a2a2a; }
+    .badge-hook  { background: #2a2a1a; color: #c0a040; border: 1px solid #5a4a1a; }
+    .badge-party { background: #1a2a3a; color: #6090c0; border: 1px solid #2a4a6a; }
+    .badge-npc   { background: #2a1a3a; color: #a060c0; border: 1px solid #4a2a6a; }
+    .badge-rule  { background: #1a2a2a; color: #40b0a0; border: 1px solid #2a5a50; }
+    .badge-note  { background: #2a2416; color: #c0a060; border: 1px solid #5a4820; }
+    .badge-world { background: #1a1a2a; color: #6070c0; border: 1px solid #2a3060; }
+    .badge-file  { background: #222; color: #888; border: 1px solid #383838; }
+    .badge-turn  { background: #1a1a0a; color: #a09040; border: 1px solid #3a3010; }
+    .badge-meta  { background: #101a18; color: #408060; border: 1px solid #1a4030; }
+
+    .agent-card {
+      border-radius: 5px; cursor: pointer; transition: all 0.1s;
+      border: 1px solid transparent;
+    }
+    .agent-card:hover { background: #252010 !important; }
+    .agent-card.selected {
+      border-color: #b48c3c !important;
+      background: #2a2010 !important;
+    }
+    .agent-dot {
+      width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+    }
+    .dot-ready  { background: #50c050; }
+    .dot-busy   { background: #c0a030; }
+
+    .ctrl-btn {
+      font-size: 0.7rem; font-weight: 600; padding: 4px 10px;
+      border-radius: 4px; cursor: pointer; transition: all 0.1s;
+      white-space: nowrap;
+    }
+    .ctrl-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .form-input {
+      background: #1e1a0e; color: #c8b87a;
+      border: 1px solid #3a3018; border-radius: 4px;
+      font-size: 0.78rem; padding: 5px 8px;
+    }
+    .form-input:focus { outline: none; box-shadow: 0 0 0 1px #b48c3c; }
+
+    .tab-pill {
+      font-size: 0.68rem; font-weight: 600; padding: 3px 9px;
+      border-radius: 10px; cursor: pointer; transition: all 0.1s;
+    }
+    .tab-pill.on  { background: #3a3010; color: #f0c060; border: 1px solid #6a5820; }
+    .tab-pill.off { background: transparent; color: #5a4a2a; border: 1px solid transparent; }
+    .tab-pill.off:hover { color: #b48c3c; }
+
+    .action-pill {
+      display: inline-flex; align-items: center; gap: 3px;
+      font-size: 0.6rem; padding: 1px 5px; border-radius: 8px;
+      font-weight: 600; margin: 1px 1px 0 0;
+    }
+    .p-dice    { background: #161e28; color: #60a0e0; border: 1px solid #2a3a5a; }
+    .p-write   { background: #1e1a0a; color: #d0a050; border: 1px solid #5a3a1a; }
+    .p-read    { background: #181e14; color: #80a060; border: 1px solid #3a5030; }
+    .p-agent   { background: #1e1428; color: #9070c0; border: 1px solid #3a2a60; }
+    .p-rule    { background: #141e18; color: #50c080; border: 1px solid #2a5040; }
+    .p-other   { background: #1a1a1a; color: #787878; border: 1px solid #303030; }
+
+    .editor-area {
+      font-family: 'Courier New', monospace;
+      font-size: 0.84rem;
+      line-height: 1.65;
+      background: #0e0c08;
+      color: #d8cf9e;
+      border: none;
+      resize: none;
+      width: 100%;
+      height: 100%;
+      padding: 2rem 3rem;
+      outline: none;
+    }
+
+    .save-banner {
+      font-size: 0.72rem; padding: 3px 10px; border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .save-banner.unsaved { background: #3a2808; color: #d09040; border: 1px solid #6a4010; }
+    .save-banner.saved   { background: #0a2a14; color: #50c070; border: 1px solid #1a5030; }
+
+    /* Bus message step colors */
+    .bus-thinker  { border-left: 2px solid #b48c3c; background: #1a1608; }
+    .bus-critic   { border-left: 2px solid #c07030; background: #1a1208; }
+    .bus-rules    { border-left: 2px solid #30a080; background: #081a14; }
+    .bus-files    { border-left: 2px solid #4060c0; background: #080e1a; }
+    .bus-dice     { border-left: 2px solid #6040c0; background: #0c081a; }
+    .bus-summary  { border-left: 2px solid #408050; background: #081408; }
+    .bus-dm       { border-left: 2px solid #d4a840; background: #181408; }
+    .bus-default  { border-left: 2px solid #3a3020; background: #141210; }
+    /* Control/data plane event types */
+    .bus-agent    { border-left: 3px solid #3080c0; background: #060e18; }
+    .bus-tool     { border-left: 3px solid #8040c0; background: #0c0618; }
+    .bus-file     { border-left: 3px solid #20a880; background: #061814; }
+    .bus-started  { border-left: 3px solid #20a050; background: #061408; }
+    .bus-done     { border-left: 3px solid #80b020; background: #0c1406; }
+    .bus-failed   { border-left: 3px solid #c02020; background: #180606; }
+
+    textarea:focus, select:focus { outline: none; box-shadow: 0 0 0 1px #b48c3c; }
+
+    /* Log chat room */
+    .log-chat-bubble {
+      border-radius: 0 8px 8px 8px;
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      line-height: 1.55;
+      border: 1px solid transparent;
+    }
+    .log-chat-bubble p { margin: 0 0 0.5em; }
+    .log-chat-bubble p:last-child { margin: 0; }
+    .log-chat-thinker  .log-chat-bubble { background:#1a1608; border-color:#3a3010; color:#c8b060; }
+    .log-chat-critic   .log-chat-bubble { background:#1a1008; border-color:#3a2010; color:#c08040; }
+    .log-chat-rules    .log-chat-bubble { background:#081a14; border-color:#103020; color:#40c090; }
+    .log-chat-campaign .log-chat-bubble { background:#080e1a; border-color:#101828; color:#6090d0; }
+    .log-chat-dice     .log-chat-bubble { background:#0c081a; border-color:#181030; color:#9060d0; }
+    .log-chat-summary  .log-chat-bubble { background:#081408; border-color:#103010; color:#60b070; }
+    .log-chat-dm       .log-chat-bubble { background:#181408; border-color:#302810; color:#f0c060; }
+    .log-chat-files    .log-chat-bubble { background:#0c1808; border-color:#1a2810; color:#80c060; font-family:monospace; font-size:0.75rem; }
+    .log-chat-header   .log-chat-bubble { background:#100e08; border-color:#2a2418; color:#8a7a50; font-size:0.75rem; }
+
+    .session-tab {
+      font-size: 0.65rem; font-weight: 700; padding: 3px 8px;
+      border-radius: 3px; cursor: pointer; transition: all 0.1s;
+      white-space: nowrap; letter-spacing: 0.03em;
+    }
+    .session-tab.active { background: #3a3010; color: #f0c060; border: 1px solid #6a5020; }
+    .session-tab.inactive { background: #1a1808; color: #5a4a2a; border: 1px solid #2a2210; }
+    .session-tab.inactive:hover { color: #b48c3c; border-color: #4a3a18; }
+  </style>
+</head>
+<body class="min-h-screen" style="background:#12100c; color:#e8dfc0;"
+  x-data="campaign()" x-init="init()" x-cloak>
+
+  <!-- ── Header ── -->
+  <div style="background:#191610; border-bottom:1px solid #302a18;" class="px-4 py-2.5 flex items-center gap-3 flex-shrink-0">
+    <span style="color:#b48c3c;" class="font-bold tracking-wide">⚔ DM Dashboard</span>
+    <span style="color:#3a3020;" class="text-sm">|</span>
+    <a href="/" style="color:#7a6a4a;" class="text-xs hover:text-amber-400 transition-colors">← Admin</a>
+    <div class="ml-auto flex items-center gap-3">
+      <!-- Bus connection indicator -->
+      <div class="flex items-center gap-1.5">
+        <div class="w-1.5 h-1.5 rounded-full" :style="busConnected ? 'background:#50c050;' : 'background:#503020;'"></div>
+        <span class="text-xs" :style="busConnected ? 'color:#50a040;' : 'color:#4a3020;'"
+              x-text="busConnected ? 'bus live' : 'bus off'"></span>
+      </div>
+      <template x-if="activeCampaign">
+        <span style="background:#201e0e; color:#b48c3c; border:1px solid #4a3a18;"
+              class="text-xs px-2.5 py-0.5 rounded-full font-medium" x-text="activeCampaign"></span>
+      </template>
+      <template x-if="anyRunning">
+        <span class="flex items-center gap-1.5 text-xs" style="color:#c0a030;">
+          <span class="spinner" style="border-top-color:#c0a030;"></span>
+          <span x-text="runningCount + ' task' + (runningCount > 1 ? 's' : '') + ' running'"></span>
+        </span>
+      </template>
+    </div>
+  </div>
+
+  <!-- ── 3-Column Body ── -->
+  <div class="flex" style="height: calc(100vh - 44px);">
+
+    <!-- ─── LEFT: Active Session ─── -->
+    <div style="width:220px; min-width:200px; background:#161410; border-right:1px solid #2a2418; flex-shrink:0;"
+         class="flex flex-col overflow-hidden">
+
+      <!-- Campaign picker -->
+      <div style="border-bottom:1px solid #2a2418;" class="p-2.5">
+        <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:#5a4a2a;">Campaign</div>
+        <template x-for="c in campaigns" :key="c.name">
+          <button @click="selectCampaign(c.name)"
+            :style="activeCampaign === c.name
+              ? 'background:#252010; color:#f0c060; border-left:2px solid #b48c3c;'
+              : 'color:#8a7a50;'"
+            class="w-full text-left px-2 py-1.5 text-xs rounded-sm mb-0.5 transition-all">
+            <div class="font-medium truncate" x-text="c.name"></div>
+            <div class="text-xs mt-0.5 opacity-60" x-text="c.file_count + ' files'"></div>
+          </button>
+        </template>
+      </div>
+
+      <!-- Session tabs -->
+      <div style="border-bottom:1px solid #2a2418;" class="p-2.5">
+        <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:#5a4a2a;">Session</div>
+        <div class="flex flex-wrap gap-1">
+          <template x-for="s in sessionDirs" :key="s">
+            <button @click="setActiveSession(s)"
+              :class="'session-tab ' + (activeSession === s ? 'active' : 'inactive')"
+              x-text="s"></button>
+          </template>
+          <template x-if="sessionDirs.length === 0">
+            <span class="text-xs" style="color:#3a2a18;">no sessions</span>
+          </template>
+        </div>
+      </div>
+
+      <!-- Active session turn list -->
+      <div class="flex-1 overflow-y-auto pb-2">
+        <div class="px-2.5 pt-2 pb-1 flex items-center justify-between">
+          <div class="text-xs font-bold uppercase tracking-widest" style="color:#5a4a2a;">
+            <span x-text="activeSession || 'Turns'"></span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button @click="showNewFile = !showNewFile" :disabled="!activeCampaign"
+              style="color:#7a6a3a; font-size:0.7rem;" class="hover:text-amber-400 transition-colors disabled:opacity-40">
+              + New
+            </button>
+            <button @click="summarizeSession()" :disabled="!activeCampaign || !activeSession || summarizing"
+              style="color:#5a7a3a; font-size:0.7rem;" class="hover:text-green-400 transition-colors disabled:opacity-40"
+              :title="'Summarize ' + (activeSession || '')">
+              <span x-text="summarizing ? '…' : '∑'"></span>
+            </button>
+            <button @click="refreshFiles()" style="color:#4a3a20; font-size:0.7rem;"
+                    class="hover:text-amber-400 transition-colors">↻</button>
+          </div>
+        </div>
+
+        <!-- New file form -->
+        <template x-if="showNewFile">
+          <div class="px-2 pb-2">
+            <input x-model="newFilePath" @keydown.enter="createFile()" @keydown.escape="showNewFile=false"
+              :placeholder="(activeSession || 'session1') + '/beat01.md'"
+              class="form-input w-full mb-1" style="font-size:0.7rem;" x-ref="newFileInput" />
+            <div class="flex gap-1">
+              <button @click="createFile()" class="ctrl-btn flex-1"
+                style="background:#2a2a10; color:#c8b040; border:1px solid #5a5020;">Create</button>
+              <button @click="showNewFile=false" class="ctrl-btn"
+                style="background:#1e1a10; color:#6a5a3a; border:1px solid #3a3020;">✕</button>
+            </div>
+          </div>
+        </template>
+
+        <!-- Turn files for active session -->
+        <template x-for="f in sessionFiles" :key="f.path">
+          <div @click="openFile(f.path)"
+            :class="'turn-row flex items-center gap-1.5 px-2 py-1.5 ' + (activeFilePath === f.path ? 'active' : '')"
+            style="margin: 1px 4px;">
+            <span :class="'badge ' + fileBadgeClass(f.filename)" x-text="fileBadge(f.filename)"></span>
+            <span class="text-xs truncate flex-1" style="color:#b0a070;" x-text="f.filename"></span>
+          </div>
+        </template>
+
+        <!-- All files (other sessions, collapsed) -->
+        <template x-if="otherFiles.length > 0">
+          <div class="mt-2">
+            <button @click="showAllFiles = !showAllFiles"
+              class="w-full text-left px-2.5 py-1 text-xs flex items-center gap-1"
+              style="color:#3a3020; border-top:1px solid #1e1c10;">
+              <span x-text="showAllFiles ? '▼' : '▶'"></span>
+              <span>All files (<span x-text="files.length"></span>)</span>
+            </button>
+            <template x-if="showAllFiles">
+              <div>
+                <template x-for="group in fileGroups" :key="group.subdir">
+                  <div>
+                    <div class="flex items-center gap-1 px-2 py-1 cursor-pointer select-none"
+                         @click="toggleDir(group.subdir)"
+                         style="border-bottom:1px solid #1a1808;">
+                      <span class="text-xs" style="color:#3a2a18;"
+                            x-text="collapsedDirs.has(group.subdir) ? '▶' : '▼'"></span>
+                      <span class="text-xs font-bold uppercase tracking-widest flex-1"
+                            style="color:#4a3a20;" x-text="group.subdir || 'root'"></span>
+                      <span class="text-xs" style="color:#2a2010;" x-text="group.files.length"></span>
+                    </div>
+                    <template x-if="!collapsedDirs.has(group.subdir)">
+                      <div>
+                        <template x-for="f in group.files" :key="f.path">
+                          <div @click="openFile(f.path)"
+                            :class="activeFilePath === f.path ? 'file-row active' : 'file-row'"
+                            class="flex items-center gap-1.5 px-2 py-1.5 pl-5">
+                            <span :class="'badge ' + fileBadgeClass(f.filename)"
+                                  x-text="fileBadge(f.filename)"></span>
+                            <span class="text-xs truncate flex-1" style="color:#7a6a50;"
+                                  x-text="f.filename"></span>
+                          </div>
+                        </template>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+              </div>
+            </template>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <!-- ─── MIDDLE: File Viewer / Editor ─── -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+
+      <!-- File toolbar -->
+      <div style="background:#191610; border-bottom:1px solid #2a2418; flex-shrink:0;"
+           class="px-4 py-2 flex items-center gap-3">
+        <template x-if="activeFilePath">
+          <span style="color:#d4a840; font-family:monospace;" class="text-sm font-medium"
+                x-text="activeFilePath"></span>
+        </template>
+        <template x-if="!activeFilePath">
+          <span style="color:#4a3a20;" class="text-sm">Select a file</span>
+        </template>
+        <span class="spinner" x-show="loadingFile"></span>
+
+        <div class="ml-auto flex items-center gap-2">
+          <template x-if="editMode && isDirty">
+            <span class="save-banner unsaved">● unsaved</span>
+          </template>
+          <template x-if="editMode && !isDirty && lastSaved">
+            <span class="save-banner saved">✓ saved</span>
+          </template>
+          <template x-if="activeFilePath">
+            <div class="flex rounded overflow-hidden" style="border:1px solid #3a3020;">
+              <button @click="setViewMode(false)"
+                :style="!editMode ? 'background:#3a3010; color:#f0c060;' : 'background:transparent; color:#6a5a3a;'"
+                class="text-xs px-2.5 py-1 transition-all">Preview</button>
+              <button @click="setViewMode(true)"
+                :style="editMode ? 'background:#3a3010; color:#f0c060;' : 'background:transparent; color:#6a5a3a;'"
+                class="text-xs px-2.5 py-1 transition-all">Edit</button>
+            </div>
+          </template>
+          <template x-if="editMode && activeFilePath">
+            <button @click="saveFile()" :disabled="saving || !isDirty"
+              class="ctrl-btn"
+              style="background:#1a3020; color:#60c070; border:1px solid #2a6040;">
+              <span x-show="saving" class="spinner mr-1" style="border-top-color:#60c070;"></span>
+              <span x-text="saving ? 'Saving…' : 'Save'"></span>
+            </button>
+          </template>
+          <button @click="refreshFiles()" x-show="activeCampaign && !editMode"
+            style="color:#5a4a2a;" class="text-xs hover:text-amber-400 transition-colors">↻</button>
+        </div>
+      </div>
+
+      <!-- File content area -->
+      <div class="flex-1 overflow-hidden relative">
+        <div x-show="!editMode" class="h-full overflow-y-auto px-10 py-6">
+          <template x-if="fileContent !== null && !loadingFile && !isLogFile()">
+            <div class="prose-parchment max-w-3xl" x-html="renderMarkdown(fileContent)"></div>
+          </template>
+          <template x-if="fileContent !== null && !loadingFile && isLogFile()">
+            <div class="max-w-3xl w-full">
+              <template x-for="(msg, i) in parseLogChat(fileContent)" :key="i">
+                <div :class="'log-chat-msg mb-3 ' + msg.cls">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="text-lg leading-none" x-text="msg.emoji"></span>
+                    <span class="text-xs font-bold uppercase tracking-wider" :style="msg.color" x-text="msg.label"></span>
+                    <span x-show="msg.time" class="text-xs ml-auto" style="color:#3a3020;" x-text="msg.time"></span>
+                  </div>
+                  <div class="log-chat-bubble" :style="msg.bubbleStyle" x-html="renderMarkdown(msg.body)"></div>
+                </div>
+              </template>
+            </div>
+          </template>
+          <template x-if="fileContent === null && !loadingFile && activeCampaign">
+            <div class="flex flex-col items-center justify-center h-full gap-3" style="color:#4a3a20;">
+              <div class="text-5xl">📜</div>
+              <div class="text-sm">Choose a file to read it here</div>
+            </div>
+          </template>
+          <template x-if="!activeCampaign">
+            <div class="flex flex-col items-center justify-center h-full gap-3" style="color:#4a3a20;">
+              <div class="text-5xl">⚔</div>
+              <div class="text-sm font-medium" style="color:#5a4a2a;">Select a campaign to begin</div>
+            </div>
+          </template>
+        </div>
+        <div x-show="editMode" class="h-full flex flex-col">
+          <textarea x-model="editContent"
+            @input="isDirty = editContent !== fileContent"
+            @keydown.ctrl.s.prevent="saveFile()"
+            class="editor-area flex-1"
+            placeholder="Start writing…"></textarea>
+          <div style="background:#0e0c08; border-top:1px solid #1e1c10;"
+               class="px-4 py-1.5 flex items-center gap-3 flex-shrink-0">
+            <span class="text-xs" style="color:#3a3020;">Ctrl+S to save</span>
+            <span class="ml-auto text-xs" style="color:#4a3a20;"
+                  x-text="editContent.length + ' chars'"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── RIGHT: DM Console + Message Bus ─── -->
+    <div style="width:400px; min-width:360px; background:#161410; border-left:1px solid #2a2418; flex-shrink:0;"
+         class="flex flex-col overflow-hidden">
+
+      <!-- ── Agents (compact) ── -->
+      <div style="border-bottom:1px solid #2a2418; flex-shrink:0;" class="p-2.5">
+        <div class="flex items-center justify-between mb-1.5">
+          <div class="text-xs font-bold uppercase tracking-widest" style="color:#5a4a2a;">Agents</div>
+          <div class="flex items-center gap-1.5">
+            <button @click="showSpawnPanel = !showSpawnPanel"
+              class="ctrl-btn" style="background:#1e2a1a; color:#60a050; border:1px solid #2a5030;">
+              + Spawn
+            </button>
+            <button @click="loadAgents()" style="color:#5a4a2a; font-size:0.75rem;" class="hover:text-amber-400 transition-colors">↻</button>
+          </div>
+        </div>
+
+        <!-- Spawn panel -->
+        <template x-if="showSpawnPanel">
+          <div class="mb-2 rounded p-2" style="background:#0e1208; border:1px solid #2a3018;">
+            <template x-if="campaignDefs.length > 0">
+              <div class="mb-1.5">
+                <div class="text-xs mb-1" style="color:#3a5028; font-weight:600; letter-spacing:0.05em;">
+                  FOR <span x-text="activeCampaign?.toUpperCase()"></span>
+                </div>
+                <template x-for="d in campaignDefs" :key="d.id">
+                  <button @click="spawnDefId = d.id; spawnAgent()"
+                    :style="'display:flex; align-items:center; gap:6px; width:100%; text-align:left; padding:5px 8px; border-radius:4px; margin-bottom:2px; font-size:0.72rem; ' +
+                      (spawnDefId === d.id ? 'background:#1e3a18; color:#80d060; border:1px solid #3a6028;' : 'background:#141e10; color:#60a050; border:1px solid #253018;')">
+                    <span style="font-size:0.6rem; background:#1a4020; color:#50b060; border:1px solid #2a6030; padding:1px 4px; border-radius:3px; flex-shrink:0;">✓</span>
+                    <span class="truncate" x-text="d.name"></span>
+                    <span class="ml-auto" style="color:#3a5028; font-size:0.62rem; flex-shrink:0;" x-text="d.model"></span>
+                  </button>
+                </template>
+              </div>
+            </template>
+            <div>
+              <button @click="showOtherDefs = !showOtherDefs"
+                class="text-xs mb-1 w-full text-left" style="color:#4a3a20;"
+                x-text="(showOtherDefs ? '▼ ' : '▶ ') + 'Other (' + otherDefs.length + ')'">
+              </button>
+              <template x-if="showOtherDefs || campaignDefs.length === 0">
+                <div class="flex gap-1.5">
+                  <select x-model="spawnDefId" class="form-input flex-1" style="font-size:0.7rem;">
+                    <option value="">— pick —</option>
+                    <template x-for="d in otherDefs" :key="d.id">
+                      <option :value="d.id" x-text="d.name"></option>
+                    </template>
+                  </select>
+                  <button @click="spawnAgent()" :disabled="!spawnDefId || spawning"
+                    class="ctrl-btn" style="background:#1a2a14; color:#70c060; border:1px solid #3a5028;">
+                    <span x-show="spawning" class="spinner mr-1" style="border-top-color:#70c060;"></span>
+                    <span x-text="spawning ? '…' : 'Go'"></span>
+                  </button>
+                </div>
+              </template>
+            </div>
+          </div>
+        </template>
+
+        <!-- Agent list (compact) -->
+        <div class="flex flex-col gap-1 max-h-24 overflow-y-auto">
+          <template x-for="agent in runningAgents" :key="agent.instance_id">
+            <div @click="selectAgent(agent)"
+              :class="'agent-card px-2 py-1 flex items-center gap-2 ' + (selectedAgentId === agent.instance_id ? 'selected' : '')"
+              :style="selectedAgentId === agent.instance_id ? '' : 'background:#1a1810;'">
+              <span :class="'agent-dot ' + (agent.task_count > 0 ? 'dot-busy' : 'dot-ready')"></span>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1">
+                  <div class="text-xs font-semibold truncate" style="color:#c8b87a;" x-text="agent.definition_name"></div>
+                  <template x-if="agentCampaignName(agent) === activeCampaign">
+                    <span style="font-size:0.5rem; background:#1a3a20; color:#50a060; border:1px solid #2a5030; padding:1px 3px; border-radius:2px; flex-shrink:0;">✓</span>
+                  </template>
+                </div>
+                <div class="text-xs" style="color:#5a4a2a;" x-text="agentModelLabel(agent)"></div>
+              </div>
+              <button @click.stop="stopAgent(agent.instance_id)"
+                style="color:#5a3a3a; font-size:0.7rem; padding:2px 4px;"
+                class="hover:text-red-400 transition-colors rounded">✕</button>
+            </div>
+          </template>
+          <template x-if="runningAgents.length === 0">
+            <div class="text-xs text-center py-1.5" style="color:#4a3a20;">No agents running</div>
+          </template>
+        </div>
+      </div>
+
+      <!-- ── Task Console ── -->
+      <div style="border-bottom:1px solid #2a2418; flex-shrink:0;" class="p-2.5">
+        <div class="flex items-center gap-2 mb-1.5">
+          <div class="text-xs font-bold uppercase tracking-widest" style="color:#5a4a2a;">Task</div>
+          <template x-if="selectedAgent">
+            <span class="text-xs px-2 py-0.5 rounded-full font-semibold truncate"
+                  style="background:#252010; color:#d4a840; border:1px solid #5a3810; max-width:150px;"
+                  x-text="selectedAgent.definition_name"></span>
+          </template>
+        </div>
+
+        <textarea x-model="intent" rows="3" @keydown.ctrl.enter="runDM()"
+          placeholder="Describe the scene, player action, or DM beat…"
+          class="form-input w-full mb-1.5" style="resize:vertical; line-height:1.55;"></textarea>
+
+        <div class="flex gap-1.5 mb-1.5">
+          <div class="flex-1 flex flex-col gap-0.5">
+            <label class="text-xs" style="color:#5a4a2a;">Session dir</label>
+            <input x-model="sessionDir" :placeholder="activeSession || 'session1'"
+              class="form-input w-full" style="font-family:monospace; font-size:0.72rem;" />
+          </div>
+          <div class="flex-1 flex flex-col gap-0.5">
+            <label class="text-xs" style="color:#5a4a2a;">Output <span style="color:#3a3020;">(auto)</span></label>
+            <input x-model="outputFile" placeholder="turn01.md"
+              class="form-input w-full" style="font-family:monospace; font-size:0.72rem;" />
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 mb-1.5">
+          <label class="text-xs" style="color:#7a6a4a;">Steps</label>
+          <input type="number" x-model.number="maxIterations" min="2" max="20"
+            class="form-input text-center" style="width:46px;" />
+          <div class="flex items-center gap-1 ml-1">
+            <input type="checkbox" id="perm-r" x-model="grantRulebook" class="accent-amber-600" />
+            <label for="perm-r" class="text-xs" style="color:#7a6a4a;">rules</label>
+          </div>
+          <div class="flex items-center gap-1 ml-auto cursor-pointer select-none"
+               @click="useSessionApi = !useSessionApi"
+               title="Session API: server writes files, reasoning traced to .meta/">
+            <div class="w-7 h-3.5 rounded-full transition-all flex items-center px-0.5"
+                 :style="useSessionApi ? 'background:#4a7a5a;' : 'background:#2a2820;'">
+              <div class="w-2.5 h-2.5 rounded-full bg-white transition-all"
+                   :style="useSessionApi ? 'transform:translateX(14px)' : ''"></div>
+            </div>
+            <span class="text-xs" :style="useSessionApi ? 'color:#60c080;' : 'color:#5a4a2a;'">📖</span>
+          </div>
+          <div class="flex items-center gap-1 cursor-pointer select-none"
+               @click="deepThink = !deepThink"
+               title="Deep Think: Thinker→Critic→Rules→Files→Dice pipeline">
+            <div class="w-7 h-3.5 rounded-full transition-all flex items-center px-0.5"
+                 :style="deepThink ? 'background:#3a7a4a;' : 'background:#2a2820;'">
+              <div class="w-2.5 h-2.5 rounded-full bg-white transition-all"
+                   :style="deepThink ? 'transform:translateX(14px)' : ''"></div>
+            </div>
+            <span class="text-xs" :style="deepThink ? 'color:#50c060;' : 'color:#5a4a2a;'">🧠</span>
+          </div>
+        </div>
+
+        <button @click="runDM()" :disabled="!canRun"
+          :style="canRun
+            ? 'background:#3a2e08; color:#f0c060; border:1px solid #7a5820; cursor:pointer;'
+            : 'background:#181610; color:#4a3a20; border:1px solid #2a2418; cursor:not-allowed;'"
+          class="w-full py-1.5 rounded text-sm font-semibold transition-all hover:brightness-110">
+          <template x-if="runningTask">
+            <span class="flex items-center justify-center gap-2">
+              <span class="spinner"></span>
+              <span x-text="thinkingPhase || '⚡ Running…'"></span>
+            </span>
+          </template>
+          <template x-if="!runningTask">
+            <span>⚡ Run Turn</span>
+          </template>
+        </button>
+      </div>
+
+      <!-- ── Grand Opener ── -->
+      <div style="border-bottom:1px solid #2a2418; flex-shrink:0; padding:10px;" x-show="activeCampaign && sessionDirs.length > 0">
+        <button @click="grandOpener()"
+          :disabled="grandOpening || !activeCampaign"
+          class="w-full rounded font-black uppercase tracking-widest transition-all"
+          style="padding:10px 0; font-size:0.8rem; letter-spacing:0.12em;
+                 background: linear-gradient(135deg, #1a0808 0%, #2a0a0a 40%, #1a0608 100%);
+                 border: 1px solid #6a1818;
+                 color: #ff4444;
+                 text-shadow: 0 0 12px #ff2222, 0 0 24px #880000;
+                 box-shadow: 0 0 8px #44000088, inset 0 1px 0 #3a1010;
+                 cursor:pointer;"
+          :style="grandOpening ? 'opacity:0.6; cursor:not-allowed;' : 'cursor:pointer;'"
+          @mouseover="$el.style.boxShadow='0 0 18px #66000088, inset 0 1px 0 #3a1010'"
+          @mouseleave="$el.style.boxShadow='0 0 8px #44000088, inset 0 1px 0 #3a1010'">
+          <template x-if="!grandOpening">
+            <span>⚔ GRAND OPENER ⚔</span>
+          </template>
+          <template x-if="grandOpening">
+            <span class="flex items-center justify-center gap-2">
+              <span class="spinner" style="border-top-color:#ff4444;"></span>
+              <span>Weaving darkness…</span>
+            </span>
+          </template>
+        </button>
+        <div class="text-center mt-1" style="font-size:0.58rem; color:#4a1a1a; letter-spacing:0.08em;">
+          takes hook from <span x-text="activeSession || '…'" style="color:#6a2a2a;"></span> → opens next session
+        </div>
+      </div>
+
+      <!-- ── Quick Tools ── -->
+      <div style="border-bottom:1px solid #2a2418; flex-shrink:0;" class="p-2.5">
+        <div class="flex items-center gap-1.5 mb-2">
+          <button @click="quickTab='dice'"  :class="quickTab==='dice'  ? 'tab-pill on' : 'tab-pill off'">🎲 Dice</button>
+          <button @click="quickTab='notes'" :class="quickTab==='notes' ? 'tab-pill on' : 'tab-pill off'">✍ Notes</button>
+          <button @click="quickTab='lore'"  :class="quickTab==='lore'  ? 'tab-pill on' : 'tab-pill off'">📜 Lore</button>
+          <button @click="quickTab='rules'" :class="quickTab==='rules' ? 'tab-pill on' : 'tab-pill off'">📖 Rules</button>
+        </div>
+
+        <!-- Dice -->
+        <div x-show="quickTab === 'dice'">
+          <div class="flex gap-1.5 mb-1.5">
+            <input x-model="diceNotation" @keydown.enter="rollDice()"
+              placeholder="2d6+3" class="form-input flex-1" style="font-family:monospace;" />
+            <button @click="rollDice()" class="ctrl-btn"
+              style="background:#1a2030; color:#60a0e0; border:1px solid #2a4070;">Roll</button>
+          </div>
+          <div class="flex flex-wrap gap-1 mb-1.5">
+            <template x-for="n in ['d4','d6','d8','d10','d12','d20','2d6','4d6','2d8']">
+              <button @click="diceNotation=n; rollDice()"
+                style="background:#161820; color:#5880a0; border:1px solid #2a3040; font-size:0.62rem; padding:2px 6px; border-radius:3px; cursor:pointer; font-family:monospace;"
+                x-text="n"></button>
+            </template>
+          </div>
+          <template x-if="diceResult">
+            <div class="pop-in rounded p-2 text-center" style="background:#10141e; border:1px solid #2a3a5a;">
+              <div class="font-bold" style="font-size:1.6rem; color:#80c0f0; line-height:1;" x-text="diceResult.total"></div>
+              <div class="text-xs mt-0.5" style="color:#607090;">
+                <span x-text="diceResult.notation"></span>
+                <template x-if="diceResult.rolls.length > 1">
+                  <span> → [<span x-text="diceResult.rolls.join(', ')"></span>]</span>
+                </template>
+                <template x-if="diceResult.mod !== 0">
+                  <span x-text="diceResult.mod > 0 ? ' +' + diceResult.mod : ' ' + diceResult.mod"></span>
+                </template>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <!-- Notes -->
+        <div x-show="quickTab === 'notes'">
+          <textarea x-model="noteText" @keydown.ctrl.enter="appendNote()" rows="2"
+            placeholder="Quick DM note…"
+            class="form-input w-full mb-1.5" style="resize:none; line-height:1.5;"></textarea>
+          <div class="flex gap-1.5">
+            <button @click="appendNote()" :disabled="!noteText.trim() || noteBusy || !activeCampaign"
+              class="ctrl-btn flex-1"
+              style="background:#1e2818; color:#80b060; border:1px solid #3a5828;">
+              <span x-show="noteBusy" class="spinner mr-1" style="border-top-color:#80b060;"></span>
+              <span x-text="noteBusy ? 'Saving…' : '+ Append'"></span>
+            </button>
+            <button @click="openSessionNotes()" :disabled="!activeCampaign"
+              class="ctrl-btn" style="background:#1a1e14; color:#607050; border:1px solid #2a3820;">📋</button>
+          </div>
+        </div>
+
+        <!-- Lore -->
+        <div x-show="quickTab === 'lore'">
+          <textarea x-model="archivistQuery" @keydown.ctrl.enter="askArchivist()" rows="2"
+            placeholder="What happened at the mill in Session 3?"
+            class="form-input w-full mb-1.5" style="resize:none;"></textarea>
+          <button @click="askArchivist()" :disabled="!archivistQuery.trim() || archivistBusy"
+            class="ctrl-btn w-full mb-1.5"
+            style="background:#1a1428; color:#9060c0; border:1px solid #3a2060;">
+            <span x-show="archivistBusy" class="spinner mr-1" style="border-top-color:#9060c0;"></span>
+            <span x-text="archivistBusy ? 'Asking…' : '📜 Ask Archivist'"></span>
+          </button>
+          <template x-if="archivistAnswer">
+            <div class="rounded p-2 text-xs leading-relaxed max-h-20 overflow-y-auto"
+                 style="background:#140e1c; border:1px solid #2a1840; color:#c0a0e0;"
+                 x-text="archivistAnswer"></div>
+          </template>
+        </div>
+
+        <!-- Rules -->
+        <div x-show="quickTab === 'rules'">
+          <textarea x-model="rulesQuery" @keydown.ctrl.enter="askRules()" rows="2"
+            placeholder="Fear save DC for seeing a ghost?"
+            class="form-input w-full mb-1.5" style="resize:none;"></textarea>
+          <button @click="askRules()" :disabled="!rulesQuery.trim() || rulesBusy"
+            class="ctrl-btn w-full mb-1.5"
+            style="background:#0e1c14; color:#50b070; border:1px solid #1a5030;">
+            <span x-show="rulesBusy" class="spinner mr-1" style="border-top-color:#50b070;"></span>
+            <span x-text="rulesBusy ? 'Looking up…' : '📖 Ask Rules'"></span>
+          </button>
+          <template x-if="rulesAnswer">
+            <div class="rounded p-2 text-xs leading-relaxed max-h-20 overflow-y-auto"
+                 style="background:#0e1810; border:1px solid #1a4028; color:#90d0a8;"
+                 x-text="rulesAnswer"></div>
+          </template>
+        </div>
+      </div>
+
+      <!-- ── Message Bus ── -->
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <div style="border-bottom:1px solid #2a2418; flex-shrink:0;" class="px-3 py-2 flex items-center gap-2">
+          <div class="flex items-center gap-1.5">
+            <div class="w-1.5 h-1.5 rounded-full" :style="busConnected ? 'background:#50c050; box-shadow:0 0 4px #50c050;' : 'background:#503020;'"></div>
+            <div class="text-xs font-bold uppercase tracking-widest" style="color:#5a4a2a;">Message Bus</div>
+          </div>
+          <span class="text-xs" style="color:#3a3020;" x-text="busMessages.length + ' events'"></span>
+          <div class="ml-auto flex items-center gap-1.5">
+            <label class="flex items-center gap-1 cursor-pointer select-none">
+              <input type="checkbox" x-model="busAutoScroll" class="accent-amber-600" style="width:10px; height:10px;" />
+              <span class="text-xs" style="color:#5a4a2a;">auto</span>
+            </label>
+            <button @click="busMessages = []" style="color:#4a3a20; font-size:0.65rem;"
+                    class="hover:text-red-400 transition-colors">clear</button>
+            <button @click="reconnectBus()" style="color:#4a3a20; font-size:0.7rem;"
+                    class="hover:text-amber-400 transition-colors">↻</button>
+          </div>
+        </div>
+
+        <!-- Bus feed -->
+        <div class="flex-1 overflow-y-auto p-2 font-mono" style="font-size:0.72rem;"
+             x-ref="busFeed">
+          <template x-if="busMessages.length === 0">
+            <div class="text-center py-8" style="color:#3a3020;">
+              <div class="text-2xl mb-2">📡</div>
+              <div>Waiting for pipeline events…</div>
+              <div class="mt-1 text-xs" style="color:#2a2010;">Run a session turn to see the bus light up</div>
+            </div>
+          </template>
+          <template x-for="msg in busMessages" :key="msg.id">
+            <div :class="'bus-msg rounded mb-1.5 px-2 py-1.5 ' + busKindClass(msg.kind, msg.label)">
+              <div class="flex items-center gap-2 mb-0.5">
+                <span class="text-xs font-bold px-1 rounded" :style="busKindBadge(msg.kind)"
+                      x-text="busKindTag(msg.kind)"></span>
+                <span style="font-weight:600; letter-spacing:0.01em;"
+                      :style="busKindColor(msg.kind, msg.label)" x-text="msg.label"></span>
+                <span class="ml-auto" style="color:#3a3020; font-size:0.62rem; flex-shrink:0;"
+                      x-text="msg.time"></span>
+              </div>
+              <div class="leading-snug whitespace-pre-wrap" style="color:#8a7a50; font-size:0.68rem;"
+                   x-text="msg.body && msg.body.length > 320 ? msg.body.slice(0, 320) + '…' : (msg.body || '')"></div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+let diceRollCounter = 0;
+let noteCounter = 0;
+let busCounter = 0;
+
+function parseDice(notation) {
+  const s = notation.trim().toLowerCase().replace(/\s+/g, '');
+  const m = s.match(/^(\d*)d(\d+)([+-]\d+)?$/);
+  if (!m) return null;
+  const count = parseInt(m[1] || '1');
+  const sides  = parseInt(m[2]);
+  const mod    = parseInt(m[3] || '0');
+  if (count < 1 || count > 100 || sides < 2) return null;
+  const rolls = Array.from({length: count}, () => Math.floor(Math.random() * sides) + 1);
+  const total = rolls.reduce((a, b) => a + b, 0) + mod;
+  return { notation, rolls, total, mod };
+}
+
+function campaign() {
+  return {
+    // Campaigns + files
+    campaigns: [],
+    activeCampaign: null,
+    files: [],
+    activeFilePath: null,
+    fileContent: null,
+    loadingFile: false,
+    collapsedDirs: new Set(),
+    showAllFiles: false,
+
+    // Active session
+    activeSession: null,
+
+    // File editor
+    editMode: false,
+    editContent: '',
+    isDirty: false,
+    saving: false,
+    lastSaved: false,
+    showNewFile: false,
+    newFilePath: '',
+    summarizing: false,
+    grandOpening: false,
+
+    // Agents
+    runningAgents: [],
+    selectedAgentId: null,
+    definitions: [],
+    showSpawnPanel: false,
+    showOtherDefs: false,
+    spawnDefId: '',
+    spawning: false,
+
+    // Task console
+    intent: '',
+    sessionDir: '',
+    outputFile: '',
+    maxIterations: 10,
+    grantRulebook: true,
+    grantWrite: true,
+    deepThink: false,
+    useSessionApi: true,
+    thinkingPhase: null,
+    runningTask: null,
+    thinkPollHandle: null,
+
+    // Quick tools
+    quickTab: 'dice',
+    diceNotation: 'd20',
+    diceResult: null,
+    diceHistory: [],
+
+    noteText: '',
+    noteBusy: false,
+    recentNotes: [],
+
+    archivistQuery: '',
+    archivistAnswer: null,
+    archivistBusy: false,
+    archivistInstanceId: null,
+
+    rulesQuery: '',
+    rulesAnswer: null,
+    rulesBusy: false,
+    rulesInstanceId: null,
+
+    // Message bus
+    busMessages: [],
+    busWs: null,
+    busConnected: false,
+    busAutoScroll: true,
+
+    // ─ Computed ─────────────────────────────────────────────────
+    get selectedAgent() {
+      return this.runningAgents.find(a => a.instance_id === this.selectedAgentId) || null;
+    },
+    get canRun() {
+      if (this.runningTask || !this.activeCampaign || !this.intent.trim()) return false;
+      if (this.useSessionApi) return !!(this.selectedDefinitionId() || this.campaignDefs.length > 0);
+      return !!this.selectedAgentId;
+    },
+    selectedDefinitionId() {
+      const agent = this.selectedAgent;
+      if (agent?.definition_id) return agent.definition_id;
+      const dmDef = this.campaignDefs.find(d => d.name.toLowerCase().includes('dm'));
+      return dmDef?.id || this.campaignDefs[0]?.id || null;
+    },
+    get anyRunning() {
+      return !!this.runningTask;
+    },
+    get runningCount() {
+      return this.runningTask ? 1 : 0;
+    },
+    // Session directories derived from file subdirs
+    get sessionDirs() {
+      const dirs = new Set();
+      for (const f of this.files) {
+        if (f.subdir && f.subdir.match(/^session\d+/i)) {
+          dirs.add(f.subdir);
+        }
+      }
+      return [...dirs].sort();
+    },
+    // Files belonging to the active session
+    get sessionFiles() {
+      if (!this.activeSession) return [];
+      return this.files.filter(f => f.subdir === this.activeSession && !f.filename.startsWith('.'));
+    },
+    // All other files (not in active session, not .meta)
+    get otherFiles() {
+      return this.files.filter(f => f.subdir !== this.activeSession);
+    },
+    get fileGroups() {
+      const map = new Map();
+      for (const f of this.files) {
+        const key = f.subdir || '';
+        if (!map.has(key)) map.set(key, []);
+        map.get(key).push(f);
+      }
+      return [...map.entries()]
+        .sort(([a], [b]) => a === '' ? -1 : b === '' ? 1 : a.localeCompare(b))
+        .map(([subdir, files]) => ({ subdir, files }));
+    },
+    get campaignDefs() {
+      if (!this.activeCampaign) return [];
+      const n = this.activeCampaign;
+      return this.definitions.filter(d =>
+        d.campaign_dir && (
+          d.campaign_dir.endsWith('/' + n) ||
+          d.campaign_dir.endsWith('\\' + n) ||
+          d.campaign_dir === n
+        )
+      );
+    },
+    get otherDefs() {
+      const ids = new Set(this.campaignDefs.map(d => d.id));
+      return this.definitions.filter(d => !ids.has(d.id));
+    },
+    get archivistDef() {
+      return this.campaignDefs.find(d => d.name.toLowerCase().includes('archivist'))
+          || this.definitions.find(d => d.name === 'Campaign Archivist');
+    },
+    get rulesDef() {
+      return this.campaignDefs.find(d => d.name.toLowerCase().includes('rule'))
+          || this.definitions.find(d => d.name === 'Rule Consultant');
+    },
+
+    // ─ Init ─────────────────────────────────────────────────────
+    async init() {
+      await Promise.all([this.loadCampaigns(), this.loadDefinitions(), this.loadAgents()]);
+      if (this.campaigns.length > 0) await this.selectCampaign(this.campaigns[0].name);
+      if (this.runningAgents.length > 0) this.selectedAgentId = this.runningAgents[0].instance_id;
+      setInterval(() => { this.loadAgents(); }, 5000);
+      this.connectBus();
+    },
+
+    // ─ Message Bus ──────────────────────────────────────────────
+    connectBus() {
+      if (this.busWs) { try { this.busWs.close(); } catch {} }
+      const ws = new WebSocket(`ws://${location.host}/ws/pipeline`);
+      this.busWs = ws;
+      ws.onopen = () => { this.busConnected = true; };
+      ws.onclose = () => {
+        this.busConnected = false;
+        // Reconnect after 3 seconds
+        setTimeout(() => { if (!this.busWs || this.busWs.readyState > 1) this.connectBus(); }, 3000);
+      };
+      ws.onerror = () => { this.busConnected = false; };
+      ws.onmessage = (ev) => {
+        try {
+          const msg = JSON.parse(ev.data);
+          let entry = null;
+
+          if (msg.type === 'pipeline_step') {
+            entry = { kind: 'step', label: msg.step, body: msg.body, taskId: msg.task_id };
+          } else if (msg.type === 'agent_spawned') {
+            entry = { kind: 'agent', label: msg.name, body: `${msg.model} — ${msg.context}`, taskId: msg.task_id };
+          } else if (msg.type === 'tool_call') {
+            entry = { kind: 'tool', label: msg.tool, body: `↳ ${msg.input}  →  ${msg.output}`, taskId: msg.task_id };
+          } else if (msg.type === 'file_write') {
+            entry = { kind: 'file', label: msg.path, body: `${msg.bytes} bytes written`, taskId: msg.task_id };
+          } else if (msg.type === 'started') {
+            entry = { kind: 'started', label: 'TASK STARTED', body: `task ${msg.task_id}`, taskId: msg.task_id };
+          } else if (msg.type === 'complete') {
+            const summary = msg.response?.result?.action_summary || msg.response?.result || '';
+            entry = { kind: 'complete', label: 'TASK COMPLETE', body: typeof summary === 'string' ? summary.slice(0,160) : JSON.stringify(summary).slice(0,160), taskId: msg.task_id };
+          } else if (msg.type === 'failed') {
+            entry = { kind: 'failed', label: 'TASK FAILED', body: msg.message || '(no message)', taskId: msg.task_id };
+          }
+
+          if (entry) {
+            entry.id = ++busCounter;
+            entry.time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+            this.busMessages.push(entry);
+            if (this.busMessages.length > 300) this.busMessages.shift();
+            if (this.busAutoScroll) {
+              this.$nextTick(() => {
+                const el = this.$refs.busFeed;
+                if (el) el.scrollTop = el.scrollHeight;
+              });
+            }
+          }
+        } catch {}
+      };
+    },
+    reconnectBus() { this.connectBus(); },
+
+    busKindTag(kind) {
+      const tags = { step: 'STEP', agent: 'AGENT', tool: 'TOOL', file: 'FILE',
+                     started: 'START', complete: 'DONE', failed: 'FAIL' };
+      return tags[kind] || kind?.toUpperCase() || '???';
+    },
+    busKindBadge(kind) {
+      const badges = {
+        step:     'background:#2a2010; color:#d4a840; border:1px solid #3a3020;',
+        agent:    'background:#102030; color:#60b0ff; border:1px solid #1a3040;',
+        tool:     'background:#201030; color:#c060ff; border:1px solid #301840;',
+        file:     'background:#102020; color:#40d0a0; border:1px solid #1a3028;',
+        started:  'background:#102820; color:#40c070; border:1px solid #1a3828;',
+        complete: 'background:#202810; color:#a0c040; border:1px solid #303810;',
+        failed:   'background:#301010; color:#ff6060; border:1px solid #401818;',
+      };
+      return badges[kind] || 'background:#1a1810; color:#7a6a50; border:1px solid #2a2820;';
+    },
+    busKindClass(kind, label) {
+      if (kind === 'agent')   return 'bus-agent';
+      if (kind === 'tool')    return 'bus-tool';
+      if (kind === 'file')    return 'bus-file';
+      if (kind === 'started') return 'bus-started';
+      if (kind === 'complete') return 'bus-done';
+      if (kind === 'failed')  return 'bus-failed';
+      // pipeline steps — color by stage name
+      if (!label) return 'bus-default';
+      const s = label.toLowerCase();
+      if (s.includes('thinker'))  return 'bus-thinker';
+      if (s.includes('critic'))   return 'bus-critic';
+      if (s.includes('rule'))     return 'bus-rules';
+      if (s.includes('campaign') || s.includes('ref')) return 'bus-files';
+      if (s.includes('dice'))     return 'bus-dice';
+      if (s.includes('summary') || s.includes('action')) return 'bus-summary';
+      if (s.includes('dm') || s.includes('writer') || s.includes('prose')) return 'bus-dm';
+      return 'bus-default';
+    },
+    busKindColor(kind, label) {
+      if (kind === 'agent')   return 'color:#60b0ff;';
+      if (kind === 'tool')    return 'color:#c060ff;';
+      if (kind === 'file')    return 'color:#40d0a0;';
+      if (kind === 'started') return 'color:#40c070;';
+      if (kind === 'complete') return 'color:#a0c040;';
+      if (kind === 'failed')  return 'color:#ff6060;';
+      if (!label) return 'color:#5a4a2a;';
+      const s = label.toLowerCase();
+      if (s.includes('thinker'))  return 'color:#d4a840;';
+      if (s.includes('critic'))   return 'color:#d08040;';
+      if (s.includes('rule'))     return 'color:#40c090;';
+      if (s.includes('campaign') || s.includes('ref')) return 'color:#6090d0;';
+      if (s.includes('dice'))     return 'color:#9060d0;';
+      if (s.includes('summary') || s.includes('action')) return 'color:#60b070;';
+      if (s.includes('dm') || s.includes('writer') || s.includes('prose')) return 'color:#f0c060;';
+      return 'color:#7a6a50;';
+    },
+
+    // ─ Campaigns ────────────────────────────────────────────────
+    async loadCampaigns() {
+      try { this.campaigns = await (await fetch('/api/campaign')).json(); } catch {}
+    },
+    async selectCampaign(name) {
+      this.activeCampaign = name;
+      this.activeFilePath = null;
+      this.fileContent = null;
+      this.editMode = false;
+      this.isDirty = false;
+      this.rulesInstanceId = null;
+      this.archivistInstanceId = null;
+      this.rulesAnswer = null;
+      this.archivistAnswer = null;
+      await this.refreshFiles();
+      this._preselectDmDef();
+      // Auto-select latest session
+      if (this.sessionDirs.length > 0) {
+        this.activeSession = this.sessionDirs[this.sessionDirs.length - 1];
+        this.sessionDir = this.activeSession;
+      }
+    },
+    async refreshFiles() {
+      if (!this.activeCampaign) return;
+      try {
+        this.files = await (await fetch(`/api/campaign/${enc(this.activeCampaign)}/files`)).json();
+      } catch {}
+    },
+    setActiveSession(s) {
+      this.activeSession = s;
+      this.sessionDir = s;
+    },
+    async summarizeSession() {
+      if (!this.activeCampaign || !this.activeSession || this.summarizing) return;
+      const defId = this.selectedDefinitionId;
+      if (!defId) { alert('No DM agent definition found — spawn one first.'); return; }
+      this.summarizing = true;
+      try {
+        const r = await fetch(`/api/campaign/${enc(this.activeCampaign)}/session/${enc(this.activeSession)}/summary`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ definition_id: defId, session_dir: this.activeSession }),
+        });
+        if (!r.ok) throw new Error(await r.text());
+        await this.refreshFiles();
+      } catch (e) {
+        alert('Summary failed: ' + e.message);
+      } finally {
+        this.summarizing = false;
+        setTimeout(() => this.refreshFiles(), 4000);
+      }
+    },
+    async grandOpener() {
+      if (!this.activeCampaign || !this.activeSession || this.grandOpening) return;
+      const defId = this.selectedDefinitionId;
+      if (!defId) { alert('No agent definition found — spawn one first.'); return; }
+      this.grandOpening = true;
+      try {
+        const r = await fetch(`/api/campaign/${enc(this.activeCampaign)}/grand-opener`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            definition_id: defId,
+            hook_session: this.activeSession,
+          }),
+        });
+        if (!r.ok) throw new Error(await r.text());
+        const data = await r.json();
+        // Switch to the new session and open the file
+        await this.refreshFiles();
+        await this.selectCampaign(this.activeCampaign);
+        this.setActiveSession(data.next_session);
+        setTimeout(async () => {
+          await this.refreshFiles();
+          if (data.output_path) this.openFile(data.output_path);
+        }, 1500);
+      } catch (e) {
+        alert('Grand Opener failed: ' + e.message);
+      } finally {
+        this.grandOpening = false;
+      }
+    },
+
+    // ─ File operations ──────────────────────────────────────────
+    async openFile(filePath) {
+      if (this.isDirty && !confirm('Discard unsaved changes?')) return;
+      this.activeFilePath = filePath;
+      this.fileContent = null;
+      this.editContent = '';
+      this.isDirty = false;
+      this.lastSaved = false;
+      this.loadingFile = true;
+      this.editMode = false;
+      try {
+        const encoded = filePath.split('/').map(encodeURIComponent).join('/');
+        const data = await (await fetch(`/api/campaign/${enc(this.activeCampaign)}/file/${encoded}`)).json();
+        this.fileContent = data.contents;
+        this.editContent = data.contents;
+      } catch {
+        this.fileContent = '_Error loading file._';
+      } finally {
+        this.loadingFile = false;
+      }
+    },
+    setViewMode(isEdit) {
+      if (isEdit) {
+        this.editContent = this.fileContent || '';
+        this.isDirty = false;
+      }
+      this.editMode = isEdit;
+    },
+    async saveFile() {
+      if (!this.activeFilePath || this.saving) return;
+      this.saving = true;
+      try {
+        const encoded = this.activeFilePath.split('/').map(encodeURIComponent).join('/');
+        const r = await fetch(`/api/campaign/${enc(this.activeCampaign)}/file/${encoded}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content: this.editContent }),
+        });
+        if (!r.ok) { alert('Save failed: ' + await r.text()); return; }
+        this.fileContent = this.editContent;
+        this.isDirty = false;
+        this.lastSaved = true;
+        await this.refreshFiles();
+      } catch (e) {
+        alert('Error: ' + e.message);
+      } finally {
+        this.saving = false;
+      }
+    },
+    async createFile() {
+      const path = this.newFilePath.trim();
+      if (!path) return;
+      const encoded = path.split('/').map(encodeURIComponent).join('/');
+      const r = await fetch(`/api/campaign/${enc(this.activeCampaign)}/file/${encoded}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: '' }),
+      });
+      if (!r.ok) { alert('Failed: ' + await r.text()); return; }
+      this.showNewFile = false;
+      this.newFilePath = '';
+      await this.refreshFiles();
+      await this.openFile(path);
+      this.editMode = true;
+    },
+    toggleDir(subdir) {
+      const s = new Set(this.collapsedDirs);
+      s.has(subdir) ? s.delete(subdir) : s.add(subdir);
+      this.collapsedDirs = s;
+    },
+    openSessionNotes() {
+      const f = this.files.find(f => f.filename === 'session_notes.md');
+      if (f) this.openFile(f.path);
+    },
+
+    // ─ Agents ───────────────────────────────────────────────────
+    async loadDefinitions() {
+      try { this.definitions = await (await fetch('/api/definitions')).json(); } catch {}
+      this._preselectDmDef();
+    },
+    _preselectDmDef() {
+      if (!this.activeCampaign) return;
+      const dmDef = this.campaignDefs.find(d => d.name.toLowerCase().includes('dm'));
+      if (dmDef) this.spawnDefId = dmDef.id;
+    },
+    async loadAgents() {
+      try {
+        const agents = await (await fetch('/api/agents')).json();
+        this.runningAgents = agents;
+        if (this.selectedAgentId && !agents.find(a => a.instance_id === this.selectedAgentId)) {
+          this.selectedAgentId = agents.length > 0 ? agents[0].instance_id : null;
+        }
+      } catch {}
+    },
+    selectAgent(agent) { this.selectedAgentId = agent.instance_id; },
+    async spawnAgent() {
+      if (!this.spawnDefId || this.spawning) return;
+      this.spawning = true;
+      try {
+        const r = await fetch('/api/agents', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ definition_id: this.spawnDefId, deployment: 'test' }),
+        });
+        if (!r.ok) { alert('Spawn failed: ' + await r.text()); return; }
+        const agent = await r.json();
+        await this.loadAgents();
+        this.selectedAgentId = agent.instance_id;
+        this.showSpawnPanel = false;
+        this.spawnDefId = '';
+      } catch (e) { alert('Error: ' + e.message); }
+      finally { this.spawning = false; }
+    },
+    async stopAgent(instanceId) {
+      if (!confirm('Stop this agent?')) return;
+      await fetch(`/api/agents/${instanceId}`, { method: 'DELETE' });
+      await this.loadAgents();
+    },
+    agentModelLabel(agent) {
+      const mb = agent.capability?.model_backend;
+      if (mb?.ollama) return mb.ollama.model;
+      if (mb?.anthropic) return mb.anthropic.model;
+      return '?';
+    },
+    agentCampaignName(agent) {
+      const def = this.definitions.find(d => d.id === agent.definition_id);
+      if (!def?.campaign_dir) return null;
+      const parts = def.campaign_dir.replace(/\\/g, '/').split('/');
+      return parts[parts.length - 1] || null;
+    },
+
+    // ─ Run DM ───────────────────────────────────────────────────
+    buildPerms() {
+      const perms = [{ custom: 'campaign.read' }, { custom: 'campaign.list' }];
+      if (this.grantWrite)    perms.push({ custom: 'campaign.write' });
+      if (this.grantRulebook) perms.push({ custom: 'rulebook.search' });
+      return perms;
+    },
+
+    async runDM() {
+      if (!this.canRun) return;
+      const defId = this.selectedDefinitionId();
+      if (!defId) return this.runTask();
+
+      const perms = this.buildPerms();
+      const savedIntent = this.intent.trim();
+
+      if (this.useSessionApi) {
+        const sdir = this.sessionDir.trim() || this.activeSession || 'session1';
+        const body = {
+          definition_id: defId,
+          session_dir: sdir,
+          intent: savedIntent,
+          permissions: [...perms, { custom: 'rulebook.search' }],
+          max_iterations: this.maxIterations,
+        };
+        if (this.outputFile.trim()) body.output_file = this.outputFile.trim();
+        this.thinkingPhase = '🧠 Thinker…';
+        try {
+          const r = await fetch(`/api/campaign/${enc(this.activeCampaign)}/session`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+          });
+          if (!r.ok) { alert('Session turn failed: ' + await r.text()); return; }
+          const { task_id } = await r.json();
+          this.runningTask = task_id;
+          this.intent = '';
+          this.outputFile = '';
+          this.watchTask(task_id, savedIntent);
+        } catch (e) { alert('Error: ' + e.message); }
+        return;
+      }
+
+      const endpoint = this.deepThink ? 'think' : 'run';
+      if (this.deepThink) this.thinkingPhase = '🧠 Thinker…';
+      try {
+        const r = await fetch(`/api/campaign/${enc(this.activeCampaign)}/${endpoint}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            definition_id: defId,
+            intent: savedIntent,
+            permissions: perms,
+            max_iterations: this.maxIterations,
+          }),
+        });
+        if (!r.ok) { alert('Failed: ' + await r.text()); return; }
+        const { task_id } = await r.json();
+        this.runningTask = task_id;
+        this.intent = '';
+        this.watchTask(task_id, savedIntent);
+      } catch (e) { alert('Error: ' + e.message); }
+    },
+
+    async runTask() {
+      const perms = this.buildPerms();
+      try {
+        const r = await fetch('/api/tasks', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            agent_instance_id: this.selectedAgentId,
+            intent: this.intent.trim(),
+            permissions: perms,
+            max_iterations: this.maxIterations,
+          }),
+        });
+        if (!r.ok) { alert('Failed: ' + await r.text()); return; }
+        const { task_id } = await r.json();
+        this.runningTask = task_id;
+        const savedIntent = this.intent;
+        this.intent = '';
+        this.watchTask(task_id, savedIntent);
+      } catch (e) { alert('Error: ' + e.message); }
+    },
+
+    watchTask(taskId, _intent) {
+      // Update thinkingPhase from bus messages
+      const phaseFromBus = setInterval(() => {
+        const last = this.busMessages[this.busMessages.length - 1];
+        if (last?.step) {
+          this.thinkingPhase = last.step + '…';
+        }
+      }, 500);
+
+      const ws = new WebSocket(`ws://${location.host}/ws/tasks/${taskId}`);
+      ws.onmessage = async (ev) => {
+        const msg = JSON.parse(ev.data);
+        if (msg.type === 'complete' || msg.type === 'failed') {
+          this.runningTask = null;
+          this.thinkingPhase = null;
+          clearInterval(phaseFromBus);
+          ws.close();
+          await Promise.all([this.refreshFiles(), this.loadAgents()]);
+          if (this.activeFilePath) await this.openFile(this.activeFilePath);
+          // Refresh session file list
+          if (this.activeCampaign) await this.refreshFiles();
+        }
+      };
+      ws.onerror = () => { this.runningTask = null; clearInterval(phaseFromBus); };
+
+      const poll = setInterval(async () => {
+        try {
+          const t = await (await fetch(`/api/tasks/${taskId}`)).json();
+          if (t.status === 'complete' || t.status === 'failed') {
+            clearInterval(poll);
+            clearInterval(phaseFromBus);
+            this.runningTask = null;
+            this.thinkingPhase = null;
+            await Promise.all([this.refreshFiles(), this.loadAgents()]);
+            if (this.activeFilePath) await this.openFile(this.activeFilePath);
+          }
+        } catch {}
+      }, 3000);
+    },
+
+    // ─ Quick Tools ──────────────────────────────────────────────
+    rollDice() {
+      const r = parseDice(this.diceNotation);
+      if (!r) { alert('Invalid: ' + this.diceNotation); return; }
+      r.id = ++diceRollCounter;
+      this.diceResult = null;
+      this.$nextTick(() => { this.diceResult = r; });
+    },
+
+    async appendNote() {
+      if (!this.noteText.trim() || this.noteBusy || !this.activeCampaign) return;
+      this.noteBusy = true;
+      const text = this.noteText.trim();
+      try {
+        const r = await fetch(`/api/campaign/${enc(this.activeCampaign)}/notes`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text }),
+        });
+        if (!r.ok) { alert('Failed: ' + await r.text()); return; }
+        this.noteText = '';
+        await this.refreshFiles();
+      } catch (e) { alert('Error: ' + e.message); }
+      finally { this.noteBusy = false; }
+    },
+
+    async ensureInstance(type) {
+      const def = type === 'archivist' ? this.archivistDef : this.rulesDef;
+      if (!def) return null;
+      const prop = type === 'archivist' ? 'archivistInstanceId' : 'rulesInstanceId';
+      if (this[prop]) {
+        const alive = this.runningAgents.find(a => a.instance_id === this[prop]);
+        if (alive) return this[prop];
+      }
+      const r = await fetch('/api/agents', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ definition_id: def.id, deployment: 'test' }),
+      });
+      if (!r.ok) return null;
+      const info = await r.json();
+      this[prop] = info.instance_id;
+      await this.loadAgents();
+      return info.instance_id;
+    },
+
+    async submitAndWait(instanceId, intent, permissions) {
+      const r = await fetch('/api/tasks', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agent_instance_id: instanceId, intent, permissions, max_iterations: 6 }),
+      });
+      if (!r.ok) throw new Error(await r.text());
+      const { task_id } = await r.json();
+      return new Promise((resolve, reject) => {
+        const ws = new WebSocket(`ws://${location.host}/ws/tasks/${task_id}`);
+        ws.onmessage = ev => {
+          const msg = JSON.parse(ev.data);
+          if (msg.type === 'complete') { ws.close(); resolve(msg.response); }
+          else if (msg.type === 'failed') { ws.close(); reject(new Error(msg.message)); }
+        };
+        ws.onerror = () => reject(new Error('ws error'));
+        const poll = setInterval(async () => {
+          try {
+            const t = await (await fetch(`/api/tasks/${task_id}`)).json();
+            if (t.status === 'complete') { clearInterval(poll); ws.close(); resolve(t.response); }
+            else if (t.status === 'failed') { clearInterval(poll); ws.close(); reject(new Error(t.error)); }
+          } catch {}
+        }, 2000);
+      });
+    },
+
+    async askArchivist() {
+      if (!this.archivistQuery.trim() || this.archivistBusy) return;
+      this.archivistBusy = true; this.archivistAnswer = null;
+      try {
+        const id = await this.ensureInstance('archivist');
+        if (!id) { this.archivistAnswer = 'No Campaign Archivist found.'; return; }
+        const resp = await this.submitAndWait(id, this.archivistQuery, [{ custom: 'campaign.read' }, { custom: 'campaign.list' }]);
+        const r = resp?.result;
+        this.archivistAnswer = typeof r === 'string' ? r : (JSON.stringify(r) || '(no answer)');
+      } catch (e) { this.archivistAnswer = 'Error: ' + e.message; }
+      finally { this.archivistBusy = false; }
+    },
+
+    async askRules() {
+      if (!this.rulesQuery.trim() || this.rulesBusy) return;
+      this.rulesBusy = true; this.rulesAnswer = null;
+      try {
+        const id = await this.ensureInstance('rules');
+        if (!id) { this.rulesAnswer = 'No Rule Consultant found.'; return; }
+        const resp = await this.submitAndWait(id, this.rulesQuery, [{ custom: 'rulebook.search' }]);
+        const r = resp?.result;
+        this.rulesAnswer = typeof r === 'string' ? r : (JSON.stringify(r) || '(no answer)');
+      } catch (e) { this.rulesAnswer = 'Error: ' + e.message; }
+      finally { this.rulesBusy = false; }
+    },
+
+    // ─ Helpers ──────────────────────────────────────────────────
+    isLogFile() {
+      return this.activeFilePath && this.activeFilePath.includes('.meta/') && this.activeFilePath.endsWith('.log');
+    },
+    parseLogChat(text) {
+      if (!text) return [];
+      const msgs = [];
+      const sectionRe = /^## (.+)$/m;
+      // Header block (everything before first ##)
+      const firstSection = text.search(sectionRe);
+      const headerText = firstSection > 0 ? text.slice(0, firstSection).trim() : '';
+      if (headerText) {
+        msgs.push({ emoji: '📜', label: 'Log Header', cls: 'log-chat-header', color: 'color:#6a5a3a;', body: headerText, time: '' });
+      }
+      // Split on ## sections
+      const parts = text.split(/^## /m).slice(1);
+      for (const part of parts) {
+        const nl = part.indexOf('\n');
+        const rawLabel = nl >= 0 ? part.slice(0, nl).trim() : part.trim();
+        const body = nl >= 0 ? part.slice(nl + 1).trim() : '';
+        const label = rawLabel.replace(/^[\p{Emoji}\s]+/u, '').trim();
+        const emoji = (rawLabel.match(/^[\p{Emoji}]+/u) || ['💬'])[0];
+        const lo = rawLabel.toLowerCase();
+        let cls = 'log-chat-header', color = 'color:#7a6a50;';
+        if (lo.includes('session writer') || lo.includes('🧠')) { cls = 'log-chat-dm';      color = 'color:#f0c060;'; }
+        else if (lo.includes('thinker'))   { cls = 'log-chat-thinker';  color = 'color:#d4a840;'; }
+        else if (lo.includes('critic'))    { cls = 'log-chat-critic';   color = 'color:#d08040;'; }
+        else if (lo.includes('rule'))      { cls = 'log-chat-rules';    color = 'color:#40c090;'; }
+        else if (lo.includes('turn files') || lo.includes('files read') || lo.includes('campaign')) { cls = 'log-chat-campaign'; color = 'color:#6090d0;'; }
+        else if (lo.includes('dice'))      { cls = 'log-chat-dice';     color = 'color:#9060d0;'; }
+        else if (lo.includes('summary') || lo.includes('action')) { cls = 'log-chat-summary'; color = 'color:#60b070;'; }
+        else if (lo.includes('dm') || lo.includes('prose') || lo.includes('writer')) { cls = 'log-chat-dm'; color = 'color:#f0c060;'; }
+        else if (lo.includes('✍') || lo.match(/turn\d/)) { cls = 'log-chat-summary'; color = 'color:#80d080;'; }
+        else if (lo.includes('files') || lo.includes('file')) { cls = 'log-chat-files'; color = 'color:#80c060;'; }
+        msgs.push({ emoji, label: label || rawLabel, cls, color, body, time: '' });
+      }
+      return msgs;
+    },
+    renderMarkdown(text) {
+      if (!text) return '';
+      try { return marked.parse(text); } catch { return text; }
+    },
+    fileBadge(filename) {
+      const f = filename.toLowerCase();
+      if (f.startsWith('turn'))   return 'turn';
+      if (f.endsWith('.log'))     return 'meta';
+      if (f === 'turns.md')       return 'idx';
+      if (f.includes('npc'))      return 'npc';
+      if (f.includes('party'))    return 'party';
+      if (f.includes('notes'))    return 'notes';
+      if (f.includes('hook'))     return 'hook';
+      if (f.startsWith('rule'))   return 'rule';
+      if (f.includes('world') || f.includes('setting')) return 'world';
+      return 'file';
+    },
+    fileBadgeClass(filename) {
+      const f = filename.toLowerCase();
+      if (f.startsWith('turn'))   return 'badge badge-turn';
+      if (f.endsWith('.log'))     return 'badge badge-meta';
+      if (f === 'turns.md')       return 'badge badge-rule';
+      if (f.includes('npc'))      return 'badge badge-npc';
+      if (f.includes('party'))    return 'badge badge-party';
+      if (f.includes('notes'))    return 'badge badge-note';
+      if (f.includes('hook'))     return 'badge badge-hook';
+      if (f.startsWith('rule'))   return 'badge badge-rule';
+      if (f.includes('world') || f.includes('setting')) return 'badge badge-world';
+      return 'badge badge-file';
+    },
+  };
+}
+
+function enc(s) { return encodeURIComponent(s); }
+</script>
+</body>
+</html>

@@ -14,3 +14,6 @@ async-trait = { workspace = true }
 thiserror = { workspace = true }
 tracing = { workspace = true }
 uuid = { workspace = true }
+reqwest = { version = "0.12", features = ["json"] }
+urlencoding = "2"
+rand = "0.8"

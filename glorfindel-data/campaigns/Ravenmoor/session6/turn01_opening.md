@@ -1,0 +1,11 @@
+The moon, a pallid specter in the starless sky, cast an eerie glow upon the village of Ravenmoor as dawn approached. Huddled around the well's rim, the intrepid adventurers - Dorian Ashgrove, Emmett Grave, Sister Isolde Carrow, and Vera Nighthollow - stood vigilant. The silence that enveloped them was a palpable thing, heavy with anticipation and foreboding.
+
+As the first light of dawn crept over the horizon, a faint silvery radiance began to emanate from the well's depths, revealing an ethereal figure standing within. Its eyes locked onto the traitorous ally who approached, a chilling reminder of the fragile balance between sanity and madness. The air was thick with tension and malice as the party poised themselves on the precipice of Ravenmoor's past, present, and future.
+
+Vera's voice broke the silence, her eyes locked onto the figure within the well. "It is older than our village, marsh, even language itself," she murmured, her words hanging heavy in the air like a curse. Father Vane knelt before the well, his head bowed in prayer as the villagers watched with bated breath.
+
+Suddenly, a voice echoed from the depths of the well, its tone ancient and haunting. "I have been waiting," it intoned, its words laced with an otherworldly cadence that sent shivers down their spines. Emmett Grave, ever the scholar, moved to decipher the entity's nature through arcane means, his eyes flitting between the figure and his arcane tome.
+
+As the figure spoke, an ominous truth was revealed - it had been manipulating events in Ravenmoor for centuries, weaving a tangled web of intrigue and deceit that stretched back to the village's founding. The party, however, was not its only pawn; hidden among them was a traitor who sought to harness the entity's power for their own gain.
+
+With the dawn breaking over Ravenmoor, the party stood at a crossroads. They could confront the ancient entity and risk their lives to save the village, or they could trust the unknown and face the possibility of betrayal from within. The question loomed heavy in the air as the sun's first rays pierced the darkness, casting long shadows over the village and revealing the treacherous path that lay ahead. Who among them would remain loyal to Ravenmoor, and who would seek power at any cost? The next session would reveal all.

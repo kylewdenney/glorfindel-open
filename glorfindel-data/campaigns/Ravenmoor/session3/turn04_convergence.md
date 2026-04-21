@@ -1,0 +1,11 @@
+As the sun's feeble rays pierced the gloom of Ravenmoor's Ashfen Marsh, the Aldwick Inn stood as a grim sentinel, its aged timbers creaking in anticipation of the chilling tales that would soon unfold within. The village's spectral wolves howled in the distance, their mournful cries echoing through the marsh like the whispers of the damned.
+
+Inside the inn, Sister Isolde Carrow, Dorian Ashgrove, Emmett Grave, and Vera Nighthollow gathered around a worn table, their faces somber as they exchanged glances heavy with unspoken dread. The air hung thick with the scent of aged oak and spilled ale, yet none dared to partake as the weight of their discoveries bore down upon them like the crushing embrace of the marsh itself.
+
+Dorian, his eyes haunted by the ghostly images of the forty-three souls he had unearthed in the mine records, began to speak. His voice trembled with a mixture of fear and determination as he recounted their tragic fate, sealing chamber breached, lives claimed by an ancient horror left undisturbed. The room fell silent, each member's gaze locked onto Dorian as if they could see the spectral whispers that haunted his very soul.
+
+Vera Nighthollow, her heart racing with anticipation, shared her conversation with Lena Marsh, revealing the existence of an entity older than Ravenmoor itself, a malevolent force that had gone unanswered for centuries. It demanded answers, not harm, its presence a constant reminder of the village's dark past. The room seemed to grow colder as Vera spoke, the very air thick with the weight of history and the darkness it bore.
+
+Emmett Grave and Sister Isolde Carrow shared their experiences from the sealing rite, alluding to a costly outcome for Emmett and the potential impact on their journey through Ravenmoor. The room was heavy with tension as Dorian Ashgrove watched with bated breath, while Vera Nighthollow felt a strange energy stirring within her.
+
+As the silence stretched on, Marta entered the room, bearing a tray of steaming coffee that seemed to materialize out of thin air. Her eyes betrayed that she had

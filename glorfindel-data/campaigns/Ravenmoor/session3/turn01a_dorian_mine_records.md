@@ -1,0 +1,11 @@
+In the heart of Ravenmoor's gloom, the Aldwick Inn stood as a forlorn sentinel, its timbers groaning with the weight of centuries past and the whispers of secrets long buried. The moon cast a pallid glow upon Dorian Ashgrove as he crept through the shadows, slipping into the inn's back room where Marta lay still in slumber.
+
+The air was thick with the scent of aged oak and spilled ale, but Dorian's focus was elsewhere — on the mine records hidden within these very walls. With a grit of teeth and a stealthy grace born from years of disgrace, he pored over the pages, his eyes straining to decipher the faded ink that spoke of a sealed chamber predating the Ashfen Marsh mines themselves. The foreman's notes were chilling in their brevity: six months before the flood, they had broken through something ancient and unnatural, something that made an ominous sound, like breathing, yet was left undisturbed.
+
+Dorian's heart raced with a mix of fear and determination as he hastily copied down each detail, committing them to memory. The weight of the impending truth hung heavy upon him, threatening to crush him beneath its crushing weight. He knew that this discovery could potentially clear his name and unravel the mystery behind the tragic flood disaster that had claimed forty-three lives.
+
+Yet, as he worked, the silence was broken only by the distant hoot of an owl and the ticking of the clock on the wall. The inn seemed to hold its breath in anticipation, as if aware of the terrible secrets it harbored. Dorian could feel the eyes of the dead watching him from the shadows, their silent whispers echoing in his mind.
+
+Suddenly, the floorboards creaked upstairs, and Dorian knew that his time was running short. He quickly gathered the records and slipped out of the room, slinking back into the darkness as if he were a ghost himself. As he disappeared into the night, the inn seemed to breathe a sigh of relief, its secrets once more hidden from prying eyes.
+
+Yet Dorian knew that he could not keep them buried for long. The truth was out there, waiting to be uncovered, and he would stop at nothing to bring it to light. For in R

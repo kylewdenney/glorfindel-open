@@ -1,0 +1,11 @@
+In the heart of Ravenmoor, where the shadows whisper ancient secrets and the air hangs heavy with dread, Sister Isolde, Dorian Ashgrove, Emmett Grave, and Vera Nighthollow stand at the edge of a well, their lanterns casting flickering light upon its cold, stone depths. The village's icy breath creeps around them, as if watching with malevolent intent.
+
+With a determined nod to his comrades, Emmett steps forward, wrapping a sturdy rope around his waist and gripping the end tightly in his gloved hands. As he descends, the well's walls seem to close in, their scratches deepening with each foot he descends, as if baring witness to countless souls lost to the darkness below. The air grows colder, the silence oppressive, and a sense of despair clings to every surface like moss on ancient tombstones.
+
+At around twenty feet, Emmett's lantern illuminates something in the water: a shape, roughly human, perfectly still, staring up at him from beneath the surface. It doesn't move. It doesn't breathe. It doesn't blink. Yet, it mouths a single word he can neither hear nor understand — 'Come.'
+
+Emmett's heart pounds in his chest, and he feels the icy tendrils of fear wriggling through his veins. But he steels himself against the chill, taking a deep breath as he clutches the rope more tightly, readying to pull himself back up if needed. With a roll of the dice, he resists the well's haunting call, his willpower holding firm in the face of the unknown.
+
+Vera watches from above, her eyes narrowed, Detect Magic active. She senses no otherworldly energies emanating from the figure below, but the chill that creeps up her spine tells her that whatever lies there is not to be trifled with. The rope tightens as Isolde and Dorian pull Emmett back up from the well, their faces pale with fear and concern. As he emerges, the mysterious figure remains in the water, still staring up at him, its unblinking gaze seemingly following him all the way to the surface.
+
+As the party retreats from the well, they cannot help but feel that

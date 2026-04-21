@@ -1,0 +1,79 @@
+# Turn: The party steps inside Lena's cottage (at least some of them — play the hesitation). Read rules/fear_and_dread.md and world/npcs.md. The cottage is wrong in small ways: the clock on the mantel runs backwards. A place at the table is set but the food on it is from last week and untouched but not rotted. A coat on the hook is a miner's coat — the same type as the Echo Emmett saw. Lena makes tea without appearing to move her hands. She tells them about her father: 'He went down with the others. But he still comes home. He's just quieter now.' She says this with complete sincerity. Roll DC 13 Fear Save for anyone inside (Wisdom). Then she says something that stops them cold: 'He told me there's a new one now. Just started listening. He said to tell whoever came — don't answer it. Once you answer, it knows your voice.' She looks at Emmett. 'You already went down, didn't you.' Play Emmett's reaction. Play the party's reaction. This is bad.
+**Campaign:** Ravenmoor  **Session:** session2  **File:** turn04_cottage_interior.md  **Time:** 2026-04-21 02:48:26 UTC
+
+## 🧠 Thinker
+NARRATIVE: The tone of this encounter is Gothic Horror, with an emphasis on unsettling atmosphere, supernatural elements, and building suspense. A key story beat involves Lena revealing disturbing information about her father and a new entity that has recently emerged, possibly connected to Emmett's past actions.
+
+CHARACTERS: The party consists of Sister Isolde Carrow (a fallen cleric), Dorian Ashgrove (a disgraced investigator), Emmett Grave (a graverobber/archaeologist), and Vera Nighthollow (a witch). Lena, the villager they encounter in her cottage, is also an important character. She is a simple, seemingly harmless woman who knows more than she lets on about the supernatural happenings in Ravenmoor.
+
+RULES: This encounter will primarily use the Fear Save mechanic (DC 13 Wisdom) to gauge the party's reaction to Lena's revelations and the eerie atmosphere of her cottage. The Investigation mechanic may also come into play as the party tries to uncover more about the new entity and Lena's father.
+
+TOOLS: Rules query needed: fear_and_dread.md. Campaign files to read: world/npcs.md. Dice notations will follow standard 5e Dungeons & Dragons format (d20, d12, etc.). The DM should also prepare character sheets for the party members and Lena for reference during the session.
+
+## 🔍 Critic
+Revised Plan:
+
+NARRATIVE: The tone of this encounter is Gothic Horror, with an emphasis on unsettling atmosphere, supernatural elements, and building suspense. A key story beat involves Lena revealing disturbing information about her father and a new entity that has recently emerged, possibly connected to Emmett's past actions.
+
+CHARACTERS: The party consists of Sister Isolde Carrow (a fallen cleric), Dorian Ashgrove (a disgraced investigator), Emmett Grave (a graverobber/archaeologist), and Vera Nighthollow (a witch). Lena, the villager they encounter in her cottage, is also an important character. She is a simple, seemingly harmless woman who knows more than she lets on about the supernatural happenings in Ravenmoor.
+
+RULES: This encounter will primarily use the Fear Save mechanic (DC 13 Wisdom) to gauge the party's reaction to Lena's revelations and the eerie atmosphere of her cottage. The Investigation skill will also be utilized as the party tries to uncover more about the new entity and Lena's father. Additionally, the DM should consider incorporating other mechanics such as Perception (to notice details like the backwards clock or the untouched food) and Insight (to gauge Lena's sincerity).
+
+TOOLS: Rules query needed: fear_and_dread.md, investigation.md, perception.md, insight.md. Campaign files to read: world/npcs.md, world/locations/cottage.md. Dice notations will follow standard 5e Dungeons & Dragons format (d20, d12, etc.). The DM should also prepare character sheets for the party members and Lena for reference during the session. Furthermore, the DM may want to research gothic horror tropes and atmospheric descriptions to enhance the overall ambiance of the encounter.
+
+## ⚖ Rules Lawyer
+Query: "Query: fear_and_dread.md, investigation.md, perception.md, insight.md, world/npcs.md, world/locations/cottage.md"
+
+
+Searching for rules related to Fear and Dread, Investigation, Perception, Insight, NPCs, and Cottage.
+
+1. Fear and Dread:
+- rulebook.search: {"query":"Fear and Dread, fear_and_dread.md"}
+
+2. Investigation:
+- rulebook.search: {"query":"Investigation, investigation.md"}
+
+3. Perception:
+- rulebook.search: {"query":"Perception, perception.md"}
+
+4. Insight:
+- rulebook.search: {"query":"Insight, insight.md"}
+
+5. NPCs:
+- rulebook.search: {"query":"NPCs, world/npcs.md"}
+
+6. Cottage:
+- rulebook.search: {"query":"Cottage, world/locations/cottage.md"}
+
+## 📚 Campaign Files
+Read: rules/fear_and_dread.md, world/npcs.md
+
+### rules/fear_and_dread.md
+# Fear, Dread, and Sanity — Gothic Horror Rules
+
+## Fear Saves
+When characters witness supernatural horror, they make a **Fear Save** (Wisdom save).
+- **DC 10**: Unsettling — shadow moves wrong, sounds from a sealed room.
+- **DC 13**: Disturbing — clear evidence of undead, violent unnatural death.
+- **DC 16**: Terrifying — face-to-face with an active supernatural threat.
+- **DC 19**: Soul-shaking — the void looks back, direct contact with the Horror.
+
+**On Failure**: The character gains 1 Dread Point and must roleplay fear for 1 round (flee, freeze, or scream).
+**On
+
+## 🎲 Dice
+No dice rolled.
+
+## 📋 Action Summary
+As the party tentatively steps inside Lena's cottage, they are immediately struck by an unsettling atmosphere. The clock on the mantel runs backwards, a place at the table is set but the food is from last week and untouched yet not rotted, and a coat on the hook is a miner's coat - the same type as Emmett had seen before. Lena brews tea without visibly moving her hands, and shares disturbing tales of her father who went down with the others in the mine but still comes home, though quieter now. She warns them about a new entity that has emerged, hinting at its connection to Emmett's past actions. The party members are faced with a DC 13 Wisdom Fear Save, their composure tested by Lena's chilling revelations and the eerie surroundings. Emmett's reaction to her words is particularly noteworthy, as she accuses him of going down into the mine himself. The party's collective response is one of unease, realizing that they may have stumbled upon something far more sinister than they had anticipated in Ravenmoor.
+
+## ✍ DM Prose
+As the party tentatively crossed the threshold of Lena's cottage, a pall of unease hung heavy in the air. The dim flicker of candlelight danced off the worn wooden walls, casting eerie shadows that seemed to writhe and twist. A sense of wrongness permeated the very fabric of the room, as if unseen eyes watched from the darkness.
+
+Isolde, her heart pounding in her chest, tried to ignore the feeling that something was watching her. Dorian, ever the investigator, scanned the room meticulously, his gaze lingering on the set table, the untouched food that seemed to defy decay, and the miner's coat hanging on a hook - the same type he had seen before. Emmett, however, felt a chill run down his spine as if an icy hand had wrapped around his heart.
+
+Lena moved with an uncanny grace as she poured tea from a pot that seemed to refill itself. Her eyes, though filled with sincerity, held a glint of something otherworldly. She spoke in a soft voice, her words chilling in their implications. "He went down with the others. But he still comes home. He's just quieter now."
+
+The room fell silent as Lena continued, her voice barely above a whisper. "He told me there's a new one now. Just started listening. He said to tell whoever came — don't answer it. Once you answer, it knows your voice." She looked directly at Emmett, her gaze piercing through the darkness. "You already went down, didn't you?"
+
+The room seemed to hold its breath as Emmett met Lena's gaze, his eyes wide with a mixture of fear and guilt. The others watched him, their own hearts pounding in their chests. This was bad, they knew it. They had come to Ravenmoor seeking answers, but it seemed they had stumbled upon something far more sinister than they could have ever imagined.

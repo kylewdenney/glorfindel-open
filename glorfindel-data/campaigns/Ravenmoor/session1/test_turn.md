@@ -1,0 +1,11 @@
+In the heart of the Ashfen Marshes, where the fog clings like a malignant shroud, the party stands at the Crossed Road junction in the cursed village of Ravenmoor. The coachman's sign before them, its once vibrant paint now faded and cracked, whispers tales of dread and despair.
+
+Dorian Ashgrove, with his leather notebook clutched tightly, approaches the symbol etched upon it—a macabre dance of twisted limbs and gnarled roots that sends a shiver down his spine. The sign's haunting beauty is matched only by its sinister significance. He takes a deep breath, steeling himself for what lies ahead as he prepares to unravel the mysteries hidden within this accursed place.
+
+Sister Isolde Carrow, her silver holy symbol dangling from a chain around her neck, watches Dorian with a mix of trepidation and curiosity. She has never felt so far from the sanctuary of St. Aldric's order as she does now in this desolate village. Yet, there is an undeniable pull towards the darkness that surrounds them—a call she cannot ignore.
+
+Emmett Grave, ever cheerful amidst death and decay, saunters over to the sign with a knowing grin on his face. His extensive knowledge of burial customs and funerary rites makes him the perfect companion for this ghastly endeavor. Though he remains unfazed by the fear that grips the others, there is something in his eyes—a flicker of unease that hints at the secrets he carries within.
+
+Vera Nighthollow, the witch who lives on the edge of law and forest, gazes out into the foggy expanse, her senses attuned to the whispers of the unknown. She speaks to animals, but today they tell her nothing—only silence that echoes with the weight of unspoken horrors. Despite her distrust by respectable people, she feels a strange kinship with these fellow seekers of truth.
+
+Together, they stand at the Crossed Road junction in Ravenmoor, each one drawn here by their own motivations and fears. As they delve deeper into this chilling mystery, they will face horrors beyond their wildest nightmares—horrors that threaten not only their sanity but

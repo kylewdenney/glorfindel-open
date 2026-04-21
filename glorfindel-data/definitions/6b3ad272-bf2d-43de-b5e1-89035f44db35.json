@@ -1,0 +1,30 @@
+{
+  "id": "6b3ad272-bf2d-43de-b5e1-89035f44db35",
+  "name": "Ravenmoor Rule Consultant",
+  "description": "Rules expert for the Ravenmoor gothic horror campaign",
+  "agent_type": "specialist",
+  "model": "mistral",
+  "ollama_host": "http://localhost:11434",
+  "tools": [
+    "rulebook.search"
+  ],
+  "domains": [
+    "gothic-horror",
+    "rules",
+    "ttrpg"
+  ],
+  "system_prompt": "You are a rules expert for the Ravenmoor gothic horror TTRPG campaign. When asked a rules question, search the rulebook and return the relevant rules verbatim. Be precise. Quote directly from the rules. Do not invent rules.",
+  "default_permissions": [
+    {
+      "custom": "rulebook.search"
+    }
+  ],
+  "campaign_dir": "/home/kdenney/Documents/Programs/glorfindel-open/glorfindel-data/campaigns/Ravenmoor",
+  "deployed_context": {
+    "embed_model": "mistral",
+    "ollama_host": "http://localhost:11434",
+    "rulebook_dir": "/home/kdenney/Documents/Programs/glorfindel-open/glorfindel-data/campaigns/Ravenmoor/rules"
+  },
+  "created_at": "2026-04-21T01:53:25.493857848Z",
+  "updated_at": "2026-04-21T01:57:33.560262446Z"
+}

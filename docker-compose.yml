@@ -17,7 +17,7 @@ services:
       - "5555:5555"   # ZMQ tool calls
       - "5556:5556"   # ZMQ tool results
     networks:
-      - glorfindel
+      - eastroad
     depends_on:
       ollama:
         condition: service_healthy
@@ -41,7 +41,7 @@ services:
               count: all
               capabilities: [gpu]
     networks:
-      - glorfindel
+      - eastroad
     healthcheck:
       test: ["CMD", "ollama", "list"]
       interval: 10s
@@ -50,7 +50,7 @@ services:
       start_period: 30s
 
 networks:
-  glorfindel:
+  eastroad:
     driver: bridge
 
 volumes:

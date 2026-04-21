@@ -1,0 +1,11 @@
+In the dead of night, under the oppressive blanket of a moonless sky, the party found themselves standing before the forbidding entrance to the Ashfen Marsh mines. The stone arch loomed like a gaping maw, its dark passage leading downwards at a forty-five degree angle. The air was heavy with an icy chill that seemed to seep from the very earth itself, and a scent hung in the air - a malevolent echo of the cursed eastern well.
+
+Sister Isolde Carrow, her resolve unwavering despite the dread that clawed at her heart, took the lead. Dorian Ashgrove, his disgrace weighing heavily upon him, followed closely behind, his eyes scanning the entrance for any sign of danger. Emmett Grave, ever the explorer, eagerly trailed after Dorian, his mind already filled with visions of long-lost treasures and forgotten history. Vera Nighthollow, her senses attuned to the unseen, brought up the rear, her eyes searching the shadows for any hint of otherworldly presence.
+
+As they approached the entrance, Father Vane stepped forward, defying Casimir's stern warning not to follow. He picked up one of the rusted iron nails that littered the ground, his fingers trembling as it crumbled in his hand. The sound echoed ominously in the silence, a stark reminder of the horrors that lay within.
+
+The air around them seemed to grow colder still, a palpable chill that seemed to seep into their very bones. Vera's keen senses twitched, her gut telling her that something was watching them from the darkness, waiting for the right moment to strike. The party exchanged nervous glances as they prepared to step through the doors, the faint sound of dripping water echoing from deep within.
+
+The entrance yawned open before them, two inches ajar, just enough for a cold breeze to creep out and brush against their faces. It was then that Isolde spoke, her voice steady but filled with determination. "We must go in," she said, her eyes never leaving the darkness beyond. "Our duty lies there."
+
+With heavy hearts and trembling hands, the party stepped into the mine, plunging themselves deeper into the heart of Ravenmoor's tragic past and the unknown horrors that

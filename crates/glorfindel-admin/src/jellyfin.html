@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jellyfin Manager — Glorfindel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    [x-cloak] { display: none !important; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0f1a; }
+    ::-webkit-scrollbar-thumb { background: #1d4ed8; border-radius: 3px; }
+    .spinner {
+      border: 2px solid rgba(59,130,246,0.2);
+      border-top-color: #3b82f6;
+      border-radius: 50%;
+      width: 14px; height: 14px;
+      animation: spin 0.7s linear infinite;
+      display: inline-block; vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .card { background: #0f1929; border: 1px solid #1e3a5f; border-radius: 8px; }
+    .badge { padding: 2px 8px; border-radius: 999px; font-size: 0.7rem; font-weight: 600; }
+    .badge-movie  { background:#1e3a5f; color:#93c5fd; }
+    .badge-series { background:#1e3a40; color:#6ee7b7; }
+    .badge-episode{ background:#2d2040; color:#c4b5fd; }
+    .badge-music  { background:#3a1e1e; color:#fca5a5; }
+    .badge-other  { background:#2a2a2a; color:#9ca3af; }
+    .session-card { background:#0a1628; border:1px solid #1e3a5f; border-radius:6px; }
+    textarea:focus,input:focus { outline:none; box-shadow:0 0 0 1px #3b82f6; }
+  </style>
+</head>
+<body class="min-h-screen" style="background:#080e1a; color:#e2e8f0;"
+  x-data="jellyfin()" x-init="init()" x-cloak>
+
+  <!-- Header -->
+  <div style="background:#0a1220; border-bottom:1px solid #1e3a5f;" class="px-5 py-3 flex items-center gap-3">
+    <span style="color:#3b82f6;" class="font-bold text-lg">🎬 Jellyfin Manager</span>
+    <span style="color:#1e3a5f;" class="text-sm">|</span>
+    <a href="/" style="color:#4b6a8a;" class="text-sm hover:text-blue-400 transition-colors">← Admin</a>
+    <div class="ml-auto flex items-center gap-3">
+      <template x-if="thinking">
+        <span class="flex items-center gap-1.5 text-xs text-blue-400">
+          <span class="spinner"></span> Working…
+        </span>
+      </template>
+      <template x-if="needsConfig">
+        <span class="text-xs bg-amber-900 text-amber-300 px-2 py-1 rounded border border-amber-700">
+          ⚠ Configure Jellyfin credentials first
+        </span>
+      </template>
+    </div>
+  </div>
+
+  <div class="flex h-[calc(100vh-52px)]">
+
+    <!-- ── LEFT: Chat + Quick Actions ── -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+
+      <!-- Quick action bar -->
+      <div style="background:#0a1220; border-bottom:1px solid #1e3a5f;" class="px-4 py-2 flex gap-2 flex-wrap flex-shrink-0">
+        <button @click="quickAction('Show me my library overview')"
+          class="text-xs px-3 py-1.5 rounded-md transition-colors"
+          style="background:#1e3a5f; color:#93c5fd; hover:background:#1d4ed8;">
+          📊 Library Overview
+        </button>
+        <button @click="quickAction('What is currently being watched right now?')"
+          class="text-xs px-3 py-1.5 rounded-md transition-colors"
+          style="background:#1e3a40; color:#6ee7b7;">
+          ▶ Now Playing
+        </button>
+        <button @click="quickAction('Show me the 10 most recently added items')"
+          class="text-xs px-3 py-1.5 rounded-md transition-colors"
+          style="background:#2d2040; color:#c4b5fd;">
+          🆕 Recently Added
+        </button>
+        <button @click="quickAction('List all users and their last activity')"
+          class="text-xs px-3 py-1.5 rounded-md transition-colors"
+          style="background:#3a2a10; color:#fcd34d;">
+          👥 Users
+        </button>
+        <button @click="quickAction('Trigger a full library scan')"
+          class="text-xs px-3 py-1.5 rounded-md transition-colors"
+          style="background:#1a3a1a; color:#86efac;">
+          🔄 Scan Library
+        </button>
+      </div>
+
+      <!-- Messages -->
+      <div class="flex-1 overflow-y-auto px-4 py-4 space-y-3" x-ref="msgList">
+        <!-- Welcome -->
+        <div class="card px-4 py-3 max-w-2xl">
+          <div class="text-xs font-semibold text-blue-400 mb-1">Jellyfin Manager</div>
+          <div class="text-sm text-gray-300 leading-relaxed">
+            Ask me anything about your Jellyfin library. I can search for content, check active streams, list recently added media, manage users, trigger library scans, and refresh metadata.
+            <br><br>
+            <span class="text-amber-400">First time?</span> Update the Jellyfin Manager definition in Admin → Definitions with your API key and user ID, then come back.
+          </div>
+        </div>
+
+        <template x-for="(msg, i) in messages" :key="i">
+          <div :class="msg.role === 'user' ? 'ml-auto max-w-xl' : 'max-w-3xl'">
+            <div class="rounded-lg px-4 py-3"
+                 :style="msg.role === 'user'
+                   ? 'background:#1e2d4a; border:1px solid #2563eb;'
+                   : (msg.role === 'error'
+                     ? 'background:#1c0f0f; border:1px solid #7f1d1d;'
+                     : 'background:#0f1929; border:1px solid #1e3a5f;')">
+              <div class="text-xs font-semibold mb-1"
+                   :class="msg.role === 'user' ? 'text-blue-400' : (msg.role === 'error' ? 'text-red-400' : 'text-gray-500')"
+                   x-text="msg.role === 'user' ? 'You' : (msg.role === 'error' ? 'Error' : 'Manager')">
+              </div>
+              <div class="text-sm text-gray-200 leading-relaxed whitespace-pre-wrap" x-text="msg.content"></div>
+            </div>
+          </div>
+        </template>
+
+        <template x-if="thinking">
+          <div class="max-w-2xl card rounded-lg px-4 py-3">
+            <div class="text-xs font-semibold text-gray-500 mb-1">Manager</div>
+            <div class="flex items-center gap-2 text-sm text-gray-500">
+              <span class="spinner"></span> Querying Jellyfin…
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <!-- Input -->
+      <div style="border-top:1px solid #1e3a5f;" class="px-4 py-3 flex-shrink-0">
+        <div class="flex gap-2 items-end">
+          <textarea
+            x-model="input"
+            @keydown.enter.exact.prevent="send()"
+            @keydown.enter.shift.exact="/* newline */"
+            rows="2"
+            placeholder="Search for a movie, check who's watching, refresh metadata… (Enter to send)"
+            class="flex-1 rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 resize-none leading-relaxed"
+            style="background:#0f1929; border:1px solid #1e3a5f;">
+          </textarea>
+          <button @click="send()"
+            :disabled="!input.trim() || thinking"
+            class="px-4 py-2 rounded-lg text-sm font-medium transition-colors flex-shrink-0"
+            :style="input.trim() && !thinking
+              ? 'background:#1d4ed8; color:white; cursor:pointer;'
+              : 'background:#0f1929; color:#4b6a8a; cursor:not-allowed;'">
+            Send
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── RIGHT: Recent task log ── -->
+    <div style="width:280px; border-left:1px solid #1e3a5f; background:#0a1220;"
+         class="flex flex-col overflow-hidden flex-shrink-0">
+
+      <div style="border-bottom:1px solid #1e3a5f;" class="px-4 py-3">
+        <div class="text-xs font-semibold uppercase tracking-widest" style="color:#4b6a8a;">Recent Queries</div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-3 space-y-2">
+        <template x-for="task in recentTasks" :key="task.task_id">
+          <div class="session-card p-3">
+            <div class="flex items-center gap-1.5 mb-1">
+              <span :class="task.status === 'complete' ? 'text-green-400' : (task.status === 'failed' ? 'text-red-400' : 'text-blue-400')"
+                    x-text="task.status === 'complete' ? '✓' : (task.status === 'failed' ? '✗' : '…')"
+                    class="text-xs font-bold"></span>
+              <span class="text-xs ml-auto" style="color:#4b6a8a;" x-text="formatTime(task.submitted_at)"></span>
+            </div>
+            <div class="text-xs leading-relaxed" style="color:#6b8faf; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;"
+                 x-text="task.intent"></div>
+            <template x-if="task.status === 'in_progress'">
+              <div class="mt-1 flex items-center gap-1">
+                <span class="spinner" style="width:10px;height:10px;"></span>
+                <span class="text-xs text-blue-400">running</span>
+              </div>
+            </template>
+          </div>
+        </template>
+        <template x-if="recentTasks.length === 0">
+          <div class="text-xs text-center mt-6" style="color:#2a4a6a;">No queries yet</div>
+        </template>
+      </div>
+
+      <!-- Config hint -->
+      <div style="border-top:1px solid #1e3a5f;" class="p-4">
+        <div class="text-xs" style="color:#4b6a8a; line-height:1.5;">
+          Set credentials in<br>
+          <a href="/" class="text-blue-500 hover:text-blue-400">Admin → Definitions</a><br>
+          → Jellyfin Manager<br>
+          → deployed_context
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const JELLYFIN_DEF_ID = '312da0c2-6aef-4878-b5de-3281da690989';
+
+function jellyfin() {
+  return {
+    input: '',
+    messages: [],
+    thinking: false,
+    recentTasks: [],
+    agentInstanceId: null,
+    needsConfig: false,
+
+    async init() {
+      await this.spawnAgent();
+      await this.loadRecentTasks();
+    },
+
+    async spawnAgent() {
+      try {
+        const r = await fetch('/api/agents', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ definition_id: JELLYFIN_DEF_ID, deployment: 'prod' }),
+        });
+        const data = await r.json();
+        this.agentInstanceId = data.instance_id;
+      } catch (e) {
+        this.messages.push({ role: 'error', content: 'Could not spawn Jellyfin Manager agent. Is the server running?' });
+      }
+    },
+
+    async loadRecentTasks() {
+      try {
+        const r = await fetch('/api/tasks');
+        const all = await r.json();
+        this.recentTasks = all.filter(t => t.agent_name === 'Jellyfin Manager').slice(0, 15);
+      } catch (e) {}
+    },
+
+    quickAction(text) {
+      this.input = text;
+      this.send();
+    },
+
+    async send() {
+      const text = this.input.trim();
+      if (!text || this.thinking || !this.agentInstanceId) return;
+      this.input = '';
+      this.messages.push({ role: 'user', content: text });
+      this.$nextTick(() => this.scrollDown());
+      this.thinking = true;
+
+      try {
+        const r = await fetch('/api/tasks', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            agent_instance_id: this.agentInstanceId,
+            intent: text,
+            permissions: [{ custom: 'media.read' }, { custom: 'media.write' }],
+            max_iterations: 8,
+          }),
+        });
+        if (!r.ok) throw new Error((await r.json()).error || r.status);
+        const { task_id } = await r.json();
+        await this.loadRecentTasks();
+        this.watchTask(task_id);
+      } catch (e) {
+        this.thinking = false;
+        this.messages.push({ role: 'error', content: 'Failed: ' + e.message });
+        this.$nextTick(() => this.scrollDown());
+      }
+    },
+
+    watchTask(taskId) {
+      const ws = new WebSocket(`ws://${location.host}/ws/tasks/${taskId}`);
+      ws.onmessage = async (ev) => {
+        const msg = JSON.parse(ev.data);
+        if (msg.type === 'complete' || msg.type === 'failed') {
+          this.thinking = false;
+          ws.close();
+          if (msg.type === 'complete') {
+            const r = msg.response?.result;
+            let text = typeof r === 'string' ? r
+              : r?.response ? String(r.response)
+              : JSON.stringify(r, null, 2);
+            this.messages.push({ role: 'agent', content: text });
+          } else {
+            const errMsg = msg.message || 'Task failed';
+            if (errMsg.includes('jellyfin') || errMsg.includes('REPLACE')) this.needsConfig = true;
+            this.messages.push({ role: 'error', content: errMsg });
+          }
+          await this.loadRecentTasks();
+          this.$nextTick(() => this.scrollDown());
+        }
+      };
+      ws.onerror = () => {
+        this.thinking = false;
+        this.messages.push({ role: 'error', content: 'WebSocket error' });
+        this.$nextTick(() => this.scrollDown());
+      };
+    },
+
+    scrollDown() {
+      const el = this.$refs.msgList;
+      if (el) el.scrollTop = el.scrollHeight;
+    },
+
+    formatTime(iso) {
+      if (!iso) return '';
+      return new Date(iso).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    },
+  };
+}
+</script>
+</body>
+</html>

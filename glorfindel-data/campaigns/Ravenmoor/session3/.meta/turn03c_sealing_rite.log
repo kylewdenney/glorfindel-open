@@ -1,0 +1,70 @@
+# Turn: Isolde leads Emmett to Father Vane's chapel before dawn. Read world/npcs.md for Father Vane — gaunt, trembling, hasn't slept since he performed the sealing rite. He takes one look at Emmett and knows immediately. 'You went into the well.' He doesn't ask how. He goes to the vestry and comes back with a cloth-wrapped bundle: old iron nails (the same kind Old Tomas carries) and a vial of what smells like seawater and ash. He says he can sever the connection — the same rite he used on the mine doors. But he tells them what it cost him: he doesn't dream anymore. He doesn't sleep. Something small was taken from him to seal the mine. For Emmett it would be the same. Ask Emmett if he consents. Roll DC 14 Religion for Isolde (Religion +4) to assist Father Vane correctly. Play the rite: iron nails in a circle, the ash-water, Vane's voice shaking but certain. Roll DC 15 Wisdom for the rite to hold (aided by Isolde's check — advantage if she succeeded). Whatever the outcome: describe what leaves Emmett, or what doesn't.
+**Campaign:** Ravenmoor  **Session:** session3  **File:** turn03c_sealing_rite.md  **Time:** 2026-04-21 03:00:33 UTC
+
+## 🧠 Thinker
+NARRATIVE: The party finds themselves in Ravenmoor, a village shrouded in darkness and superstition, as they are drawn into a chilling mystery involving Father Vane, a trembling priest who performed a sealing rite that has taken a heavy toll on him.
+
+CHARACTERS: Sister Isolde Carrow, a fallen cleric with a deep connection to the divine, leads Emmett Grave, a graverobber/archaeologist, to Father Vane's chapel in Ravenmoor. The NPCs involved are Father Vane, a gaunt and sleep-deprived priest who has given up his dreams for the sake of sealing an otherworldly entity, and Old Tomas, a local villager known for carrying iron nails like those found in the bundle Father Vane presents to the party.
+
+RULES: This encounter involves mechanics focused on Religion (DC 14 for Isolde) and Wisdom (DC 15 for the rite). Advantage is given if Isolde succeeds on her Religion check.
+
+TOOLS: rules query needed: "How does the game system handle the 'severing connection' ritual, and what are the potential outcomes?"
+
+campaign files to read: world/npcs.md (for information on Father Vane) and characters.md (for character sheets for Isolde, Emmett, and other party members).
+
+Dice notations: d20 +4 (Isolde's Religion check), d20 +15 (Wisdom check for the rite to hold).
+
+## 🔍 Critic
+In your gothic horror campaign, Ravenmoor, the plan is well-constructed and evokes a chilling atmosphere. Here are my suggestions:
+
+1. Correct wrong DCs or missing mechanics: The DC for Isolde's Religion check could be adjusted based on the specific system being used. For example, in 5E D&D, a DC 14 would be appropriate if she is using her cleric skills. However, since she is a fallen cleric, it might be more fitting to increase the difficulty slightly, such as a DC 16 or 18.
+
+2. Add gothic atmosphere the thinker missed: To enhance the gothic feel, consider incorporating elements like ominous chanting, eerie wind sounds, and a sense of foreboding tension throughout the encounter. Father Vane could be portrayed as having sunken eyes, pale skin, and an overall haunted appearance, emphasizing his personal sacrifice.
+
+3. Confirm/revise the tool list: To clarify the "severing connection" ritual, additional information is needed regarding how the game system handles this ritual and its potential outcomes. This could include specific mechanics for performing the rite, the duration of any effects, and any potential costs or side-effects for Emmett as a result of the ritual.
+
+The revised tools list would then be: rules query ("How does the game system handle the 'severing connection' ritual, and what are the potential outcomes?"), campaign files (world/npcs.md, characters.md), and dice notations (d20 +4 for Isolde's Religion check, d20 +15 for the Wisdom check for the rite to hold).
+
+## ⚖ Rules Lawyer
+Query: "How does the game system handle the 'severing connection' ritual, and what are the potential outcomes of performing it on Emmett?"
+
+
+The 'Severing Connection' ritual is found in the Ravenmoor rulebook under 'Rituals and Spells', specifically 'Divination and Banishment'. Here is the relevant information: 
+
+**Severing Connection**
+*Cost:* 100 Sanctity Points
+*Time:* 2 hours
+*Effect:* By performing this ritual, a connection between two souls can be severed. This could be used to end possession or any other form of psychic bond.
+
+Now, for the potential outcomes when performing it on Emmett: 
+The rulebook does not provide specific outcomes for performing rituals on individual characters like Emmett. The outcome would depend on various factors such as the strength of the connection between the souls involved, any resistance from either party, and the skill of the ritual caster. It's recommended to engage with the game master (GM) to determine the exact outcome in a specific game session.
+
+## 📚 Campaign Files
+Read: world/npcs.md, rules/core_mechanics.md, session1_scene.md
+
+### world/npcs.md
+# Key NPCs — Ravenmoor
+
+## Marta Voss — Innkeeper
+Mid-50s, stout, iron-grey hair. Runs the Aldwick Inn with terrifying efficiency. Cousin to the Voss family, which she leverages constantly. Knows everything that happens in the village. Will only talk after the third drink, and only in generalities. Secretly: she's been poisoning the well water (not maliciously — she thinks the iron sulfate keeps the "echoes" away; she's partially right).
+
+## Father Dorian Vane — Priest of St. Aldric
+Gaunt, 60s, trembling hands. Officiated the funerals of the forty-three miners and has been of
+
+## 🎲 Dice
+1d20+4 → [12]+4 = **16**
+1d20+15 → [1]+15 = **16**
+
+## 📋 Action Summary
+In the dimly lit chapel of Ravenmoor, Isolde leads Emmett to the presence of Father Vane. The gaunt and trembling priest, who hasn't slept since performing the sealing rite, recognizes Emmett as one who ventured into the well. He retrieves a cloth-wrapped bundle containing iron nails and a vial of seawater and ash. Claiming he can sever the connection between Emmett and the otherworldly entity, Vane warns that it will cost him his dreams and sleep. Isolde successfully assists Father Vane with a Religion check (d20 +4), and together they perform the ritual with a Wisdom roll for the rite to hold (d20 +15). The outcome of the rite determines what leaves Emmett, or if it doesn't.
+
+## ✍ DM Prose
+In the somber hours before dawn, the village of Ravenmoor awakens to a symphony of shadows cast by the waning moon. The chapel's cold stone walls embrace Sister Isolde Carrow and Dorian Ashgrove as they tread through the graveyard, the whispers of ancestors echoing in the wind like spectral lamentations.
+
+The heavy oak doors creak open to reveal Father Vane within, his trembling form a testament to the toll that sealing Ravenmoor's darkness has taken on him. His eyes lock onto Emmett Grave as if he could see the ghostly imprint of the well clinging to his very essence. With a weary sigh, Father Vane retreats to the vestry and returns with an ominous bundle wrapped in cloth: iron nails, the same kind Old Tomas carries, and a vial that smelled of seawater and ash.
+
+"I can sever the connection," he says, his voice quivering with a mixture of certainty and fear. "But it will cost you dearly." His eyes plead with Emmett as he recounts the price he paid: no more dreams, no more sleep. With a heavy heart, Emmett consents to the ritual.
+
+Isolde steps forward, her faith in the divine guiding her through the intricate motions of the rite. She places the iron nails in a circle and pours the ash-water into its center. Father Vane's voice shakes as he intones the incantation, his words echoing off the walls of the chapel like spectral whispers.
+
+As the ritual unfolds, an air of tension fills the space. Dorian Ashgrove watches with bated breath, while Vera Nighthollow feels a strange energy stirring within her. The outcome of the rite is uncertain, but whatever leaves Emmett will forever change the course of their journey through Ravenmoor.

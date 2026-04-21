@@ -1,0 +1,11 @@
+In the heart of Ravenmoor's Ashfen Marshes, a chilling wind howled through the gnarled branches of the ancient oak trees, their limbs reaching out like skeletal fingers grasping for the moonlight that barely pierced the dense canopy above. The gloom enveloped Glorfindel Manor, its once grand facade now crumbling under the weight of secrets long buried.
+
+As the party approached the manor's entrance, Sister Isolde Carrow could not shake the feeling that they were being watched. Her heart pounded in her chest as she clutched her silver holy symbol — a relic she no longer believed in but still felt compelled to carry. The weight of it seemed to grow heavier with each step, a constant reminder of the faith she had lost and the lives she could not save.
+
+Dorian Ashgrove, ever the investigator, scanned the manor's exterior for any sign of trouble. His keen eyes caught movement in a high tower window, but it was gone before he could focus on it. He muttered to himself about ghostly apparitions and his own growing obsession with the Holloway disappearances, which seemed to be connected to this very place.
+
+Emmett Grave, ever the archaeologist, studied the cryptic ward-markings etched into the manor's stone walls. He hummed a cheerful tune as he worked, seemingly unfazed by the eerie atmosphere surrounding them. But even he could not ignore the feeling that they were walking into a trap, one baited with the promise of long-lost knowledge and the horrors that came along with it.
+
+Vera Nighthollow, ever the witch, stood at the edge of the forest, her eyes closed as she listened to the whispers of the wind. She could sense the malevolent presence within Glorfindel Manor, a darkness that threatened to consume them all if they dared to venture too far inside. But she also felt something else — a faint glimmer of hope, a spark of magic that could be harnessed to protect them from the encroaching shadows.
+
+As the party entered Glorfindel Manor, they found themselves drawn deeper into its dark heart, each step bringing them closer to the truth and further from the safety of the outside world. The air grew colder, the whispers louder,

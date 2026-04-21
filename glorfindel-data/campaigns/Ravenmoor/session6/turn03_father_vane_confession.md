@@ -1,0 +1,11 @@
+In the desolate halls of Father Vane's crumbling church, the air was thick with a palpable dread that seeped from the very stones themselves. The wind howled outside, echoing the mournful cries of grieving spirits, and the cold emanated from the ancient walls like a living entity. The four strangers gathered around the frail figure of Father Vane, their eyes locked on him as he spoke in hushed tones.
+
+Sister Isolde Carrow, her silver holy symbol hanging loosely at her side, held her breath as she listened to the revelation that threatened to shake her very foundations. She could feel the darkness pressing against her, whispering forbidden truths and testing her wavering faith. But she stood tall, her eyes flashing with determination as she resolved to face whatever horrors lay ahead.
+
+Dorian Ashgrove, his leather notebook clutched tightly in his trembling hands, scribbled furiously, his mind racing with the implications of Father Vane's words. The disgraced investigator had always known there was more to Ravenmoor than met the eye, and this new information only confirmed his suspicions. He looked up from his notes, his eyes meeting Father Vane's, and nodded solemnly, a steely resolve settling over him like a shroud.
+
+Emmett Grave, ever cheerful in the face of death, seemed unfazed by the chilling revelation that lay before them. He ran a gnarled hand through his greasy hair, his eyes twinkling with excitement as he contemplated the archaeological treasure trove that awaited them in the mine chamber. With a raucous laugh, he slapped Dorian on the back, his voice booming above the howling wind. "Well, chaps, it looks like we're off on another grand adventure!"
+
+Vera Nighthollow, her eyes flickering with a strange light, listened quietly to Father Vane's words, her fingers tapping an erratic rhythm against the cold stone floor. She looked up from her contemplations and met Isolde's gaze, a knowing smile playing at her lips. "This is going to be interesting," she whispered, her voice barely audible over the wind.
+
+As the gathering dispersed, the air in the church seemed to grow even heav

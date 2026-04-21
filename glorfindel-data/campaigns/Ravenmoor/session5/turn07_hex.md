@@ -1,0 +1,11 @@
+As midnight's chilling embrace descended upon Ravenmoor, the once bustling tavern of Hollowbrook's Embrace transformed into a chamber of shadows and whispers. The flickering candlelight danced macabrely on the walls, casting spectral apparitions that seemed to writhe and contort in their eternal dance. The party, huddled around a worn oak table, appeared as mere silhouettes against this haunting backdrop, their faces etched with determination and fear.
+
+Sister Isolde Carrow, her silver holy symbol clenched tightly, spoke with a voice heavy with the weight of responsibility that now rested upon her shoulders. Her eyes shone with an intensity born of faith and conviction as she advocated for venturing to the well to the east. She believed their faith demanded they uncover the secrets that had led to this tragedy, and it was a burden she bore with unwavering resolve.
+
+Dorian Ashgrove, a man whose disgrace seemed to follow him like an ever-present specter, supported Sister Isolde's argument but with a hint of caution in his voice. He suggested they wait until dawn, when the first light of day might banish some of the darkness that clung to this forsaken village like an unshakable curse. His words were a testament to his desire to protect those who had placed their trust in him, even as he grappled with his own inner demons.
+
+Emmett Grave, ever cheerful and morally ambiguous, agreed with both of them. With his keen intellect and insatiable curiosity, he saw the potential for historical significance in their investigation, a prize worth braving the unknown. His voice echoed with excitement as he spoke, but there was an edge to it, a note of apprehension that betrayed his awareness of the danger they faced.
+
+Vera Nighthollow, a woman who walked the line between good and evil, listened intently as her companions debated their course of action. She sensed spectral figures lurking in the corners of the room, a chilling reminder that they were not alone in their pursuit of truth. Her eyes glinted with a predatory gleam as she considered the secrets Ravenmoor held and the power that might be gained by uncovering them.
+
+As the debate continued, the dice rolled revealed the varying levels of

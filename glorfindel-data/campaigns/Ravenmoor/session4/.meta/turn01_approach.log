@@ -1,0 +1,74 @@
+# Turn: Read session3/turn04_convergence.md if it exists, else recall what happened: Marta revealed that Casimir Voss answered the entity and has been in the east tower for three weeks. Now: mid-afternoon, grey. The party walks the manor road — it curves north past the drowned fields. Read world/setting.md for Voss Manor. The iron gates stand open. They shouldn't be. No groundskeeper, no dogs. The east tower window glows faintly even in daylight. Father Vane has insisted on coming. He carries the cloth bundle from the chapel: iron nails, ash-water, the same tools he used on the mine doors. He explains, walking: answering the entity is not madness. The madness is what comes after — the entity doesn't release you because it has no concept of done. 'Casimir answered it and it kept asking. It is still asking.' Roll DC 13 Perception for the party approaching the gates (best modifier: Dorian +3). If they succeed: the ground near the east tower foundation is wet. Not rain-wet. Seep-wet. The water table has risen. Play the dread of the approach — the open gates, the wet ground, the light in the tower.
+**Campaign:** Ravenmoor  **Session:** session4  **File:** turn01_approach.md  **Time:** 2026-04-21 03:19:22 UTC
+
+## 🧠 Thinker
+NARRATIVE:
+The narrative tone is ominous and suspenseful, with a focus on the growing danger and mystery surrounding Voss Manor and the entity that resides within. The story beat revolves around the party investigating the eerie occurrences at the manor, specifically the strange events happening in the east tower where Casimir Voss has been isolated for three weeks.
+
+CHARACTERS:
+1. Sister Isolde Carrow (fallen cleric): She is a member of the party who, despite her fall from grace, still holds onto her faith and may try to exorcise the entity.
+2. Dorian Ashgrove (disgraced investigator): His skills in investigation will be crucial in uncovering the truth behind the entity and the strange happenings at Voss Manor.
+3. Emmett Grave (graverobber/archaeologist): He brings his knowledge of ancient artifacts and may have insights into the origins of the entity.
+4. Vera Nighthollow (witch): Her magical abilities could be invaluable in battling or communicating with the entity, but her presence might also provoke it further.
+5. Father Vane: A local priest who has been dealing with the entity and is determined to help the party. He carries tools he used on the mine doors, hinting at a past encounter with the same entity.
+
+RULES:
+1. The Perception check (DC 13) applies as the party approaches the gates of Voss Manor, using Dorian's +3 modifier for his keen senses.
+2. Fear saves may be necessary if the party encounters the entity or experiences particularly unsettling events.
+3. Investigation and social interactions will also play a role, with appropriate DCs based on the nature of the checks and the NPCs involved.
+
+TOOLS:
+1. Query: If session3/turn04_convergence.md does not exist, recall what happened in the previous sessions related to Casimir Voss and the entity.
+2. Campaign files to read: world/setting.md (for details about Voss Manor).
+3. Dice notations: d20 for Perception checks, d100 for fear saves if necessary.
+
+## 🔍 Critic
+The plan for the gothic horror campaign, Ravenmoor, effectively sets an ominous and suspenseful tone while incorporating a strong narrative focus on the mysterious entity residing within Voss Manor. The character roster is diverse and well-rounded, with each member bringing unique skills that will be crucial in unraveling the mystery.
+
+The rules are comprehensive, including a Perception check (DC 13) as the party approaches the gates of Voss Manor, and potential Fear saves if the entity or unsettling events are encountered. Investigation and social interactions are also accounted for, ensuring a balanced gameplay experience.
+
+In terms of tools, the plan effectively uses Query to recall relevant information from previous sessions when necessary, and reads campaign files such as world/setting.md for detailed descriptions of Voss Manor. Dice notations are clear and specific, using d20 for Perception checks and d100 for fear saves if required.
+
+To further enhance the gothic atmosphere, consider adding elements like a chilling wind, the distant cawing of ravens, or an unsettling silence that only breaks with the sound of their footsteps on the manor road. This will help immerse the players in the game world and heighten the sense of dread and suspense.
+
+## ⚖ Rules Lawyer
+Query: "Query: If session3/turn04_convergence.md does not exist, recall what happened regarding Casimir Voss and the entity, and read world/setting.md for details about Voss Manor."
+[core_mechanics.md] ## Proficiency Bonus: +3 for all player characters.
+[fear_and_dread.md] ## The "Echo" (Seeing the Dead)
+When a character sees an Echo (a lingering ghost-impression of the dead), they must make DC 10 Fear Save. Emmett is immune. Vera has advantage.
+[investigation.md] ## Research (Books/Records)
+Ravenmoor has a parish registry (at the chapel) and mine records (stolen from the Manor, now in the inn's back room).
+- **Parish Registry**: DC 10 History to find relevant 
+[investigation.md] ## Clue Tiers
+Every location has tiered clues:
+1. **Surface clue** — found on any successful check, or automatically if the party spends 10+ minutes.
+2. **Hidden clue** — requires DC 13+ or specif
+[core_mechanics.md] ## Contested Checks
+When two characters oppose each other: both roll, highest wins. Ties go to the active party.
+
+Casimir Voss is a deceased nobleman who owned Voss Manor, a large, crumbling mansion located on the outskirts of Ravenmoor village. The manor has a long history of supernatural activity and is rumored to be haunted. Casimir died under mysterious circumstances, and his death may be connected to the town's recent disturbing events. Voss Manor serves as a primary location in the Ravenmoor gothic horror TTRPG campaign. Here are some rules relevant to the session: The player characters have a proficiency bonus of +3 for all checks (core_mechanics.md, section 5). When a character sees an Echo (a lingering ghost-impression of the dead), they must make a DC 10 Fear Save. Emmett is immune, and Vera has advantage (fear_and_dread.md, section 7). Researching books or records can be done with varying degrees of success based on check results (investigation.md, section 6). Clues at locations have multiple tiers, with deeper clues requiring higher DCs (investigation.md, section 4). Contested checks are resolved by the highest roll winning, with ties going to the active party (core_mechanics.md, section 4).
+
+## 📚 Campaign Files
+Read: session3/turn04_convergence.md, rules/fear_and_dread.md, world/setting.md
+
+### session3/turn04_convergence.md
+As the sun's feeble rays pierced the gloom of Ravenmoor's Ashfen Marsh, the Aldwick Inn stood as a grim sentinel, its aged timbers creaking in anticipation of the chilling tales that would soon unfold within. The village's spectral wolves howled in the distance, their mournful cries echoing through the marsh like the whispers of the damned.
+
+Inside the inn, Sister Isolde Carrow, Dorian Ashgrove, Emmett Grave, and Vera Nighthollow gathered around a worn table, their faces somber as they exchanged glances heavy with unspoken dread. The air hung thick with the s
+
+## 🎲 Dice
+1d20+3 → [10]+3 = **13**
+
+## 📋 Action Summary
+As the party approaches Voss Manor, the iron gates stand open, a chilling sight in the grey afternoon. Dorian's keen senses (DC 13 Perception check) reveal that the ground near the east tower foundation is wet, not rain-wet, but seep-wet, indicating a rising water table. Father Vane, walking alongside, explains that the entity has been asking Casimir questions for three weeks and warns that answering it may not be madness, but the madness comes later when the entity doesn't release you because it has no concept of done. The party treads closer to the manor, feeling a growing sense of dread as they near the eerie glow from the east tower window.
+
+## ✍ DM Prose
+As the party approached Voss Manor, their footsteps echoed eerily against the damp earth, each step sinking slightly into the ground as if the very land beneath them was yielding to the oppressive atmosphere that surrounded Ravenmoor. The iron gates stood ajar, an ominous invitation that sent shivers down their spines. The sun's feeble rays struggled against the encroaching grey, casting elongated shadows that danced and twisted like spectral apparitions.
+
+Isolde gripped her holy symbol tightly, her eyes fixed on the east tower as a faint glow emanated from within, like a beacon of darkness amidst the gloom. Dorian's keen senses were on high alert, his gaze scanning the grounds for any signs of unnatural activity. Emmett, ever the pragmatist, kept a steady pace, his eyes scanning the manor for any potential loot or clues that might aid their investigation. Vera, however, felt an unsettling presence growing within her, as if the very air was thick with malevolence and the whispers of the dead.
+
+Father Vane, walking alongside them, his face a mask of somber determination, spoke softly of Casimir's fate, warning that answering the entity's questions may not be madness but the beginning of a far worse torment. His words hung heavy in the air, the weight of them pressing down on each member of the party like the crushing embrace of the marsh itself.
+
+As they drew closer to the manor, the ground near the east tower foundation was wet, not rain-wet, but seep-wet – a chilling indication that the water table had risen. The sight sent a shiver down each of their spines, as if the very earth was crying out in response to the darkness that lay within Voss Manor's walls. The party treaded cautiously, their senses heightened, their hearts pounding in their chests as they neared the manor, feeling the growing dread that threatened to consume them whole.
+
+The east tower window continued to glow faintly even in daylight, casting an eerie light upon the grounds below. The party stood before the open gates, the manor looming ominously behind them, and the village of Ravenmoor stretching out before them like a graveyard shrouded in fog

@@ -1,0 +1,9 @@
+As the party nears the Millhouse, a chilling wind whips through the Ashfen Marshes, carrying with it an eerie symphony of creaking wood and grinding gears that emanate from the dilapidated structure. The wheel, once turning with a purposeful rhythm, now slows to a halt, its iron spokes groaning in protest as if bewitched by some malevolent force.
+
+In the midst of this haunting tableau, a figure emerges from the cottage door – a young girl no older than nineteen, though her age seems at odds with the weather-beaten appearance of her home. Lena Marsh stands soaked and unbothered by the rain, a sight that sends a shiver down the spine of even the hardiest adventurer.
+
+Vera's eyes narrow as she senses something more than mere youth in the girl. Her Insight check reveals an unsettling truth: part of Lena is somewhere else, or stuck in another time. The witch cannot shake off the feeling that there is a strange connection between them, a bond forged by forces beyond mortal understanding.
+
+Sister Isolde approaches with caution, drawn to the innocence that radiates from Lena like a beacon. Dorian Ashgrove hesitates, his investigator's instincts tingling as he studies the cottage door, searching for clues hidden in plain sight. Emmett Grave, ever pragmatic, demands answers, while Vera feels a strange compulsion to protect this mysterious girl who seems to share her own otherworldly nature.
+
+The weight of Old Tomas' warning hangs heavy in the air, and as the party stands at the threshold of Lena's cottage, they can feel the sinister presence of Ravenmoor pressing in on them like a suffocating fog. Together, they must decide whether to enter or retreat, knowing that whatever awaits them within will surely test their courage and resolve.

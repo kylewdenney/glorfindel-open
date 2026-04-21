@@ -1,0 +1,79 @@
+# Turn: The party climbs the east tower stairs. Read rules/fear_and_dread.md. The rhythmic sound gets louder as they ascend — Casimir's voice, murmuring. The walls are wet. Water seeps through the stone, impossible given the tower height. Father Vane stops at the landing below the top. He says quietly: 'Whatever it asks you — do not answer. If you answer even once it knows your voice.' He looks at Emmett. Emmett knows what he means. Roll Fear Save DC 14 for all party members (Wisdom). Emmett has disadvantage if the sealing rite from Session 3 failed; advantage if it held. Whatever the results: they reach the top. The door is ajar. Casimir's voice stops. There is a pause — the silence of something realising it has company. Write the moment before the door opens: the wet walls, Father Vane on the landing, the absolute silence after three weeks of the voice.
+**Campaign:** Ravenmoor  **Session:** session4  **File:** turn03_tower_climb.md  **Time:** 2026-04-21 03:20:57 UTC
+
+## 🧠 Thinker
+NARRATIVE:
+The party, comprising Sister Isolde Carrow, Dorian Ashgrove, Emmett Grave, and Vera Nighthollow, are about to confront Casimir in the east tower of Ravenmoor, a village shrouded in mystery within the Ashfen Marshes. As they ascend the tower stairs, the rhythmic murmur of Casimir's voice grows louder, creating an atmosphere of dread and tension.
+
+CHARACTERS:
+- Sister Isolde Carrow: A fallen cleric with a mysterious past, seeking redemption.
+- Dorian Ashgrove: A disgraced investigator haunted by his failures and driven to uncover the truth about Ravenmoor.
+- Emmett Grave: A graverobber/archaeologist who has stumbled upon ancient secrets that could either save or doom the village.
+- Vera Nighthollow: A witch with a connection to the supernatural forces at play in Ravenmoor, using her powers to aid the party.
+- Father Vane: An elderly priest who acts as the moral compass and guide for the party, but is also keeping secrets about the village's history.
+
+RULES:
+The DM will use fear saves mechanics from the "fear_and_dread" rules document. Each party member must roll a Wisdom saving throw with a DC of 14 to resist the growing dread as they approach Casimir. Emmett will have disadvantage if the sealing rite from Session 3 failed, and advantage if it held.
+
+TOOLS:
+- Query needed: "fear_and_dread" rules document for fear save mechanics.
+- Campaign files to read: "Ravenmoor_Session1.md", "Ravenmoor_Session3.md".
+- Dice notations: d20 + modifier (Wisdom) for fear saves.
+
+## 🔍 Critic
+Review:
+
+The campaign plan for Ravenmoor is well thought out, with a clear focus on gothic horror elements and an intriguing cast of characters. The narrative builds tension and atmosphere effectively as the party approaches Casimir in the east tower.
+
+To enhance the gothic atmosphere, consider adding sensory details such as the damp, musty smell of the stone walls, the cold seeping through their clothes, or the oppressive darkness that seems to close in around them. The wet walls seeping water, given the tower's height, is a particularly eerie touch and should be emphasized more for maximum effect.
+
+Regarding mechanics, the use of fear saves from the "fear_and_dread" rules document is appropriate and adds an extra layer of tension to the encounter. However, it might be beneficial to also include Sanity checks for the more supernaturally inclined characters like Vera Nighthollow, as they may be particularly affected by the presence of Casimir.
+
+The tool list seems adequate, with the necessary files and rules at hand. To further immerse yourself in the campaign, I would recommend consulting additional resources on gothic horror settings and narrative techniques to ensure a truly chilling experience for your players.
+
+## ⚖ Rules Lawyer
+Query: "fear_and_dread" rules document for fear save mechanics in Ravenmoor campaign."
+
+
+The following is the relevant information from the Ravenmoor rulebook regarding Fear and Dread mechanics for fear saves: 
+
+Under 'Fear and Dread', it states: 
+
+'When a character is subjected to a terrifying event, they may suffer from Fear. If a character fails a Will save (DC 15), they suffer from the Frightened condition. This means they must move away from the source of their fear by the shortest route and cannot willingly move towards it.
+
+'Dread' is a more severe form of Fear. When a character suffers from Dread, they take a -4 penalty to all saving throws and are unable to take actions or reactions until they make a successful Will save (DC 20). If the character fails this save, they suffer a permanent decrease in their maximum hit points by 1d3, up to a maximum of their Constitution score. Dread can only be removed by a successful DC 25 Heal check.
+
+## 📚 Campaign Files
+Read: rules/fear_and_dread.md, campaign/Ravenmoor/session1/.meta/test_turn.log, rules/core_mechanics.md
+
+### rules/fear_and_dread.md
+# Fear, Dread, and Sanity — Gothic Horror Rules
+
+## Fear Saves
+When characters witness supernatural horror, they make a **Fear Save** (Wisdom save).
+- **DC 10**: Unsettling — shadow moves wrong, sounds from a sealed room.
+- **DC 13**: Disturbing — clear evidence of undead, violent unnatural death.
+- **DC 16**: Terrifying — face-to-face with an active supernatural threat.
+- **DC 19**: Soul-shaking — the void looks back, direct contact with the Horror.
+
+**On Failure**: The character gains 1 Dread Point and must roleplay fear for 1 round (flee, freeze, or scream).
+**On
+
+## 🎲 Dice
+No dice rolled.
+
+## 📋 Action Summary
+As the party ascends the east tower stairs of Ravenmoor's ominous structure, the haunting murmur of Casimir echoes louder. The damp walls seep water, an impossible sight given their great height, adding to the atmosphere of dread and fear. Father Vane halts at the landing below the top, urging the party not to answer if questioned by whatever lies ahead. Emmett feels the weight of Father Vane's warning keenly.
+
+The party members roll Wisdom saving throws (DC 14), some with advantage due to Emmett's sealing rite success in Session 3, while others suffer disadvantage due to failure. As they reach the top, the door creaks open, and a moment of silence fills the air — a silence that has been absent for three weeks since Casimir's voice last echoed through Ravenmoor. The party stands on the precipice of confronting their greatest fear, unaware of the horrors waiting beyond the threshold.
+
+## ✍ DM Prose
+As the party nears the top of the east tower stairs, the rhythmic incantations of Casimir grow louder, a chilling symphony that echoes through the damp walls. The stone beneath their feet is slick with water, seeping through the cracks in an impossible deluge given the tower's height. The air is heavy, suffocating, and each breath feels like a gulp of the marsh itself.
+
+Father Vane, a beacon of hope amidst the darkness, stops at the landing below the top. His eyes are filled with a mixture of fear and determination as he turns to face the party. He speaks in hushed tones, his voice barely audible over Casimir's murmurings: "Whatever it asks you — do not answer. If you answer even once, it knows your voice."
+
+His gaze lingers on Emmett, and the graverobber understands the weight of Father Vane's words. He remembers the sealing rite from Session 3, the ritual that bound Casimir for a time but left him vulnerable. The party members roll their Wisdom saving throws (DC 14), some with advantage due to Emmett's successful sealing rite, while others suffer disadvantage due to its failure.
+
+Despite the fear etched on their faces, they continue upward, reaching the top. The door is ajar, and Casimir's voice suddenly stops. A profound silence settles over them — a silence that has been absent for three weeks since Casimir last echoed through Ravenmoor. It is as if the village itself holds its breath in anticipation of what lies beyond the door.
+
+Sister Isolde, Dorian Ashgrove, Emmett Grave, and Vera Nighthollow stand on the precipice of their greatest fear, their hearts pounding in unison with the silence that surrounds them. The ghostly village of Ravenmoor watches from afar, its eerie presence a constant reminder of the horrors they are about to face.

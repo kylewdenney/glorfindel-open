@@ -1,0 +1,11 @@
+The moon cast a pale, spectral glow upon the cobblestone streets of Ravenmoor, the eerie silence punctuated only by the distant hoot of an owl and the soft lapping of waves against the shore. The village, once a bustling hub of activity, now lay in a chilling stillness that seemed to seep into the very soul.
+
+Inside the inn, Sister Isolde Carrow sat by the hearth, her eyes lost in the flickering flames. Her thoughts were heavy with guilt and regret, the weight of her past sins pressing down upon her like the damp moss that clung to the stone walls outside. Across the room, Dorian Ashgrove was engrossed in his notebook, his quill scratching furiously as he wrote down every detail, every clue that could help them unravel the mystery of this accursed place.
+
+But it was Emmett Grave who broke the silence. He stirred in his sleep, a low moan escaping his lips as he sat upright in bed. His boots were already on, facing towards the door, and he didn't remember putting them on. His gaze was fixed upon the east, towards the well from which they had retrieved the letter that had brought them all to Ravenmoor.
+
+Vera Nighthollow, watching from her room above, saw Emmett stand and begin to walk towards the well. There was a strange compulsion in his movements, a pull that seemed to come from deeper than just the village itself. She called out to him, but he didn't seem to hear. It took her physical grasp on his arm to stop him, three steps away from the well's dark depths.
+
+Emmett snapped back to awareness, sweating and disoriented. He knew exactly what had almost happened, and he felt a chill run down his spine as he realized that the thing in the well now recognized his voice. The dread that had been building between them all seemed to intensify, a palpable presence in the air that threatened to suffocate them.
+
+As the night wore on, the party members huddled together for warmth and comfort, their minds filled with thoughts of what they had witnessed. The horror of Ravenmoor continued to reveal itself, each new discovery bringing them closer to the truth but also pushing them further into the abyss. The village seemed to hold a mal

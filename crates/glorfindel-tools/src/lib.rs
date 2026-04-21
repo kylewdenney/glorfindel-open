@@ -6,15 +6,26 @@
 //! deny-by-default permissions.
 
 pub mod bash_tool;
+pub mod campaign_tool;
+pub mod dice_tool;
 pub mod error;
 pub mod executor;
 pub mod file_tools;
+pub mod media_tool;
+pub mod rulebook_tool;
 pub mod search_tool;
 pub mod traits;
 
 pub use bash_tool::BashTool;
+pub use dice_tool::{DiceRollTool, parse_notation as parse_dice_notation};
+pub use campaign_tool::{CampaignListTool, CampaignReadTool, CampaignWriteTool};
 pub use error::ToolError;
 pub use executor::ToolExecutor;
 pub use file_tools::{FileReadTool, FileWriteTool};
+pub use media_tool::{
+    JellyfinClient, MediaItemTool, MediaLibraryTool, MediaRecentTool, MediaRefreshTool,
+    MediaScanTool, MediaSearchTool, MediaSessionsTool, MediaUsersTool,
+};
+pub use rulebook_tool::RulebookTool;
 pub use search_tool::SearchTool;
 pub use traits::Tool;

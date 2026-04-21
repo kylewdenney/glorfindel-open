@@ -1,0 +1,11 @@
+In the heart of Ravenmoor's Ashfen Marsh, where the sun rarely dared to tread, the party found themselves standing before a chamber that seemed to have been swallowed by time itself. The cold, damp air hung heavy with an ancient dread as they ventured deeper into the mine, their torches casting flickering shadows upon the dressed stone walls of this prehistoric sanctum.
+
+Sister Isolde Carrow, her silver holy symbol dangling at her side like a relic of a forgotten faith, felt the hairs on her neck stand on end as she gazed upon the chamber's centerpiece - a shallow depression filled with water from the eastern well. In that dark, still expanse, a large and ominous presence lay submerged, its eyes locked onto their intruding souls like a predator waiting for prey to approach.
+
+Dorian Ashgrove, disgraced investigator and former crown servant, scribbled furiously in his leather notebook, each stroke of his quill echoing eerily within the chamber's confines. His mind raced with theories about the entity before them, but he could not shake off the feeling that they had stumbled upon something far greater than anything they had ever encountered.
+
+Emmett Grave, self-proclaimed archaeologist and grave robber extraordinaire, leaned over the water's edge, peering intently at the ancient being below. He whispered words of power under his breath, attempting to discern its true nature through the arcane secrets he had learned over the years. Yet, even for one as knowledgeable in such matters as Emmett, this entity remained a mystery, a riddle shrouded in darkness and time.
+
+Vera Nighthollow, witch and outcast of society, closed her eyes and reached out with her senses, seeking to understand the presence that seemed to resonate within the very fabric of the chamber. A chill ran down her spine as she felt its ancient, question-shaped consciousness probing at hers, a connection forged by forces far older than their own. As she opened her eyes once more, she shared with her companions what she had learned - that this entity was not the one from the well but something even older, something that had been here since before the village, before the marsh, before language itself.
+
+The air in the chamber grew colder still as Father Vane knelt before

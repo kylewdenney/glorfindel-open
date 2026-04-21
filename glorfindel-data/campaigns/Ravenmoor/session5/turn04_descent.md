@@ -1,0 +1,11 @@
+The descent into the mine shaft was a harrowing plunge into darkness, the air growing colder and damper with each passing foot. The party, armed with torches, cast flickering shadows on the damp walls that seemed to writhe like serpents as they descended deeper into the earth.
+
+At thirty feet, the sight of a solitary miner's boot, devoid of its former occupant, sent a shiver down Isolde's spine. She could almost hear the echoes of the man's last breath, the silence that followed his abrupt disappearance. Dorian, his eyes fixed on the boot, felt a cold hand grip his heart, as if the ghost of the miner were reaching out from beyond the grave to claim him.
+
+Sixty feet below ground, the walls began to weep water, the seeping moisture seeping into their bones and filling them with an icy dread. The same dampness that had seeped into the manor east tower foundation, a chilling reminder of the unnatural forces at work in this cursed village.
+
+At ninety feet, they stumbled upon the foreman's work station, its contents untouched since his fateful entry into the sealed chamber. Dorian, armed with his camera, carefully photographed the records, his heart racing as he deciphered the chilling words of the foreman's last entry: 'Day 847. Sound from below the new shaft. Not machinery. Not settling. Like something large adjusting its position. Decided not to report upward. Will check tomorrow.' Tomorrow never came.
+
+The party stood silently, their torches casting eerie light upon the foreman's coffee cup and logbook open to the last entry. Emmett, feeling the weight of the sealing rite upon him, steeled himself for the roll of the dice. As they listened, they could hear a sound from below, not breathing, not movement, but something that had been waiting, deep within the pre-existing chamber forty feet deeper than their current location.
+
+The silence was deafening, the air thick with dread. The party held their breath, their eyes fixed on each other as they braced themselves for what lay ahead. Each heartbeat echoed in their ears like a death knell, a reminder of the danger that lurked below, waiting to claim them all.

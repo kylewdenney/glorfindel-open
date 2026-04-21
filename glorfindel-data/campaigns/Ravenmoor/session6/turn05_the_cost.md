@@ -1,0 +1,9 @@
+In the heart of the mine chamber, a catacomb hewn from the Ashfen Marsh's cold embrace, the party stood united yet fractured by uncertainty. The oppressive weight of Ravenmoor bore down upon them, its gothic atmosphere seeping into every pore—dripping water echoed through the darkness, distant whispers reverberated off ancient stone, and an icy chill permeated the air.
+
+The chamber began to close in around them, the heavy stone doors creaking as they slowly sealed their fate. Father Vane, eyes locked upon the impending seal, stood resolute. His hands trembled slightly, but his resolve never wavered; this was his ending, he had known it since the first rusted nail.
+
+Casimir Voss, a man without a future in the manor, stepped forward, challenging Father Vane's decision. His gaze met Isolde's, and she felt a strange connection, a sense of familiarity that she could not quite place. A moment passed between them, filled with unspoken words, before Casimir spoke aloud, "I will stay."
+
+Sister Carrow, her heart heavy with the weight of responsibility, looked to Dorian for help. But his paranoia clouded his judgment, and he could offer no counsel. Emmett remained silent, his cheerful demeanor replaced by a grim acceptance of the impending doom. Only Vera, sensing something in the name mentioned, spoke up, "I heard this name before...in a dream...from my grandmother."
+
+As the party prepared to face their darkest fears, the shadows danced upon the walls like the spectral remnants of those who had come before. The air grew colder still, and the oppressive atmosphere seemed to close in around them, pressing down with an unyielding force. The Fear Saves would come soon, testing their resolve, and the party knew that they must steel themselves for the horrors awaiting within Ravenmoor's depths.

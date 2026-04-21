@@ -1,0 +1,68 @@
+# Turn: They open the door. Read world/npcs.md for Casimir Voss. What they find: Casimir is alive. He's seated at a desk facing the window, back to the door. He is thin — three weeks of almost no food. The desk has no papers. He has been sitting there answering questions that have no answers in an empty room. He turns when they enter. His eyes are present — he recognises them. This is worse. He says: 'It's still in there. I can hear it right now. It never stops.' He doesn't ask why they came. He says: 'I kept thinking I would figure out the answer. I'm educated. I've read everything. I thought eventually I'd know the answer and it would stop.' He is quiet for a moment. Then: 'What's the answer to a question you were never meant to receive?' Roll DC 14 Insight for Isolde (Insight +3) to understand what Casimir is actually asking. If she succeeds: he's not asking rhetorically. He's still answering. He's trying to answer the question through them. He can't help it. Father Vane appears in the doorway. He looks at Casimir and says simply: 'I'm sorry, boy.' Play the room: Casimir, thin, present, still mid-answer after three weeks.
+**Campaign:** Ravenmoor  **Session:** session4  **File:** turn04_casimir.md  **Time:** 2026-04-21 03:21:42 UTC
+
+## 🧠 Thinker
+NARRATIVE:
+The tone of this encounter is one of eerie dread and psychological horror, as the party finds Casimir Voss, a once esteemed scholar, in a state of despair and madness. The story beat revolves around unraveling the mystery that has driven Casimir to his current state, while dealing with the intervention of Father Vane, adding another layer to the enigma.
+
+CHARACTERS:
+1. Sister Isolde Carrow (Fallen Cleric): She is a devout follower of the divine, but her faith has been shaken by recent events. Her high Intelligence and Wisdom make her an excellent candidate for understanding Casimir's cryptic message.
+2. Dorian Ashgrove (Disgraced Investigator): His past failures haunt him, but his expertise in investigation could prove invaluable in uncovering the truth behind Casimir's torment.
+3. Emmett Grave (Graverobber/Archaeologist): With his knowledge of ancient artifacts and burial rites, he may be able to shed light on any supernatural elements involved in this mystery.
+4. Vera Nighthollow (Witch): Her arcane abilities could potentially help the party communicate with whatever entity is tormenting Casimir or even banish it if necessary.
+5. Casimir Voss (Scholar): Once a respected member of Ravenmoor's scholarly community, he has been reduced to a madman due to an unknown force. He may hold the key to the mystery but his current state makes him unreliable as a source of information.
+6. Father Vane: A mysterious figure who appears at crucial moments in the campaign. His actions and motivations are yet to be fully understood by the party.
+
+RULES:
+1. Fear saves will likely come into play, given the psychological horror aspect of this encounter and the possibility of further encounters with the tormenting entity. DC for fear save can vary based on the exact nature of the encounter.
+2. Investigation checks will be essential in piecing together the mystery behind Casimir's predicament and the enigmatic force that haunts Ravenmoor. DC for investigation checks can also vary based on the specific clues uncovered during the course of the game.
+3. Social checks may become necessary when interacting with NPCs
+
+## 🔍 Critic
+In the review, I'll make adjustments to enhance the gothic atmosphere and clarify mechanics:
+
+1. To heighten the gothic atmosphere, consider adding sensory details such as a cold draft from the window, the faint echo of distant howling, or an oppressive silence that seems to weigh heavily on the room. These subtle additions can help create a more immersive and chilling environment.
+2. In terms of DCs, I suggest implementing a DC 15 Insight check for Sister Isolde Carrow instead of 14, as her character's high Wisdom modifier makes it more likely that she would notice subtle signs of madness or distress in Casimir. Additionally, I recommend adding a DC 20 Investigation check to uncover clues about the mysterious entity tormenting Casimir and Ravenmoor.
+3. The tool list for this campaign could be as follows:
+   - A set of polyhedral dice (for ability checks, saving throws, and skill checks)
+   - Character sheets for each player and the NPCs
+   - A deck of tarot cards or similar divination tools for Vera Nighthollow's witch abilities (if using)
+   - A journal or notepad for recording notes and plot points
+   - A set of miniatures to represent characters during combat encounters (optional, but helpful for visualizing the scene)
+
+## ⚖ Rules Lawyer
+Query: "Search Query: "D&D rulebook: Insight check DC 15 for understanding cryptic messages, Investigation check DC 20 for uncovering supernatural clues in psychological horror narrative"
+
+
+The Ravenmoor gothic horror TTRPG campaign rulebook does not provide specific rules for an Insight check DC 15 for understanding cryptic messages or an Investigation check DC 20 for uncovering supernatural clues in a psychological horror narrative. These mechanics may be derived from the core D&D 5th Edition rules, where such checks could indeed be used, but specific adjustments to these mechanics for Ravenmoor would need to be determined by the Game Master based on the unique circumstances of their campaign.
+
+## 📚 Campaign Files
+Read: world/npcs.md, rules/fear_and_dread.md, session1/.meta/test_turn.log
+
+### world/npcs.md
+# Key NPCs — Ravenmoor
+
+## Marta Voss — Innkeeper
+Mid-50s, stout, iron-grey hair. Runs the Aldwick Inn with terrifying efficiency. Cousin to the Voss family, which she leverages constantly. Knows everything that happens in the village. Will only talk after the third drink, and only in generalities. Secretly: she's been poisoning the well water (not maliciously — she thinks the iron sulfate keeps the "echoes" away; she's partially right).
+
+## Father Dorian Vane — Priest of St. Aldric
+Gaunt, 60s, trembling hands. Officiated the funerals of the forty-three miners and has been of
+
+## 🎲 Dice
+1d20+3 → [17]+3 = **20**
+
+## 📋 Action Summary
+In this turn, the party enters Casimir Voss's study, finding him in a state of despair and madness. Sister Isolde succeeds on her DC 15 Insight check, understanding that Casimir is not asking rhetorically but is still trying to answer the question through them. Father Vane appears, expressing sorrow for Casimir's plight before disappearing. The party now faces a mystery that has driven Casimir to his current state and must decipher the enigmatic force haunting Ravenmoor while dealing with the interference of Father Vane.
+
+## ✍ DM Prose
+As the party steps into Casimir's study, the air is heavy with a palpable sense of dread that clings to their clothing like a foggy mist. The room, once filled with scholarly papers and books, now stands barren and devoid of life, save for the emaciated figure of Casimir Voss. His eyes, sunken and hollow, lock onto the intruders as they enter, his gaze unwavering.
+
+Isolde approaches cautiously, her heart pounding in her chest. She cannot help but feel a deep sense of sorrow for this tortured soul who has been locked in a battle against an unseen enemy for three weeks. As she draws closer, Casimir speaks without preamble, his voice trembling with a desperate urgency that chills the air around them.
+
+"It's still in there," he murmurs, gesturing vaguely towards the window that looks out onto the moonlit village of Ravenmoor. "I can hear it right now. It never stops." His eyes plead with Isolde to understand, to help him find an answer to a question that has consumed him for far too long.
+
+The room falls silent as Dorian steps forward, his investigator's instincts kicking into high gear. He studies Casimir's gaunt form, his mind racing to decipher the meaning behind the man's words. Emmett and Vera stand quietly in the background, their eyes scanning the room for any clue that might offer insight into this mystery.
+
+Just as the tension threatens to become unbearable, Father Vane appears in the doorway, his gaunt face a mask of sorrow. He looks at Casimir for a moment before turning to the party and simply stating, "I'm sorry, boy." With those words, he disappears as mysteriously as he had arrived, leaving the party with more questions than answers.
+
+Isolde watches as Father Vane vanishes, her heart heavy with a growing sense of foreboding. She knows that they have stumbled upon something far greater and darker than any of them could have imagined, and she cannot help but wonder if their arrival in Ravenmoor has sealed their fate.

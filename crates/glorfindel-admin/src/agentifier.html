@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Agentifier — Glorfindel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    [x-cloak] { display: none !important; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0f1117; }
+    ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 3px; }
+    .spinner {
+      border: 2px solid rgba(99,102,241,0.2);
+      border-top-color: #6366f1;
+      border-radius: 50%;
+      width: 14px; height: 14px;
+      animation: spin 0.7s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .msg-user { background: #1e1b4b; border: 1px solid #3730a3; }
+    .msg-agent { background: #0f172a; border: 1px solid #1e293b; }
+    .msg-system { background: #0c1a0c; border: 1px solid #14532d; }
+    .msg-error  { background: #1c0a0a; border: 1px solid #7f1d1d; }
+    pre { white-space: pre-wrap; word-break: break-word; font-size: 0.8rem; }
+    textarea:focus { outline: none; box-shadow: 0 0 0 1px #6366f1; }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col"
+  x-data="agentifier()" x-init="init()" x-cloak>
+
+  <!-- Header -->
+  <div class="bg-gray-900 border-b border-gray-800 px-5 py-3 flex items-center gap-3 flex-shrink-0">
+    <span class="text-indigo-400 font-bold text-lg">⚙ The Agentifier</span>
+    <span class="text-gray-600 text-sm">|</span>
+    <a href="/" class="text-gray-500 text-sm hover:text-gray-300 transition-colors">← Admin</a>
+    <div class="ml-auto flex items-center gap-3">
+      <template x-if="thinking">
+        <span class="flex items-center gap-1.5 text-xs text-indigo-400">
+          <span class="spinner"></span> Designing…
+        </span>
+      </template>
+      <template x-if="!thinking && lastTaskId">
+        <span class="text-xs text-green-400">✓ Done</span>
+      </template>
+    </div>
+  </div>
+
+  <!-- Two-column: chat left, sidebar right -->
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- ── Chat ── -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+
+      <!-- Message history -->
+      <div class="flex-1 overflow-y-auto px-4 py-4 space-y-3" x-ref="msgList">
+
+        <!-- Welcome -->
+        <div class="msg-system rounded-lg px-4 py-3 max-w-2xl">
+          <div class="text-xs font-semibold text-green-400 mb-1">Agentifier</div>
+          <div class="text-sm text-gray-300 leading-relaxed">
+            Tell me what you want to agentify. Describe the agent's purpose, what it should be able to do, and whether you want a GUI to interact with it. I'll design the system prompt, pick the right tools, write the definition, and build the interface.
+          </div>
+        </div>
+
+        <template x-for="(msg, i) in messages" :key="i">
+          <div :class="msg.role === 'user' ? 'ml-auto max-w-xl' : 'max-w-2xl'">
+            <div :class="msg.role === 'user' ? 'msg-user' : (msg.role === 'error' ? 'msg-error' : 'msg-agent')"
+                 class="rounded-lg px-4 py-3">
+              <div class="text-xs font-semibold mb-1"
+                   :class="msg.role === 'user' ? 'text-indigo-400' : (msg.role === 'error' ? 'text-red-400' : 'text-gray-500')"
+                   x-text="msg.role === 'user' ? 'You' : (msg.role === 'error' ? 'Error' : 'Agentifier')">
+              </div>
+              <div class="text-sm text-gray-200 leading-relaxed whitespace-pre-wrap" x-text="msg.content"></div>
+            </div>
+          </div>
+        </template>
+
+        <template x-if="thinking">
+          <div class="max-w-2xl">
+            <div class="msg-agent rounded-lg px-4 py-3">
+              <div class="text-xs font-semibold text-gray-500 mb-1">Agentifier</div>
+              <div class="flex items-center gap-2 text-sm text-gray-500">
+                <span class="spinner"></span> Thinking…
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <!-- Input -->
+      <div class="border-t border-gray-800 px-4 py-3 flex-shrink-0">
+        <div class="flex gap-2 items-end">
+          <textarea
+            x-model="input"
+            @keydown.enter.exact.prevent="send()"
+            @keydown.enter.shift.exact="/* allow newline */"
+            rows="3"
+            placeholder="Describe the agent you want to build… (Enter to send, Shift+Enter for newline)"
+            class="flex-1 bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 resize-none leading-relaxed">
+          </textarea>
+          <button @click="send()"
+            :disabled="!input.trim() || thinking"
+            :class="input.trim() && !thinking
+              ? 'bg-indigo-600 hover:bg-indigo-500 text-white cursor-pointer'
+              : 'bg-gray-800 text-gray-600 cursor-not-allowed'"
+            class="px-4 py-2 rounded-lg text-sm font-medium transition-colors flex-shrink-0">
+            Send
+          </button>
+        </div>
+        <div class="text-xs text-gray-600 mt-1.5">
+          After the agent runs, new definitions appear in <span class="text-gray-500">Admin → Definitions</span> and GUIs at their route.
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Sidebar: recent builds ── -->
+    <div class="w-64 border-l border-gray-800 bg-gray-900 flex flex-col overflow-hidden flex-shrink-0">
+      <div class="px-4 py-3 border-b border-gray-800">
+        <div class="text-xs font-semibold uppercase tracking-widest text-gray-500">Recent Builds</div>
+      </div>
+      <div class="flex-1 overflow-y-auto p-3 space-y-2">
+        <template x-for="task in recentTasks" :key="task.task_id">
+          <div class="bg-gray-800 rounded-lg p-3 border border-gray-700">
+            <div class="flex items-center gap-1.5 mb-1.5">
+              <span x-text="task.status === 'complete' ? '✓' : (task.status === 'failed' ? '✗' : '…')"
+                    :class="task.status === 'complete' ? 'text-green-400' : (task.status === 'failed' ? 'text-red-400' : 'text-indigo-400')"
+                    class="text-xs font-bold"></span>
+              <span class="text-xs text-gray-400 font-medium">Build</span>
+              <span class="text-xs text-gray-600 ml-auto" x-text="formatTime(task.submitted_at)"></span>
+            </div>
+            <div class="text-xs text-gray-500 leading-relaxed"
+                 style="display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;"
+                 x-text="task.intent"></div>
+            <template x-if="task.status === 'complete' && task.response">
+              <div class="mt-1.5 text-xs text-green-500"
+                   x-text="(task.response.actions_taken || []).length + ' actions'"></div>
+            </template>
+            <template x-if="task.status === 'in_progress'">
+              <div class="mt-1.5 flex items-center gap-1.5">
+                <span class="spinner" style="width:10px;height:10px;"></span>
+                <span class="text-xs text-indigo-400">running</span>
+              </div>
+            </template>
+          </div>
+        </template>
+        <template x-if="recentTasks.length === 0">
+          <div class="text-xs text-gray-600 text-center mt-4">No builds yet</div>
+        </template>
+      </div>
+
+      <!-- Definitions quick list -->
+      <div class="border-t border-gray-800 px-4 py-3">
+        <div class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-2">Definitions</div>
+        <template x-for="d in definitions" :key="d.id">
+          <div class="flex items-center gap-2 py-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 flex-shrink-0"></span>
+            <span class="text-xs text-gray-400 truncate" x-text="d.name"></span>
+          </div>
+        </template>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+const AGENTIFIER_DEF_ID = '1ff77419-592f-4920-8359-86812ca79b0d';
+
+function agentifier() {
+  return {
+    input: '',
+    messages: [],
+    thinking: false,
+    lastTaskId: null,
+    recentTasks: [],
+    definitions: [],
+    agentInstanceId: null,
+
+    async init() {
+      await Promise.all([this.loadDefinitions(), this.loadRecentTasks()]);
+      await this.ensureInstance();
+    },
+
+    async ensureInstance() {
+      // Spawn a persistent Agentifier instance for the session
+      try {
+        const r = await fetch('/api/agents', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ definition_id: AGENTIFIER_DEF_ID, deployment: 'test' }),
+        });
+        const data = await r.json();
+        this.agentInstanceId = data.instance_id;
+      } catch (e) { console.error('Failed to spawn agentifier', e); }
+    },
+
+    async loadDefinitions() {
+      try {
+        const r = await fetch('/api/definitions');
+        this.definitions = await r.json();
+      } catch (e) {}
+    },
+
+    async loadRecentTasks() {
+      try {
+        const r = await fetch('/api/tasks');
+        const all = await r.json();
+        // Only show tasks run from this UI (agent_name matches)
+        this.recentTasks = all.filter(t => t.agent_name === 'The Agentifier').slice(0, 10);
+      } catch (e) {}
+    },
+
+    async send() {
+      const text = this.input.trim();
+      if (!text || this.thinking) return;
+      this.input = '';
+      this.messages.push({ role: 'user', content: text });
+      this.$nextTick(() => this.scrollDown());
+
+      if (!this.agentInstanceId) {
+        this.messages.push({ role: 'error', content: 'No agent instance — check that the Agentifier definition exists.' });
+        return;
+      }
+
+      this.thinking = true;
+
+      try {
+        const r = await fetch('/api/tasks', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            agent_instance_id: this.agentInstanceId,
+            intent: text,
+            permissions: ['file_read', 'file_write', 'bash_exec'],
+            max_iterations: 15,
+          }),
+        });
+        if (!r.ok) {
+          const err = await r.json();
+          throw new Error(err.error || r.status);
+        }
+        const { task_id } = await r.json();
+        this.lastTaskId = task_id;
+        await this.loadRecentTasks();
+        this.watchTask(task_id);
+      } catch (e) {
+        this.thinking = false;
+        this.messages.push({ role: 'error', content: 'Failed to submit: ' + e.message });
+        this.$nextTick(() => this.scrollDown());
+      }
+    },
+
+    watchTask(taskId) {
+      const ws = new WebSocket(`ws://${location.host}/ws/tasks/${taskId}`);
+      ws.onmessage = async (ev) => {
+        const msg = JSON.parse(ev.data);
+        if (msg.type === 'complete') {
+          this.thinking = false;
+          ws.close();
+          const result = msg.response?.result;
+          let text = '';
+          if (typeof result === 'string') text = result;
+          else if (result?.response) text = result.response;
+          else if (result?.written_files) text = 'Wrote: ' + result.written_files.join(', ');
+          else text = JSON.stringify(result, null, 2);
+          this.messages.push({ role: 'agent', content: text });
+          await this.loadRecentTasks();
+          await this.loadDefinitions();
+          this.$nextTick(() => this.scrollDown());
+        } else if (msg.type === 'failed') {
+          this.thinking = false;
+          ws.close();
+          this.messages.push({ role: 'error', content: msg.message || 'Task failed' });
+          await this.loadRecentTasks();
+          this.$nextTick(() => this.scrollDown());
+        }
+      };
+      ws.onerror = () => {
+        this.thinking = false;
+        this.messages.push({ role: 'error', content: 'WebSocket error — check server logs' });
+        this.$nextTick(() => this.scrollDown());
+      };
+    },
+
+    scrollDown() {
+      const el = this.$refs.msgList;
+      if (el) el.scrollTop = el.scrollHeight;
+    },
+
+    formatTime(iso) {
+      if (!iso) return '';
+      return new Date(iso).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    },
+  };
+}
+</script>
+</body>
+</html>

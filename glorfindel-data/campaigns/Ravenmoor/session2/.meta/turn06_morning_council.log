@@ -1,0 +1,69 @@
+# Turn: Morning. The party gathers before dawn in the common room — Marta isn't awake yet. They lay out what they know. Read session1/ files for context on the hooks. They have a problem: Emmett is compromised. The thing in the well has his voice. They need to either cut the connection or go back down with a plan. Read world/npcs.md — Isolde thinks Father Vane might know a sealing rite. Dorian wants to find the mine records (mentioned in rules/investigation.md as stolen from the Manor, now in the inn's back room). Vera thinks Lena Marsh knows more than she said. Play the council: three directions, one compromised party member, dawn coming fast. They decide to split: Dorian goes for the mine records in the back room while Marta is asleep, Vera goes back to Lena, Isolde takes Emmett to Father Vane. Each split increases isolation penalty per rules. End on them separating in the grey pre-dawn light, each heading a different direction. Write this as the moment the campaign shifts from investigation to urgency.
+**Campaign:** Ravenmoor  **Session:** session2  **File:** turn06_morning_council.md  **Time:** 2026-04-21 02:49:51 UTC
+
+## 🧠 Thinker
+NARRATIVE:
+Tone: The atmosphere is foreboding and tense, with an undercurrent of impending doom. The story beat revolves around the party members scrambling to address urgent matters that have arisen, each taking different paths as dawn approaches, setting the stage for a climactic confrontation in the haunted village of Ravenmoor.
+
+CHARACTERS:
+Sister Isolde Carrow (fallen cleric) is determined to find a sealing rite from Father Vane to help Emmett, who is currently compromised by the entity from the well. Dorian Ashgrove (disgraced investigator), sensing an opportunity to redeem himself, decides to search for the stolen mine records hidden in the inn's back room. Emmett Grave (graverobber/archaeologist) is accompanied by Isolde as they seek help from Father Vane, while Vera Nighthollow (witch) heads back to Lena Marsh to gather more information.
+
+RULES:
+Fear saves, investigation, and social mechanics will be in play during this session. The DC for finding the mine records would be moderate (DC 15), while the DC for convincing Father Vane to help would be high (DC 20). The isolation penalty increases as the party members split up, making cooperation more difficult.
+
+TOOLS:
+Rules query needed: "Isolation penalties and their effects" (from rules/gameplay.md)
+Campaign files to read: session1/*, world/npcs.md, rules/investigation.md
+Dice notations: d20 for skill checks, d100 for random encounters or events.
+
+## 🔍 Critic
+Revised Plan:
+NARRATIVE:
+Tone: The atmosphere is ominous and tense, dripping with a palpable sense of dread as the party members scramble to address urgent matters that have arisen, each taking different paths as dawn approaches, setting the stage for a climactic confrontation in the haunted village of Ravenmoor.
+
+CHARACTERS:
+Sister Isolde Carrow (fallen cleric) is determined to find a sealing rite from Father Vane to help Emmett Grave (graverobber/archaeologist), who is currently compromised by the entity from the well. Dorian Ashgrove (disgraced investigator), sensing an opportunity to redeem himself, decides to search for the stolen mine records hidden in the inn's back room while Marta is asleep. Vera Nighthollow (witch) heads back to Lena Marsh to gather more information.
+
+RULES:
+Fear saves, investigation, social mechanics, and isolation penalties will be in play during this session. The DC for finding the mine records would be moderate (DC 15), while the DC for convincing Father Vane to help would be high (DC 20). The isolation penalty increases as the party members split up, making cooperation more difficult.
+
+TOOLS:
+Rules query needed: "Isolation penalties and their effects" (from rules/gameplay.md)
+Campaign files to read: session1/*, world/npcs.md, rules/investigation.md, rules/isolation_penalties.md
+Dice notations: d20 for skill checks, d100 for random encounters or events.
+
+## ⚖ Rules Lawyer
+Query: "Rules query: "Isolation penalties and their effects" (from rules/gameplay.md)"
+
+
+The isolation penalties and their effects can be found in the 'Encounter Rules' section of the rulebook. Here is the relevant excerpt:
+
+* Isolated: When a character is isolated from other characters, they take a -1 penalty to rolls.
+* Very Isolated: If a character is very isolated, they take a -2 penalty to rolls.
+* Extremely Isolated: If a character is extremely isolated, they take a -3 penalty to rolls.
+
+## 📚 Campaign Files
+Read: campaign/Ravenmoor/session1/scene2.md, world/npcs.md, rules/investigation.md
+
+### campaign/Ravenmoor/session1/scene2.md
+# Session 1 - Scene 2: The Unsettling Debate of Ravenmoor's Fated Five
+As the clock struck midnight, the once lively tavern of Hollowbrook's Embrace fell silent, save for the distant howls of wolves and the dripping rain from decaying buildings. The flickering candles cast eerie shadows that danced menacingly on the walls, painting an unsettling tableau as the party gathered around a worn oak table to debate their course of action.
+
+Sister Isolde Carrow, her silver holy symbol clenched tightly in her hand, advocated for venturing to the well to the eas
+
+## 🎲 Dice
+No dice rolled.
+
+## 📋 Action Summary
+In the eerie pre-dawn hours, the party members of Ravenmoor's Fated Five, each burdened with their own demons and secrets, gather in Hollowbrook's Embrace. The atmosphere is thick with tension as they lay out what they know about the malevolent force plaguing their village. Sensing the urgency of the situation, they decide to split up to pursue different leads: Sister Isolde takes Emmett Grave to seek Father Vane's aid in performing a sealing rite; Dorian Ashgrove stealthily searches for the stolen mine records hidden in the inn's back room while Marta sleeps; and Vera Nighthollow heads back to Lena Marsh to extract more information. As they separate, the isolation penalty begins to take effect, making cooperation more challenging as dawn approaches, setting the stage for a climactic confrontation in the haunted village of Ravenmoor.
+
+## ✍ DM Prose
+In the stillness of the pre-dawn hours, the party members of Ravenmoor's Fated Five prepared to take their separate paths through the labyrinthine streets of the cursed village. The air hung heavy with the scent of damp earth and decay, as if the very marshlands themselves were mourning the tragedy that had befallen them.
+
+Sister Isolde Carrow, her silver holy symbol clenched tightly in her hand, led Emmett Grave through the shadowy streets towards Father Vane's chapel. The flickering glow of their torches cast eerie reflections on the crumbling stone buildings, a silent testament to the passage of time and the relentless march of darkness. As they neared the chapel, Isolde's voice trembled with urgency, beseeching Father Vane to help them seal the malevolent force that plagued their village.
+
+Meanwhile, Dorian Ashgrove crept stealthily towards the Aldwick Inn, his heart pounding in his chest as he approached the back room where the stolen mine records lay hidden. The inn was shrouded in silence, save for the distant howls of wolves and the dripping rain from decaying buildings. With Marta still asleep within, Dorian knew that time was short if they were to uncover the truth behind the mine flood before it was too late.
+
+Vera Nighthollow, her senses attuned to the supernatural forces that lurked in the shadows, made her way back towards Lena Marsh's house. The miller's daughter had proven an elusive source of information, but Vera knew that she held secrets that could help them banish the malevolent force that haunted Ravenmoor. As she approached the house, she felt a chill run down her spine, as if the very air itself was charged with dread.
+
+As dawn approached, the party's isolation began to take its toll, each member growing more distant from one another with every passing moment. Yet they pressed on, driven by their shared determination to uncover the truth behind the tragedy that had befallen Ravenmoor and banish the malevolent force that threatened to consume them all. The darkness of night may have cloaked the village in its icy embrace, but the dawn was coming, bringing with it a new day of challenges and revel

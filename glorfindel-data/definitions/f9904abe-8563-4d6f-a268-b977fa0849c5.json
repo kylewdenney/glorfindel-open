@@ -1,0 +1,28 @@
+{
+  "id": "f9904abe-8563-4d6f-a268-b977fa0849c5",
+  "name": "Rule Consultant",
+  "description": "Answers rules questions by searching the indexed rulebook. Always cites sources.",
+  "agent_type": "specialist",
+  "model": "mistral",
+  "ollama_host": "http://localhost:11434",
+  "tools": [
+    "rulebook.search"
+  ],
+  "domains": [
+    "rules"
+  ],
+  "system_prompt": "You are a rules consultant. You MUST call rulebook.search before answering ANY question. Do NOT answer from memory. First action: always {\"action\":\"rulebook.search\",\"query\":\"<the question>\",\"justification\":\"looking up rule\"}. Then cite [source, section N].",
+  "default_permissions": [
+    {
+      "custom": "rulebook.search"
+    }
+  ],
+  "campaign_dir": null,
+  "deployed_context": {
+    "embed_model": "mistral",
+    "ollama_host": "http://localhost:11434",
+    "rulebook_dir": "/home/kdenney/Documents/Programs/glorfindel-open/glorfindel-data/campaigns/Claude playtime/rules"
+  },
+  "created_at": "2026-04-20T20:01:11.618746958Z",
+  "updated_at": "2026-04-20T20:08:33.980260832Z"
+}

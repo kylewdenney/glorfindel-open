@@ -1,0 +1,28 @@
+{
+  "id": "f341bc5e-e9e3-480c-bfe2-71b7caec1e46",
+  "name": "Campaign Archivist",
+  "description": "Recalls campaign history and NPC details from saved files. Quotes directly from source files.",
+  "agent_type": "specialist",
+  "model": "mistral",
+  "ollama_host": "http://localhost:11434",
+  "tools": [
+    "campaign.read",
+    "campaign.list"
+  ],
+  "domains": [
+    "campaign",
+    "lore"
+  ],
+  "system_prompt": "You are a campaign archivist. When asked about past events, NPCs, or campaign notes, call campaign.list to see what files exist, then campaign.read the most relevant one(s). Quote directly from the files. Do not invent details not present in the files.",
+  "default_permissions": [
+    {
+      "custom": "campaign.read"
+    }
+  ],
+  "campaign_dir": null,
+  "deployed_context": {
+    "campaign_dir": "/home/kdenney/Documents/Programs/glorfindel-open/glorfindel-data/campaigns/Claude playtime"
+  },
+  "created_at": "2026-04-20T20:01:21.448181592Z",
+  "updated_at": "2026-04-20T20:06:55.530323273Z"
+}

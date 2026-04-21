@@ -1,0 +1,76 @@
+# Turn: Read session4/turn03_tower_climb.md and session3/turn03c_sealing_rite.md — Father Vane has performed two sealing rites: the mine doors, and Casimir. The party goes to the chapel before the mine. Father Vane is there. He is awake. He has been awake. When they tell him about the dry well, his face does something complicated. He sits down heavily in the front pew. He says: 'I sealed the mine doors eleven years ago. After the flood. I thought I was sealing the entity — the thing that had been calling the miners down. I nailed the iron. I spoke the rite. The calling stopped. I thought that was the proof.' He stops. He looks at his hands — the ones that no longer dream. 'But the entity in the well — the thing Vera said only wanted to be answered — if that was never the threat... then what was I sealing *in*?' Roll DC 15 Arcana for Vera (Arcana +5) to connect what she knows: the entity was pre-human, non-malevolent, question-shaped. It didn't flood the mine. If she succeeds: the entity wasn't down there. It was at the boundary. It was asking its question — 'what is the thing that existed before you knew you existed' — because the answer IS the thing in the mine. The entity was the warning. Father Vane sealed the warning out and the monster in. Apply dread. Play Father Vane understanding eleven years too late what he actually did.
+**Campaign:** Ravenmoor  **Session:** session5  **File:** turn02_father_vane.md  **Time:** 2026-04-21 03:38:10 UTC
+
+## 🧠 Thinker
+NARRATIVE:
+The tone is one of creeping horror and mounting dread as the party uncovers a dark secret from Ravenmoor's past, with Father Vane revealing his grave mistake in sealing an ancient entity that was meant to serve as a warning, unleashing a monster instead. The story beat involves the party discovering the truth about the entity and trying to find a way to undo Father Vane's mistake before it's too late.
+
+CHARACTERS:
+- Sister Isolde Carrow (fallen cleric): She is a devout follower of a forgotten god who has been banished from her order for heresy. She seeks redemption and will be crucial in understanding the ancient entity.
+- Dorian Ashgrove (disgraced investigator): A former member of the Inquisition, he was expelled for his unorthodox methods and now works as a private investigator. His skills in investigation will be useful in uncovering the truth about the entity.
+- Emmett Grave (graverobber/archaeologist): A thief with a passion for ancient artifacts, he has knowledge of the region's history that will prove valuable. He may also have connections to Father Vane and the church.
+- Vera Nighthollow (witch): A powerful witch who uses her magic to communicate with spirits and the supernatural. She was instrumental in identifying the entity in the well and will play a key role in understanding its true nature.
+
+RULES:
+The mechanics that apply in this scenario are fear saves, investigation, and social interaction. The DC for Vera's Arcana check to connect what she knows is 15 (Arcana +5).
+
+TOOLS:
+- Rules query needed: "Fear Saves"
+- Campaign files to read: session4/turn03_tower_climb.md, session3/turn03c_sealing_rite.md
+
+## 🔍 Critic
+The campaign plan for Ravenmoor is well-crafted, offering a rich gothic atmosphere and a compelling narrative that deepens the mystery of the ancient entity. Here are some suggestions to enhance the experience:
+
+1. Correct wrong DCs or missing mechanics: Although the DC for Vera's Arcana check is correctly stated, it might be beneficial to include fear saves for the mounting dread effect and potential encounters with the monster. Additionally, consider including DCs for Investigation checks as the party uncovers more information about the entity and Father Vane's mistake.
+
+2. Add gothic atmosphere: To further emphasize the creepy and atmospheric setting, incorporate sensory details such as the cold dampness of the chapel, the eerie echoes of footsteps in the mine, or the distant wails of wind through the ashfen marshes. Also, consider using descriptive language to portray Father Vane's emotional turmoil and remorse.
+
+3. Confirm/revise the tool list: The tools required for this campaign include the following:
+   - Rules query needed: "Fear Saves"
+   - Campaign files to read: session4/turn03_tower_climb.md, session3/turn03c_sealing_rite.md
+   - Additional tools: Fog of War for revealing the location and progression of the party and the monster, and a custom mood tracker to help maintain the gothic atmosphere throughout the sessions.
+
+## ⚖ Rules Lawyer
+Query: "Rules query needed: Fear Saves"
+
+
+To find the rules for Fear Saves, I used the following tool call:
+{"action":"rulebook.search", "query":"Fear Saves", "justification":"The player needs to know the rules for Fear Saves in the Ravenloft: Misty Hollows TTRPG campaign"}
+
+## 📚 Campaign Files
+Read: world/entity.md, rules/fear_and_dread.md, session4/turn03_tower_climb.md
+
+### rules/fear_and_dread.md
+# Fear, Dread, and Sanity — Gothic Horror Rules
+
+## Fear Saves
+When characters witness supernatural horror, they make a **Fear Save** (Wisdom save).
+- **DC 10**: Unsettling — shadow moves wrong, sounds from a sealed room.
+- **DC 13**: Disturbing — clear evidence of undead, violent unnatural death.
+- **DC 16**: Terrifying — face-to-face with an active supernatural threat.
+- **DC 19**: Soul-shaking — the void looks back, direct contact with the Horror.
+
+**On Failure**: The character gains 1 Dread Point and must roleplay fear for 1 round (flee, freeze, or scream).
+**On
+
+## 🎲 Dice
+1d20 → [10] = **10**
+1d20 → [14] = **14**
+1d20 → [9] = **9**
+1d20 → [5] = **5**
+
+## 📋 Action Summary
+This turn, the party encounters a significant revelation as Father Vane admits his grave mistake in sealing an ancient entity meant to serve as a warning, unleashing a monster instead. Vera successfully rolls a DC 15 Arcana check and realizes that the entity was pre-human, non-malevolent, and question-shaped. It wasn't down in the mine but at its boundary, asking its question — 'what is the thing that existed before you knew you existed' — because the answer IS the thing in the mine. The entity was a warning, and Father Vane sealed it out while sealing the monster in. The party now faces mounting dread as they try to find a way to undo Father Vane's mistake before it's too late. Fear Saves are applied to reflect the growing sense of horror.
+
+## ✍ DM Prose
+As the party ascends the east tower, each step is a testament to their resolve as they are drawn deeper into the heart of Ravenmoor's darkness. The air grows colder, heavier with the stench of decay and the whispers of the marsh. The incantations of Casimir grow louder, his spectral voice echoing through the ancient stones like a haunting dirge.
+
+Sister Isolde feels the weight of her fallen cleric status press down upon her shoulders, a heavy burden she carries with every step. Dorian Ashgrove, the disgraced investigator, clings to his faith in reason and logic, but even he cannot ignore the palpable dread that seeps into the very fabric of this cursed village.
+
+Emmett Grave, the graverobber, feels a strange sense of familiarity with the tower's damp walls, as if they speak of secrets long buried in the marsh. He glances at Vera Nighthollow, the witch, who seems to be in her element, her eyes gleaming with an otherworldly light.
+
+Father Vane stands at the landing below the top, his face etched with fear and determination. His voice barely audible, he warns them: "Whatever it asks you — do not answer. If you answer even once, it knows your voice." The gravity of his words hangs in the air like a shroud, adding to the growing sense of dread that surrounds them.
+
+The party reaches the top, the door ajar before them. Casimir's voice suddenly ceases, and an oppressive silence descends upon them. It is as if the very village holds its breath in anticipation of what lies beyond the door.
+
+Standing on the precipice of their greatest fear, the party members feel their hearts pounding in unison with the silence that surrounds them. The ghostly village of Ravenmoor watches from afar, its eerie presence a constant reminder of the horrors they are about to face. Isolde, Dorian, Emmett, and Vera stand united, bound together by their shared dread and determination to confront the darkness that threatens Ravenmoor.

@@ -5,6 +5,7 @@ members = [
     "crates/glorfindel-tools",
     "crates/glorfindel-agent",
     "crates/glorfindel-orchestrator",
+    "crates/glorfindel-admin",
 ]
 resolver = "2"
 
@@ -27,12 +28,25 @@ path = "examples/simple_task.rs"
 name = "register_agent"
 path = "examples/register_agent.rs"
 
+[[example]]
+name = "dm_assistant"
+path = "examples/dm_assistant.rs"
+
+[[bin]]
+name = "glorfindel-admin"
+path = "src/admin.rs"
+
+[[example]]
+name = "media_server"
+path = "local/media_server.rs"
+
 [dependencies]
 glorfindel-schemas = { path = "crates/glorfindel-schemas" }
 glorfindel-transport = { path = "crates/glorfindel-transport" }
 glorfindel-tools = { path = "crates/glorfindel-tools" }
 glorfindel-agent = { path = "crates/glorfindel-agent" }
 glorfindel-orchestrator = { path = "crates/glorfindel-orchestrator" }
+glorfindel-admin = { path = "crates/glorfindel-admin" }
 tokio = { version = "1", features = ["full"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }

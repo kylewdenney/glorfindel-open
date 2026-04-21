@@ -1,0 +1,11 @@
+As the sun's first light crept over the Ashfen Marshes, the gloom that cloaked Ravenmoor seemed to deepen, as if the very village held its breath in anticipation of the day ahead. The cobblestone streets echoed with the footsteps of the fallen cleric Sister Isolde Carrow, her heart heavy with the weight of her past sins and the impending darkness that threatened Ravenmoor.
+
+By her side, Dorian Ashgrove, the disgraced investigator, clung to his faith in reason and logic, but even he could not ignore the palpable dread that seeped into the very fabric of this cursed village. The spectral voice of Casimir Voss echoed through the ancient stones of Glorfindel Manor, his incantations growing louder with each passing moment.
+
+Emmett Grave, the graverobber, felt a strange sense of familiarity as he followed the others up the east tower, as if the damp walls whispered secrets long buried in the marsh. He glanced at Vera Nighthollow, the witch, who seemed to be in her element, her eyes gleaming with an otherworldly light that seemed to defy the encroaching darkness.
+
+Father Vane stood at the landing below them, his face etched with fear and determination. With a trembling voice, he warned them: "Whatever it asks you — do not answer. If you answer even once, it knows your voice." The gravity of his words hung in the air like a shroud, adding to the growing sense of dread that surrounded them.
+
+Isolde, Dorian, Emmett, and Vera stood united on the precipice of their greatest fear, each feeling their hearts pounding in unison with the oppressive silence that enveloped them. The ghostly village of Ravenmoor watched from afar, its eerie presence a constant reminder of the horrors they were about to face. As one, they stepped forward, bound together by their shared dread and determination to confront the darkness that threatened their home.
+
+The air grew colder as they entered Glorfindel Manor, the shadows seeming to dance and shift around them like spectral fingers reaching out from the darkness. The incantations of Casimir Voss grew louder still, a haunting dirge that seemed to echo through the very mar

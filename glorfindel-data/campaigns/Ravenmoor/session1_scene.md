@@ -1,0 +1,9 @@
+# Session 1 - The Haunting of Hollowbrook (Ravenmoor) - Scene 1: Arrival in Ebonhollow
+
+The dense fog clings to your clothes like a shroud, chilling you to the bone as you enter the desolate village of Ebonhollow, nestled deep within the Ashfen Marshes. The once vibrant cobblestone streets are now overgrown with weeds and moss, while the decaying buildings loom eerily in the distance, their windows boarded up or shattered. The oppressive silence is punctuated by the distant howls of wolves and the dripping of rain from the decaying roofs above.
+
+As you make your way through the village, a chill runs down your spine as if being watched by unseen eyes. The air seems thick with dread, suffocating any hope that Ebonhollow might once have known. You gather at the local tavern, The Raven's Rest, where Sister Isolde Carrow, Dorian Ashgrove, Emmett Grave, and Vera Nighthollow await your arrival.
+
+Sister Isolde, a fallen cleric who carries a silver holy symbol she no longer believes in, greets you with a weary smile. Dorian Ashgrove, the disgraced investigator dismissed for pursuing the Holloway disappearances of 1891, offers you a leather notebook filled with obsessive details and a bottle of gin. Emmett Grave, the cheerful graverobber turned archaeologist who calls himself an archaeologist, regales you with tales of his past exploits. Vera Nighthollow, the witch who lives on the edge of the law and the edge of the forest, speaks to the animals that gather around her.
+
+The villagers of Ebonhollow have been disappearing one by one, and it is your task to uncover the secrets buried beneath this cursed town's history. Will you be able to confront the malevolent forces plaguing Ebonhollow and solve the mystery that has haunted this village for decades?

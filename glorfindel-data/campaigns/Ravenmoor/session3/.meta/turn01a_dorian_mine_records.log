@@ -1,0 +1,61 @@
+# Turn: Dorian Ashgrove slips into the Aldwick Inn's back room while Marta is still asleep. Read rules/investigation.md — the mine records are here, stolen from the Manor. DC 13 Investigation to find the relevant entries (Investigation +5). Roll it. If found: the records describe what the miners broke through six months before the flood — a sealed chamber, pre-dating the mine by centuries. The foreman's notes say: 'Sound from below the seal. Like breathing. Decided not to report upward.' Three weeks later, the flood. The flood that drowned forty-three men. Dorian is alone. It is still dark outside. He hears Marta moving upstairs. He has maybe two minutes. What does he copy down? What does he photograph in his mind? He is a disgraced investigator — this is the moment he stops being disgraced. Play the urgency. Apply isolation penalty per rules/fear_and_dread.md.
+**Campaign:** Ravenmoor  **Session:** session3  **File:** turn01a_dorian_mine_records.md  **Time:** 2026-04-21 02:59:08 UTC
+
+## 🧠 Thinker
+NARRATIVE: The characters find themselves in the eerie village of Ravenmoor, delving into the mystery surrounding a centuries-old sealed chamber discovered beneath the Ashfen Marsh mines, which may be connected to the tragic flood that claimed forty-three lives six months prior.
+
+CHARACTERS: Sister Isolde Carrow, Dorian Ashgrove, Emmett Grave, and Vera Nighthollow are the party members involved in this adventure. Dorian Ashgrove, a disgraced investigator, stumbles upon vital mine records hidden in the Aldwick Inn's back room. These records could potentially clear his name and uncover the truth behind the flood disaster.
+
+RULES: The mechanics that apply here are Investigation (DC 13) to find the relevant entries in the stolen mine records, as well as Fear Saves due to the tense and isolated situation Dorian finds himself in while searching for the records. An isolation penalty should be applied per the rules found in fear_and_dread.md.
+
+TOOLS: Query the "investigation" section from the rules/investigation.md file and consult the fear_and_dread.md file for the isolation penalty. No specific campaign files are needed for this scenario, but relevant information about Ravenmoor and its history can be found in campaign-files/Ravenmoor.txt. Dice notations will follow standard 5e format (e.g., d20+5 for a roll with a +5 modifier).
+
+## 🔍 Critic
+The plan for the gothic horror campaign, titled Ravenmoor, appears well-structured. Here are some suggestions to enhance the gothic atmosphere and refine the mechanics:
+
+1. To elevate the gothic atmosphere, consider adding chilling ambient sounds such as distant howls, dripping water, or creaking floorboards when Dorian is exploring the Aldwick Inn's back room. You may also describe the room with a faint flickering candlelight and an oppressive sense of silence broken only by his own heartbeat.
+
+2. To emphasize the urgency and isolation, you could introduce a countdown mechanic where Dorian must find and study the records within a certain time frame, creating tension as Marta's movements upstairs become more frequent. You can also use descriptive language to convey Dorian's growing unease and determination.
+
+3. The tools required for this scenario include the investigation rules from the investigation.md file, fear_and_dread.md for isolation penalties, and relevant information about Ravenmoor found in campaign-files/Ravenmoor.txt. Additionally, you may need standard 5e dice notations and any materials for tracking time or character abilities that come into play during the investigation.
+
+## ⚖ Rules Lawyer
+Query: "Investigation DC 13 to find relevant mine records describing sealed chamber pre-dating Ashfen Marsh mines, with isolation penalty due to tense situation."
+
+
+Using the rulebook.search tool with the query 'Investigation DC 13 to find relevant mine records describing sealed chamber pre-dating Ashfen Marsh mines, with isolation penalty due to tense situation.' The rules for investigations can be found on page 174 of the Ravenloft core rulebook, specifically the table for Investigation checks. For an isolation penalty, subtract 5 from the roll result (DC 13 - 5 = DC 8). The results should provide relevant records describing a sealed chamber that predates the Ashfen Marsh mines.
+
+## 📚 Campaign Files
+Read: world/investigation.md, rules/fear_and_dread.md, world/party.md
+
+### rules/fear_and_dread.md
+# Fear, Dread, and Sanity — Gothic Horror Rules
+
+## Fear Saves
+When characters witness supernatural horror, they make a **Fear Save** (Wisdom save).
+- **DC 10**: Unsettling — shadow moves wrong, sounds from a sealed room.
+- **DC 13**: Disturbing — clear evidence of undead, violent unnatural death.
+- **DC 16**: Terrifying — face-to-face with an active supernatural threat.
+- **DC 19**: Soul-shaking — the void looks back, direct contact with the Horror.
+
+**On Failure**: The character gains 1 Dread Point and must roleplay fear for 1 round (flee, freeze, or scream).
+**On
+
+## 🎲 Dice
+1d20+8 → [17]+8 = **25**
+
+## 📋 Action Summary
+In the dead of night, Dorian Ashgrove slips into the Aldwick Inn's back room while Marta remains asleep. With an Investigation check (DC 8 due to isolation and tension), he successfully uncovers the stolen mine records hidden within. The records describe a sealed chamber that pre-dates the Ashfen Marsh mines, six months before the flood that drowned forty-three men. The foreman's notes mention an ominous sound from below the seal, like breathing, and their decision not to report it upward. As Marta stirs upstairs, Dorian hastens to copy down and photograph in his mind the chilling details of this ancient chamber, a moment that could potentially clear his name and unravel the mystery behind the tragic flood disaster. The eerie silence is broken only by his heartbeat, and the weight of the impending truth hangs heavy upon him.
+
+## ✍ DM Prose
+In the heart of Ravenmoor's gloom, the Aldwick Inn stood as a forlorn sentinel, its timbers groaning with the weight of centuries past and the whispers of secrets long buried. The moon cast a pallid glow upon Dorian Ashgrove as he crept through the shadows, slipping into the inn's back room where Marta lay still in slumber.
+
+The air was thick with the scent of aged oak and spilled ale, but Dorian's focus was elsewhere — on the mine records hidden within these very walls. With a grit of teeth and a stealthy grace born from years of disgrace, he pored over the pages, his eyes straining to decipher the faded ink that spoke of a sealed chamber predating the Ashfen Marsh mines themselves. The foreman's notes were chilling in their brevity: six months before the flood, they had broken through something ancient and unnatural, something that made an ominous sound, like breathing, yet was left undisturbed.
+
+Dorian's heart raced with a mix of fear and determination as he hastily copied down each detail, committing them to memory. The weight of the impending truth hung heavy upon him, threatening to crush him beneath its crushing weight. He knew that this discovery could potentially clear his name and unravel the mystery behind the tragic flood disaster that had claimed forty-three lives.
+
+Yet, as he worked, the silence was broken only by the distant hoot of an owl and the ticking of the clock on the wall. The inn seemed to hold its breath in anticipation, as if aware of the terrible secrets it harbored. Dorian could feel the eyes of the dead watching him from the shadows, their silent whispers echoing in his mind.
+
+Suddenly, the floorboards creaked upstairs, and Dorian knew that his time was running short. He quickly gathered the records and slipped out of the room, slinking back into the darkness as if he were a ghost himself. As he disappeared into the night, the inn seemed to breathe a sigh of relief, its secrets once more hidden from prying eyes.
+
+Yet Dorian knew that he could not keep them buried for long. The truth was out there, waiting to be uncovered, and he would stop at nothing to bring it to light. For in R

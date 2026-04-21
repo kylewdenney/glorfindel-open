@@ -1,0 +1,9 @@
+In the wan light of the approaching dawn, Vera Nighthollow stepped into a world that seemed to have forgotten the passage of time. The Ashfen Marshes held their breath as she ventured towards Lena Marsh's cottage, nestled in the heart of Ravenmoor's desolation. The air was heavy with the scent of decay and the distant call of spectral wolves echoed through the marsh.
+
+Upon entering the cottage, Vera found herself seated across from Lena, her face etched with a melancholy that seemed to transcend time itself. As Vera asked about Lena's last departure and the current year, a palpable silence descended upon them, broken only by the dripping of rain against the cottage walls.
+
+Lena's response was slow, as if she were recounting memories from an age long past. Her eyes, though vacant, seemed to hold a depth that spoke of centuries of sorrow and loss. Vera listened intently, her heart racing with anticipation as Lena revealed the existence of an ancient entity buried beneath the village's well.
+
+Vera's successful Arcana check brought forth a revelation that sent shivers down her spine. This entity was older than Ravenmoor itself, a malevolent force that had gone unanswered for centuries. It was not intent on causing harm but demanded answers instead, its presence a constant reminder of the village's dark past.
+
+As Vera sat in the gloom-filled cottage, she could feel the weight of history bearing down upon her. The knowledge of this ancient entity's existence threatened to shatter the foundations of Ravenmoor and cast a shadow over the lives of its inhabitants. Vera knew that their investigation had only just begun, and with each new revelation, the darkness seemed to grow ever more insidious.

@@ -1,0 +1,67 @@
+# Turn: Write the summary of Session 5. Read all of the files in the directory and present the conclusion.
+**Campaign:** Ravenmoor  **Session:** session5  **File:** session_summary_.md  **Time:** 2026-04-21 04:03:55 UTC
+
+## 🧠 Thinker
+NARRATIVE: In Session 5 of the Ravenmoor campaign, the party finds themselves delving deeper into the heart of darkness as they investigate a series of gruesome murders that have befallen the village. The villagers' fear is palpable, and whispers of an ancient curse haunt the air.
+
+CHARACTERS: Sister Isolde Carrow, fallen cleric of Sarenrae, uses her faith to guide her through the darkness; Dorian Ashgrove, a disgraced investigator seeking redemption, brings his skills in deduction and investigation to bear on the case; Emmett Grave, a graverobber/archaeologist, uncovers clues from the past that may hold the key to stopping the murders; Vera Nighthollow, a powerful witch, relies on her magical abilities to protect the party and uncover the truth.
+
+RULES: Fear saves will be essential as the characters encounter increasingly terrifying sights and sounds. Investigation skills will be crucial for unraveling the mystery behind the murders. Social checks will come into play as the party interacts with the villagers, some of whom may hold key information or be hiding secrets. DCs will range from 15 to 25, depending on the difficulty of the task at hand.
+
+TOOLS: Rules query needed for fear saves and investigation mechanics. Campaign files to read: "Ravenmoor_Session_5.pdf", "Ravenmoor_NPCs.docx", "Ashfen_Marshes_Lore.txt". Dice notations will follow the standard of d20+modifier for rolls.
+
+## 🔍 Critic
+In Session 5 of the Ravenmoor campaign, the party delves deeper into the heart of darkness as they investigate a series of gruesome murders that have befallen the village. The gothic atmosphere is thick with palpable fear and whispers of an ancient curse.
+
+The characters, Sister Isolde Carrow (DC 18 for Religion checks to guide her through the darkness), Dorian Ashgrove (DC 20 for Investigation checks to bring his skills in deduction and investigation to bear on the case), Emmett Grave (DC 20 for Archaeology checks to uncover clues from the past), and Vera Nighthollow (DC 18 for Arcana checks to protect the party and uncover the truth) will encounter increasingly terrifying sights and sounds that require Fear saves.
+
+As the party interacts with the villagers, some of whom may hold key information or be hiding secrets, Social checks (DC 15-20) will come into play. The rules for fear saves and investigation mechanics are yet to be clarified, but it is suggested that dice notations follow the standard of d20+modifier for rolls.
+
+Additional tools required include reading the files "Ravenmoor_Session_5.pdf", "Ravenmoor_NPCs.docx", and "Ashfen_Marshes_Lore.txt" to ensure a smooth and immersive session.
+
+## ⚖ Rules Lawyer
+Query: "Fear saves and investigation rules for Session 5 of Ravenmoor campaign, read "Ravenmoor_Session_5.pdf", "Ravenmoor_NPCs.docx", and "Ashfen_Marshes_Lore.txt" for additional information."
+
+
+Initiating search for Fear saves and investigation rules in Session 5 of Ravenmoor campaign.
+First, I will search the rulebook:
+rulebook.search {"query":"Fear saves and investigation rules for Session 5 of Ravenmoor campaign"}
+Next, I will check additional resources: 'Ravenmoor_Session_5.pdf', 'Ravenmoor_NPCs.docx', and 'Ashfen_Marshes_Lore.txt'
+After collecting all the relevant information, I will provide the rules verbatim.
+
+## 📚 Campaign Files
+Read: session5/TURNS.md, session5/turn01_morning.md, session5/turn02_father_vane.md
+
+### session5/TURNS.md
+# Ravenmoor / session5 — Turn Index
+
+| # | Time (UTC) | Data plane | Control plane | Dice | Summary |
+|---|-----------|-----------|--------------|------|---------|
+| 1 | 03:38:07 | [turn01_morning.md](turn01_morning.md) | [.meta/turn01_morning.log](.meta/turn01_morning.log) | 1d20+3 | In the dim light of dawn, the party finds itself gathered at the Aldwick Inn, each lost in their own thoughts and fears. |
+| 2 | 03:38:48 | [turn02_father_vane.md](turn02_father_vane.md) | [.meta/turn02_father_vane.log](.meta/turn02_father_vane.log) | 1d20, 1d20, 1d20, 1d20 | This turn, the 
+
+## 🎲 Dice
+1d20+3 → [12]+3 = **15**
+1d20 → [19] = **19**
+1d20 → [14] = **14**
+1d20 → [14] = **14**
+1d20 → [11] = **11**
+1d20 → [6] = **6**
+
+## 📋 Action Summary
+In Session 5 of the Ravenmoor campaign, the party finds themselves at the Aldwick Inn as dawn breaks over the Ashfen Marshes. A sense of foreboding hangs heavy in the air, and Old Tomas warns them that the eastern well has run dry for the first time in living memory. Dorian Ashgrove makes an Insight check (15) to discern the gravity of the situation, sensing a connection between this event and their investigation into the village's recent murders.
+
+The party prepares to journey to the mine, feeling the call of the darkness that plagues Ravenmoor. As they ascend the east tower, they hear the incantations of Casimir Voss growing louder, his spectral voice echoing through the ancient stones like a haunting dirge. Faced with the unknown horrors that await them, they stand united in their determination to confront the darkness and protect Ravenmoor from its curse.
+
+## ✍ DM Prose
+As the sun's first light crept over the Ashfen Marshes, the gloom that cloaked Ravenmoor seemed to deepen, as if the very village held its breath in anticipation of the day ahead. The cobblestone streets echoed with the footsteps of the fallen cleric Sister Isolde Carrow, her heart heavy with the weight of her past sins and the impending darkness that threatened Ravenmoor.
+
+By her side, Dorian Ashgrove, the disgraced investigator, clung to his faith in reason and logic, but even he could not ignore the palpable dread that seeped into the very fabric of this cursed village. The spectral voice of Casimir Voss echoed through the ancient stones of Glorfindel Manor, his incantations growing louder with each passing moment.
+
+Emmett Grave, the graverobber, felt a strange sense of familiarity as he followed the others up the east tower, as if the damp walls whispered secrets long buried in the marsh. He glanced at Vera Nighthollow, the witch, who seemed to be in her element, her eyes gleaming with an otherworldly light that seemed to defy the encroaching darkness.
+
+Father Vane stood at the landing below them, his face etched with fear and determination. With a trembling voice, he warned them: "Whatever it asks you — do not answer. If you answer even once, it knows your voice." The gravity of his words hung in the air like a shroud, adding to the growing sense of dread that surrounded them.
+
+Isolde, Dorian, Emmett, and Vera stood united on the precipice of their greatest fear, each feeling their hearts pounding in unison with the oppressive silence that enveloped them. The ghostly village of Ravenmoor watched from afar, its eerie presence a constant reminder of the horrors they were about to face. As one, they stepped forward, bound together by their shared dread and determination to confront the darkness that threatened their home.
+
+The air grew colder as they entered Glorfindel Manor, the shadows seeming to dance and shift around them like spectral fingers reaching out from the darkness. The incantations of Casimir Voss grew louder still, a haunting dirge that seemed to echo through the very mar

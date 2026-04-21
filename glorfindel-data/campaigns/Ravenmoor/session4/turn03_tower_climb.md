@@ -1,0 +1,9 @@
+As the party nears the top of the east tower stairs, the rhythmic incantations of Casimir grow louder, a chilling symphony that echoes through the damp walls. The stone beneath their feet is slick with water, seeping through the cracks in an impossible deluge given the tower's height. The air is heavy, suffocating, and each breath feels like a gulp of the marsh itself.
+
+Father Vane, a beacon of hope amidst the darkness, stops at the landing below the top. His eyes are filled with a mixture of fear and determination as he turns to face the party. He speaks in hushed tones, his voice barely audible over Casimir's murmurings: "Whatever it asks you — do not answer. If you answer even once, it knows your voice."
+
+His gaze lingers on Emmett, and the graverobber understands the weight of Father Vane's words. He remembers the sealing rite from Session 3, the ritual that bound Casimir for a time but left him vulnerable. The party members roll their Wisdom saving throws (DC 14), some with advantage due to Emmett's successful sealing rite, while others suffer disadvantage due to its failure.
+
+Despite the fear etched on their faces, they continue upward, reaching the top. The door is ajar, and Casimir's voice suddenly stops. A profound silence settles over them — a silence that has been absent for three weeks since Casimir last echoed through Ravenmoor. It is as if the village itself holds its breath in anticipation of what lies beyond the door.
+
+Sister Isolde, Dorian Ashgrove, Emmett Grave, and Vera Nighthollow stand on the precipice of their greatest fear, their hearts pounding in unison with the silence that surrounds them. The ghostly village of Ravenmoor watches from afar, its eerie presence a constant reminder of the horrors they are about to face.

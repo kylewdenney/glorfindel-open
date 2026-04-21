@@ -1,0 +1,9 @@
+In the somber hours before dawn, the village of Ravenmoor awakens to a symphony of shadows cast by the waning moon. The chapel's cold stone walls embrace Sister Isolde Carrow and Dorian Ashgrove as they tread through the graveyard, the whispers of ancestors echoing in the wind like spectral lamentations.
+
+The heavy oak doors creak open to reveal Father Vane within, his trembling form a testament to the toll that sealing Ravenmoor's darkness has taken on him. His eyes lock onto Emmett Grave as if he could see the ghostly imprint of the well clinging to his very essence. With a weary sigh, Father Vane retreats to the vestry and returns with an ominous bundle wrapped in cloth: iron nails, the same kind Old Tomas carries, and a vial that smelled of seawater and ash.
+
+"I can sever the connection," he says, his voice quivering with a mixture of certainty and fear. "But it will cost you dearly." His eyes plead with Emmett as he recounts the price he paid: no more dreams, no more sleep. With a heavy heart, Emmett consents to the ritual.
+
+Isolde steps forward, her faith in the divine guiding her through the intricate motions of the rite. She places the iron nails in a circle and pours the ash-water into its center. Father Vane's voice shakes as he intones the incantation, his words echoing off the walls of the chapel like spectral whispers.
+
+As the ritual unfolds, an air of tension fills the space. Dorian Ashgrove watches with bated breath, while Vera Nighthollow feels a strange energy stirring within her. The outcome of the rite is uncertain, but whatever leaves Emmett will forever change the course of their journey through Ravenmoor.

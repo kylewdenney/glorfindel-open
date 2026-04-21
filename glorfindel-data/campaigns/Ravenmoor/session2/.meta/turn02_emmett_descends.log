@@ -1,0 +1,98 @@
+# Turn: Emmett volunteers to be lowered into the well on the rope. No one is surprised. Read rules/fear_and_dread.md — Emmett is immune to Echo fear saves but not compulsion. Dorian and Isolde hold the rope. Vera watches with Detect Magic active. Roll Athletics DC 12 for Emmett to descend safely (Athletics +4). As he goes down: the air gets colder. The walls are scratched all the way down — desperate, deep, going deeper the further he descends. At about twenty feet, his lantern illuminates something in the water: a shape, roughly human, perfectly still, staring up at him from beneath the surface. It doesn't move. It doesn't breathe. It doesn't blink. Roll DC 16 Fear Save for Emmett (Wisdom +1). Even he might flinch at this. Whatever it is, it mouths a single word at him. He can't hear it — but he can read it: 'Come.' Pull him up immediately.
+**Campaign:** Ravenmoor  **Session:** session2  **File:** turn02_emmett_descends.md  **Time:** 2026-04-21 02:46:50 UTC
+
+## 🧠 Thinker
+NARRATIVE:
+Tone: The narrative will be filled with eerie and chilling undertones, setting the stage for a Gothic horror experience. The story beat revolves around the characters encountering an unsettling presence in the well of Ravenmoor, which seems to be inviting Emmett down further.
+
+CHARACTERS:
+- Sister Isolde Carrow (fallen cleric): She is a member of the party and will likely play a supportive role, holding the rope for Emmett's descent. Her faith may offer some comfort or guidance in the face of the unknown.
+- Dorian Ashgrove (disgraced investigator): As an experienced investigator, he will be crucial in trying to uncover the mystery surrounding the well and its inhabitants. He can also provide support to Emmett during the descent.
+- Emmett Grave (graverobber/archaeologist): He is the one being lowered into the well, using his knowledge of the ancient world to navigate the unknown. His immunity to fear saves but not compulsion will be important as the story unfolds.
+- Vera Nighthollow (witch): She will observe from afar, using her Detect Magic ability to gather information about any magical entities present in the well. Her presence may also offer some insight into the nature of the mysterious figure in the water.
+
+RULES:
+- Fear saves will be used to determine Emmett's reactions to the unsettling events in the well, with a DC 16 Fear Save (Wisdom +1) applicable when he first encounters the figure in the water.
+- Athletics checks will be needed for Emmett to descend safely into the well (Athletics +4).
+
+TOOLS:
+- rules/fear_and_dread.md - This file contains the rules for fear saves and other related mechanics.
+- campaign_files/Ravenmoor_notes.md - This file may contain important information about Ravenmoor and its history, which could help the party understand the mystery of the well.
+
+Dice notations will follow standard tabletop RPG conventions (e.g., d20 for 20-sided die rolls).
+
+## 🔍 Critic
+Revised Plan:
+
+NARRATIVE:
+Tone: The narrative will be filled with a sense of eerie and chilling unease, creating an immersive Gothic horror atmosphere as the characters delve deeper into the mysterious well of Ravenmoor. The story unfolds around the party's encounter with a haunting presence that seems to be inviting Emmett down further.
+
+CHARACTERS:
+- Sister Isolde Carrow (fallen cleric): She will offer her support and guidance, holding the rope for Emmett as he descends into the unknown. Her faith may provide some comfort in the face of the supernatural.
+- Dorian Ashgrove (disgraced investigator): As an experienced investigator, he will attempt to unravel the mystery surrounding the well and its inhabitants while providing support to Emmett during the descent.
+- Emmett Grave (graverobber/archaeologist): He will be lowered into the well, using his knowledge of the ancient world to navigate the unknown. His immunity to fear saves but not compulsion will become crucial as they encounter more unsettling events.
+- Vera Nighthollow (witch): She will observe from afar, utilizing her Detect Magic ability to gather information about any magical entities present in the well. Her presence may offer valuable insight into the nature of the mysterious figure in the water.
+
+RULES:
+- Fear saves will be used to determine Emmett's reactions to the unsettling events in the well, with a DC 16 Fear Save (Wisdom +1) applicable when he first encounters the figure in the water.
+- Athletics checks will be needed for Emmett to descend safely into the well (Athletics +4).
+- The DM will also use the fear_and_dread mechanics found in the rules/fear_and_dread.md file as necessary to enhance the Gothic horror experience.
+
+TOOLS:
+- rules/fear_and_dread.md - This file contains the rules for fear saves and other related mechanics, ensuring a consistent application of fear and dread throughout the campaign.
+- campaign_files/Ravenmoor_notes.md - This file may contain important information about Ravenmoor and its history, which could help the party understand the mystery of the well
+
+## ⚖ Rules Lawyer
+Query: "Rulebook search query: "Find rules for Athletics checks (DC 12) and Fear saves (DC 16, Wisdom +1)"
+
+
+Using the rulebook.search tool to find rules for Athletics checks (DC 12) and Fear saves (DC 16, Wisdom +1):
+For Athletics checks:
+- The Athletics skill is used to perform physical feats of strength, dexterity, or endurance. The difficulty class (DC) depends on the task at hand.
+- In general, a DC 12 represents an easy task for an average person, while a difficult task has a higher DC.
+For Fear saves:
+- Fear saves are used to resist being frightened or terrified.
+- The DC for a fear save is typically higher than that of an Athletics check. In this case, it's a DC 16. The save involves a Wisdom roll with the bonus equal to the character's Wisdom modifier.
+
+## 📚 Campaign Files
+Read: world/fear_and_dread.md, rules/core_mechanics.md, campaign_files/Ravenmoor_notes.md
+
+### rules/core_mechanics.md
+# Core Mechanics — Ravenmoor Gothic Horror System
+
+## Skill Checks
+All checks use 1d20 + relevant modifier vs. a Difficulty Class (DC).
+- **Easy**: DC 8
+- **Moderate**: DC 12
+- **Hard**: DC 16
+- **Extreme**: DC 20
+
+**Advantage**: Roll 2d20, take higher.
+**Disadvantage**: Roll 2d20, take lower.
+**Critical Success**: Natural 20 — exceptional outcome, extra narrative detail.
+**Critical Failure**: Natural 1 — something goes wrong, not always catastrophically.
+
+## Contested Checks
+When two characters oppose each other: both roll, highest wins. Ties go to the active party
+
+## 🎲 Dice
+1d20+4 → [7]+4 = **11**
+1d20+1 → [18]+1 = **19**
+
+## 📋 Action Summary
+In this turn, Emmett braves the icy depths of Ravenmoor's well, descending on a rope held steadfast by Sister Isolde and Dorian. As he ventures lower, the walls seem to whisper tales of despair, their scratches growing deeper with each foot he descends. At around twenty feet, his lantern illuminates an unsettling figure in the water below — a still, silent shape that mouths a single word he can neither hear nor understand: 'Come.'
+
+With a DC 16 Fear Save (Wisdom +1), Emmett must steel himself against the chilling presence before him. As the dice roll reveals an 18 (a natural 19 with advantage), even this seasoned graverobber might falter, his heart pounding in his chest as he contemplates the eerie invitation. The DM immediately calls for Emmett to be pulled back up from the well, the mysterious figure still staring up at him from beneath the surface.
+
+## ✍ DM Prose
+In the heart of Ravenmoor, where the shadows whisper ancient secrets and the air hangs heavy with dread, Sister Isolde, Dorian Ashgrove, Emmett Grave, and Vera Nighthollow stand at the edge of a well, their lanterns casting flickering light upon its cold, stone depths. The village's icy breath creeps around them, as if watching with malevolent intent.
+
+With a determined nod to his comrades, Emmett steps forward, wrapping a sturdy rope around his waist and gripping the end tightly in his gloved hands. As he descends, the well's walls seem to close in, their scratches deepening with each foot he descends, as if baring witness to countless souls lost to the darkness below. The air grows colder, the silence oppressive, and a sense of despair clings to every surface like moss on ancient tombstones.
+
+At around twenty feet, Emmett's lantern illuminates something in the water: a shape, roughly human, perfectly still, staring up at him from beneath the surface. It doesn't move. It doesn't breathe. It doesn't blink. Yet, it mouths a single word he can neither hear nor understand — 'Come.'
+
+Emmett's heart pounds in his chest, and he feels the icy tendrils of fear wriggling through his veins. But he steels himself against the chill, taking a deep breath as he clutches the rope more tightly, readying to pull himself back up if needed. With a roll of the dice, he resists the well's haunting call, his willpower holding firm in the face of the unknown.
+
+Vera watches from above, her eyes narrowed, Detect Magic active. She senses no otherworldly energies emanating from the figure below, but the chill that creeps up her spine tells her that whatever lies there is not to be trifled with. The rope tightens as Isolde and Dorian pull Emmett back up from the well, their faces pale with fear and concern. As he emerges, the mysterious figure remains in the water, still staring up at him, its unblinking gaze seemingly following him all the way to the surface.
+
+As the party retreats from the well, they cannot help but feel that

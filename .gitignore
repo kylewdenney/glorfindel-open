@@ -1,0 +1,7 @@
+# Build artifacts
+/target/
+
+# Runtime data — personal campaigns excluded, Ravenmoor playground included
+glorfindel-data/campaigns/shire/
+"glorfindel-data/campaigns/Claude playtime/"
+glorfindel-data/campaigns/Claude playtime/

@@ -1,0 +1,11 @@
+In the heart of Ravenmoor, under the oppressive canopy of the Ashfen Marshes, a frigid wind whispers through the deserted streets, carrying with it the eerie scent of damp earth and decay. The villagers huddle in their homes, their eyes wide with fear as water flows uphill, defying the very laws of nature, streaming through the village like veins filled with darkest blood.
+
+At the center of this macabre spectacle stands Casimir Voss, his face etched with the weight of a thousand nightmares and an exhaustion borne from many sleepless nights. He holds aloft a tattered parchment, its ink faded but still legible: the true name that has haunted Ravenmoor for over a decade. His voice carries across the square, wavering with emotion as he declares, "This is what it sought all along—to be remembered. It asked, and now it knows."
+
+The air hangs heavy with dread, pressing down on the shoulders of Sister Isolde Carrow. Her heart races, but her hands remain steady as she recalls ancient scriptures that speak of entities bound by their names. A successful Religion check (d20+19) illuminates a path forward, though one fraught with peril and power. She whispers to herself, "A name holds the essence—to know it is to wield it."
+
+Across the square, Dorian Ashgrove watches Casimir intently. He has seen many things that defy explanation, but this…this feels different. The parchment in Voss's hands holds the key to understanding the horror that grips Ravenmoor, and he knows it. He grabs his notebook, determined to uncover the truth, no matter the cost.
+
+Emmett Grave, ever the curious archaeologist, approaches Casimir cautiously. His heart pounds in his chest as he looks at the parchment, but he feels a strange sense of excitement. This is what he has been seeking—the unknown, the forbidden. He reaches out, almost touching the paper, before hesitating. His years of grave-robbing have taught him that some things are better left buried.
+
+Vera Nighthollow, her eyes glowing with an otherworldly light, studies Casimir from a distance. She can feel the
