@@ -1,6 +1,8 @@
 # Glorfindel
 
-A local-first agentic AI framework built on OMS pub/sub principles — and a gothic horror TTRPG Dungeon Master that runs entirely on your machine.
+A local-first agentic AI framework built on OMS pub/sub principles — and a TTRPG Dungeon Master that runs entirely on your machine.
+
+> **Just want to play?** See [CAMPAIGNS.md](CAMPAIGNS.md).
 
 ## What is this?
 
@@ -8,7 +10,7 @@ Glorfindel is two things:
 
 **1. An agentic AI framework** built in Rust. Agents communicate over a dual-transport bus (ZeroMQ data plane, DDS control plane), execute permission-gated tools, and run inference through a local Ollama instance. No cloud required.
 
-**2. A DM Dashboard** — a full web UI for running tabletop RPG sessions using local LLMs. It ships with the complete *Ravenmoor* gothic horror campaign (Sessions 1–7) as a public domain AI-generated playground, free to fork and run.
+**2. A DM Dashboard** — a full web UI for running tabletop RPG sessions using local LLMs. Ships with two public domain campaigns: *Ravenmoor* (gothic horror, Sessions 1–7) and *Avalon* (Gaelic Fae Arthurian, Session 1 complete + Session 2 opening). Both include full pipeline logs for transparency.
 
 ---
 
@@ -29,25 +31,33 @@ ollama pull mistral
 ### Features
 
 - **Session pipeline** — Thinker → Critic → Rules Lawyer → Campaign Referencer → Dice Roller → DM Writer. Every step traced to a `.meta/*.log` file.
+- **Player Turn pipeline** — What Happened Critic → Rules Assessor → Dice Executor → DM Writer → Summarizer. Pick a character, describe an action, get a scene.
+- **Play Mode** — toggle the dashboard into player mode: select your character, type what you do, hit Take Action.
 - **Live message bus** — ZMQ PUB/SUB + WebSocket feed. Watch every agent spawn, tool call, and file write in real time on the bus panel.
 - **Chat-room log viewer** — open any `.meta/*.log` and see the full control plane as colour-coded chat bubbles. Each pipeline stage is its own message.
 - **Map-reduce session summarizer** — condenses each turn individually, then synthesises a 5-paragraph recap. Fits inside a 7B context window.
-- **⚔ GRAND OPENER** — reads the previous session's summary, extracts the darkest thread, adds a twist, and writes the opening scene of the next session in media res.
+- **Grand Opener / Eucatastrophe** — reads the previous session's summary, extracts the darkest thread, adds a twist, and writes the opening scene of the next session in media res.
 - **Dice roller, lore lookup, rules query** — all wired to the same local agent infrastructure.
 
-### Ravenmoor — Public Domain Playground
+### Campaigns — Public Domain Playgrounds
 
-`glorfindel-data/campaigns/Ravenmoor/` contains a complete AI-generated gothic horror campaign:
+See [CAMPAIGNS.md](CAMPAIGNS.md) for the full player-facing guide.
 
-| Session | Title | Hook |
-|---------|-------|------|
-| 1 | Arrival | The eastern well has run dry |
-| 2 | The Descent | Something is in the mine |
-| 3 | Records | The chamber predates the village |
-| 4 | The Manor | Casimir has been awake all night |
-| 5 | The Monster Unleashed | The water is moving uphill |
-| 6 | The Sealing | Father Vane knew all along |
-| 7 | Grand Opener | The name has faded from the paper |
+**Ravenmoor** — gothic horror, `glorfindel-data/campaigns/Ravenmoor/`
+
+| Session | Hook |
+|---------|------|
+| 1 | The eastern well has run dry |
+| 2 | Something is in the mine |
+| 3 | The chamber predates the village |
+| 4 | Casimir has been awake all night |
+| 5 | The water is moving uphill |
+| 6 | Father Vane knew all along |
+| 7 | The name has faded from the paper |
+
+**Avalon** — Gaelic Fae Arthurian, `glorfindel-data/campaigns/Avalon/`
+
+Roman descendants of the Knights of the Round Table have stumbled onto what actually made Arthur's court work. Six-check system (BLADE, PRESENCE, LORE, RITUAL, OFFERING, VEIL), Devotion mechanics, and Fae ritual rules. Four pre-generated characters included. **Designed for Play Mode** — one player per character, or solo.
 
 All sessions, turn files, and `.meta` control plane logs are included. Use it, fork it, run more sessions, break it. Public domain.
 
