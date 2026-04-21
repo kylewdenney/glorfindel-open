@@ -1,0 +1,11 @@
+In the heart of a bustling training yard, Caius ap Llywarch, with renewed determination, raises his sword for another attempt at the BLADE skill challenge. His heart pounds in anticipation as he focuses on the gleaming blade before him. With a swift, powerful motion, he swings the sword, the air around it shimmering slightly under the impact.
+
+The crowd watches with bated breath, sensing that this time, Caius will not fail. As his opponent steps forward to defend, there's a noticeable shift in Caius's demeanor — a newfound grace and precision as if the sword were an extension of himself. His moves are calculated, precise, and imbued with a fierce determination that leaves no doubt about his skill.
+
+The crowd erupts in cheers as Caius strikes true, the resounding clang echoing through the yard. The opponents fall back, momentarily stunned by the display of raw talent they've just witnessed. Caius stands tall, his chest heaving with exhilaration and pride. He has proven to himself — and everyone else — that he is indeed a worthy descendant of Lancelot du Lac.
+
+The training session comes to an end, and Caius is surrounded by well-wishers offering congratulations and words of encouragement. As the sun sets, casting long shadows across the yard, Caius can't help but feel a sense of satisfaction and accomplishment. The BLADE test may have been just one small step in his journey, but it is a significant one that has reinforced his belief in himself and his abilities.
+
+As the night deepens, whispers begin to circulate among the villagers about the young Roman-British descendant who has rekindled hope in their hearts. Stories are shared of ancient knights, legendary battles, and prophecies yet to unfold. Caius listens intently, his curiosity piqued by tales that hint at a connection between himself and the legendary Lancelot du Lac.
+
+The world around him seems to shift subtly in response to Caius's newfound strength and renewed sense of purpose. The air is charged with an energy that was absent before, as if the spirits of the land are taking notice of this young warrior who may play a part in their future. Little does Cai
