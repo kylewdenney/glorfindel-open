@@ -206,6 +206,35 @@
     .session-tab.active { background: #3a3010; color: #f0c060; border: 1px solid #6a5020; }
     .session-tab.inactive { background: #1a1808; color: #5a4a2a; border: 1px solid #2a2210; }
     .session-tab.inactive:hover { color: #b48c3c; border-color: #4a3a18; }
+
+    /* Eucatastrophe button */
+    @keyframes goldenPulse {
+      0%, 100% { box-shadow: 0 0 8px #c0901088, inset 0 1px 0 #3a2e10; }
+      50%       { box-shadow: 0 0 20px #e0b03088, inset 0 1px 0 #3a2e10; }
+    }
+    .euca-btn-locked {
+      background: linear-gradient(135deg, #141208 0%, #1e1a08 100%);
+      border: 1px solid #2a2410; color: #4a3a18; cursor: not-allowed;
+    }
+    .euca-btn-unlocked {
+      background: linear-gradient(135deg, #1a1400 0%, #2a2000 40%, #1a1600 100%);
+      border: 1px solid #7a5a10;
+      color: #f0c040;
+      text-shadow: 0 0 10px #c09020, 0 0 20px #604000;
+      animation: goldenPulse 2.5s ease-in-out infinite;
+      cursor: pointer;
+    }
+    .euca-btn-unlocked:hover {
+      background: linear-gradient(135deg, #201800 0%, #322600 40%, #201a00 100%);
+    }
+
+    /* Story Actions section — paired dark/light */
+    .story-action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .story-action-grid.single-col { grid-template-columns: 1fr; }
+
+    /* Session progress bar */
+    .session-progress-track { background: #1a1808; border-radius: 2px; height: 3px; overflow: hidden; }
+    .session-progress-fill  { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
   </style>
 </head>
 <body class="min-h-screen" style="background:#12100c; color:#e8dfc0;"
@@ -545,8 +574,18 @@
         </div>
       </div>
 
-      <!-- ── Task Console ── -->
-      <div style="border-bottom:1px solid #2a2418; flex-shrink:0;" class="p-2.5">
+      <!-- ── Console Header: DM / Play toggle ── -->
+      <div style="border-bottom:1px solid #2a2418; flex-shrink:0; padding:6px 10px;" class="flex items-center gap-1">
+        <button @click="playMode = false"
+          :class="!playMode ? 'tab-pill on' : 'tab-pill off'"
+          style="flex:1;">⚔ DM</button>
+        <button @click="playMode = true"
+          :class="playMode ? 'tab-pill on' : 'tab-pill off'"
+          style="flex:1;">🎭 Play</button>
+      </div>
+
+      <!-- ── DM Task Console ── -->
+      <div x-show="!playMode" style="border-bottom:1px solid #2a2418; flex-shrink:0;" class="p-2.5">
         <div class="flex items-center gap-2 mb-1.5">
           <div class="text-xs font-bold uppercase tracking-widest" style="color:#5a4a2a;">Task</div>
           <template x-if="selectedAgent">
@@ -620,43 +659,146 @@
         </button>
       </div>
 
-      <!-- ── Grand Opener ── -->
-      <div style="border-bottom:1px solid #2a2418; flex-shrink:0; padding:10px;" x-show="activeCampaign && sessionDirs.length > 0">
-        <button @click="grandOpener()"
-          :disabled="grandOpening || !activeCampaign"
-          class="w-full rounded font-black uppercase tracking-widest transition-all"
-          style="padding:10px 0; font-size:0.8rem; letter-spacing:0.12em;
-                 background: linear-gradient(135deg, #1a0808 0%, #2a0a0a 40%, #1a0608 100%);
-                 border: 1px solid #6a1818;
-                 color: #ff4444;
-                 text-shadow: 0 0 12px #ff2222, 0 0 24px #880000;
-                 box-shadow: 0 0 8px #44000088, inset 0 1px 0 #3a1010;
-                 cursor:pointer;"
-          :style="grandOpening ? 'opacity:0.6; cursor:not-allowed;' : 'cursor:pointer;'"
-          @mouseover="$el.style.boxShadow='0 0 18px #66000088, inset 0 1px 0 #3a1010'"
-          @mouseleave="$el.style.boxShadow='0 0 8px #44000088, inset 0 1px 0 #3a1010'">
-          <template x-if="!grandOpening">
-            <span>⚔ GRAND OPENER ⚔</span>
+      <!-- ── Play Mode Console ── -->
+      <div x-show="playMode" style="border-bottom:1px solid #2a2418; flex-shrink:0;" class="p-2.5">
+        <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:#5a4a2a; letter-spacing:0.1em;">Your Character</div>
+
+        <!-- Character selector pills -->
+        <div class="flex flex-wrap gap-1 mb-2" x-show="partyMembers.length > 0">
+          <template x-for="pc in partyMembers" :key="pc">
+            <button @click="activeCharacter = pc"
+              :style="activeCharacter === pc
+                ? 'background:#2a2010; color:#f0c060; border:1px solid #b48c3c;'
+                : 'background:#1a1808; color:#6a5a3a; border:1px solid #2a2418;'"
+              class="text-xs px-2 py-1 rounded transition-all"
+              x-text="pc"></button>
           </template>
-          <template x-if="grandOpening">
+        </div>
+        <input x-show="partyMembers.length === 0" x-model="activeCharacter"
+          placeholder="Your character name…"
+          class="form-input w-full mb-2" style="font-size:0.78rem;" />
+
+        <div class="text-xs mb-1" style="color:#5a4a2a; font-weight:600; letter-spacing:0.05em;">What do you do?</div>
+        <textarea x-model="playerAction" rows="4" @keydown.ctrl.enter="takeAction()"
+          :placeholder="activeCharacter ? activeCharacter + ' approaches…' : 'Select a character first…'"
+          class="form-input w-full mb-1.5" style="resize:vertical; line-height:1.6; font-size:0.82rem;"></textarea>
+
+        <div class="flex gap-1.5 mb-1.5">
+          <div class="flex-1 flex flex-col gap-0.5">
+            <label class="text-xs" style="color:#5a4a2a;">Session</label>
+            <input x-model="sessionDir" :placeholder="activeSession || 'session1'"
+              class="form-input w-full" style="font-family:monospace; font-size:0.72rem;" />
+          </div>
+          <div class="flex items-end gap-1.5">
+            <!-- Last scene preview button -->
+            <button @click="loadLastScene()" :disabled="!activeCampaign || !activeSession"
+              style="background:#1a1a0e; color:#5a4a2a; border:1px solid #2a2410; font-size:0.65rem; padding:5px 7px; border-radius:4px; white-space:nowrap;"
+              class="hover:text-amber-400 transition-colors disabled:opacity-30"
+              title="Load last scene into viewer">📜 Scene</button>
+          </div>
+        </div>
+
+        <button @click="takeAction()" :disabled="!canPlay"
+          :style="canPlay
+            ? 'background:#0e2a1a; color:#50d080; border:1px solid #1a6030; cursor:pointer;'
+            : 'background:#0e140e; color:#2a4a2a; border:1px solid #1a2418; cursor:not-allowed;'"
+          class="w-full py-1.5 rounded text-sm font-semibold transition-all hover:brightness-110">
+          <template x-if="runningTask">
             <span class="flex items-center justify-center gap-2">
-              <span class="spinner" style="border-top-color:#ff4444;"></span>
-              <span>Weaving darkness…</span>
+              <span class="spinner" style="border-top-color:#50d080;"></span>
+              <span x-text="thinkingPhase || '🎭 Acting…'"></span>
             </span>
           </template>
+          <template x-if="!runningTask">
+            <span>🎭 Take Action</span>
+          </template>
         </button>
-        <div class="text-center mt-1" style="font-size:0.58rem; color:#4a1a1a; letter-spacing:0.08em;">
-          takes hook from <span x-text="activeSession || '…'" style="color:#6a2a2a;"></span> → opens next session
+
+        <!-- Devotion reminder for active character -->
+        <template x-if="activeCharacter && partyDevotions[activeCharacter]">
+          <div class="mt-2 rounded p-2" style="background:#0a0e18; border:1px solid #1a2430;">
+            <div class="text-xs mb-0.5" style="color:#3a4a6a; font-weight:600; letter-spacing:0.05em;">DEVOTION</div>
+            <div class="text-xs" style="color:#6080a0;" x-text="partyDevotions[activeCharacter]"></div>
+          </div>
+        </template>
+      </div>
+
+      <!-- ── Story Actions ── -->
+      <div style="border-bottom:1px solid #2a2418; flex-shrink:0; padding:8px 10px;" x-show="activeCampaign && sessionDirs.length > 0">
+        <div class="flex items-center justify-between mb-1.5">
+          <div class="text-xs font-bold uppercase tracking-widest" style="color:#3a3020; letter-spacing:0.1em;">Story Actions</div>
+          <!-- Session progress toward eucatastrophe -->
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs" :style="eucatastropheUnlocked ? 'color:#b08030;' : 'color:#3a3020;'"
+                  x-text="sessionDirs.length + '/5'"></span>
+            <div class="session-progress-track" style="width:48px;">
+              <div class="session-progress-fill"
+                   :style="'width:' + Math.min(100, sessionDirs.length / 5 * 100) + '%; background:' + (eucatastropheUnlocked ? '#c09030' : '#3a3020;')"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-action-grid">
+          <!-- Grand Opener -->
+          <button @click="grandOpener()"
+            :disabled="grandOpening || !activeCampaign"
+            class="rounded font-black uppercase tracking-wider transition-all"
+            style="padding:9px 4px; font-size:0.65rem; letter-spacing:0.06em;
+                   background: linear-gradient(135deg, #1a0808 0%, #2a0a0a 40%, #1a0608 100%);
+                   border: 1px solid #6a1818; color: #ff4444;
+                   text-shadow: 0 0 10px #ff2222, 0 0 20px #880000;
+                   box-shadow: 0 0 8px #44000088;"
+            :style="grandOpening ? 'opacity:0.5; cursor:not-allowed;' : 'cursor:pointer;'">
+            <template x-if="!grandOpening">
+              <span>⚔ DARK OPENER</span>
+            </template>
+            <template x-if="grandOpening">
+              <span class="flex items-center justify-center gap-1">
+                <span class="spinner" style="border-top-color:#ff4444; width:9px; height:9px;"></span>
+                <span>Twisting…</span>
+              </span>
+            </template>
+          </button>
+
+          <!-- Eucatastrophe -->
+          <button @click="runEucatastrophe()"
+            :disabled="eucatastropheRunning || !activeCampaign || !eucatastropheUnlocked"
+            class="rounded font-black uppercase tracking-wider transition-all"
+            style="padding:9px 4px; font-size:0.65rem; letter-spacing:0.06em;"
+            :class="eucatastropheUnlocked ? 'euca-btn-unlocked' : 'euca-btn-locked'"
+            :style="eucatastropheRunning ? 'opacity:0.5; cursor:not-allowed;' : ''">
+            <template x-if="!eucatastropheRunning && eucatastropheUnlocked">
+              <span>✦ THE GRACE</span>
+            </template>
+            <template x-if="!eucatastropheRunning && !eucatastropheUnlocked">
+              <span>✦ LOCKED</span>
+            </template>
+            <template x-if="eucatastropheRunning">
+              <span class="flex items-center justify-center gap-1">
+                <span class="spinner" style="border-top-color:#f0c040; width:9px; height:9px;"></span>
+                <span>Grace…</span>
+              </span>
+            </template>
+          </button>
+        </div>
+
+        <div class="flex justify-between mt-1" style="font-size:0.55rem; color:#3a2a18; letter-spacing:0.04em;">
+          <span>hook from <span x-text="activeSession || '…'" style="color:#5a2a2a;"></span> → next session</span>
+          <span x-show="!eucatastropheUnlocked" style="color:#3a2a18;">
+            <span x-text="5 - sessionDirs.length"></span> more session<span x-show="5 - sessionDirs.length !== 1">s</span> needed
+          </span>
+          <span x-show="eucatastropheUnlocked" style="color:#6a5010;">earned</span>
         </div>
       </div>
 
       <!-- ── Quick Tools ── -->
       <div style="border-bottom:1px solid #2a2418; flex-shrink:0;" class="p-2.5">
-        <div class="flex items-center gap-1.5 mb-2">
+        <div class="flex items-center gap-1 mb-2 flex-wrap">
           <button @click="quickTab='dice'"  :class="quickTab==='dice'  ? 'tab-pill on' : 'tab-pill off'">🎲 Dice</button>
           <button @click="quickTab='notes'" :class="quickTab==='notes' ? 'tab-pill on' : 'tab-pill off'">✍ Notes</button>
           <button @click="quickTab='lore'"  :class="quickTab==='lore'  ? 'tab-pill on' : 'tab-pill off'">📜 Lore</button>
           <button @click="quickTab='rules'" :class="quickTab==='rules' ? 'tab-pill on' : 'tab-pill off'">📖 Rules</button>
+          <button @click="quickTab='party'; loadParty()" :class="quickTab==='party' ? 'tab-pill on' : 'tab-pill off'">🧑‍🤝‍🧑 Party</button>
         </div>
 
         <!-- Dice -->
@@ -710,16 +852,19 @@
         <!-- Lore -->
         <div x-show="quickTab === 'lore'">
           <textarea x-model="archivistQuery" @keydown.ctrl.enter="askArchivist()" rows="2"
-            placeholder="What happened at the mill in Session 3?"
+            :placeholder="'Who is ' + (activeCampaign ? activeCampaign + ' character X' : 'a character') + '? What happened in session 2?'"
             class="form-input w-full mb-1.5" style="resize:none;"></textarea>
-          <button @click="askArchivist()" :disabled="!archivistQuery.trim() || archivistBusy"
+          <button @click="askArchivist()" :disabled="!archivistQuery.trim() || archivistBusy || !activeCampaign"
             class="ctrl-btn w-full mb-1.5"
             style="background:#1a1428; color:#9060c0; border:1px solid #3a2060;">
             <span x-show="archivistBusy" class="spinner mr-1" style="border-top-color:#9060c0;"></span>
-            <span x-text="archivistBusy ? 'Asking…' : '📜 Ask Archivist'"></span>
+            <span x-text="archivistBusy ? 'Asking…' : '📜 Ask Lore'"></span>
           </button>
+          <div class="text-xs mb-1" style="color:#2a2030;" x-show="archivistDef">
+            via <span x-text="archivistDef?.name || '…'" style="color:#4a3060;"></span>
+          </div>
           <template x-if="archivistAnswer">
-            <div class="rounded p-2 text-xs leading-relaxed max-h-20 overflow-y-auto"
+            <div class="rounded p-2 text-xs leading-relaxed max-h-24 overflow-y-auto"
                  style="background:#140e1c; border:1px solid #2a1840; color:#c0a0e0;"
                  x-text="archivistAnswer"></div>
           </template>
@@ -728,18 +873,56 @@
         <!-- Rules -->
         <div x-show="quickTab === 'rules'">
           <textarea x-model="rulesQuery" @keydown.ctrl.enter="askRules()" rows="2"
-            placeholder="Fear save DC for seeing a ghost?"
+            :placeholder="'How does ' + (activeCampaign ? activeCampaign + ' handle ' : 'this campaign handle ') + 'honour? What are the stakes for…'"
             class="form-input w-full mb-1.5" style="resize:none;"></textarea>
-          <button @click="askRules()" :disabled="!rulesQuery.trim() || rulesBusy"
+          <button @click="askRules()" :disabled="!rulesQuery.trim() || rulesBusy || !activeCampaign"
             class="ctrl-btn w-full mb-1.5"
             style="background:#0e1c14; color:#50b070; border:1px solid #1a5030;">
             <span x-show="rulesBusy" class="spinner mr-1" style="border-top-color:#50b070;"></span>
             <span x-text="rulesBusy ? 'Looking up…' : '📖 Ask Rules'"></span>
           </button>
+          <div class="text-xs mb-1" style="color:#1a2818;" x-show="rulesDef">
+            via <span x-text="rulesDef?.name || '…'" style="color:#2a5030;"></span>
+          </div>
           <template x-if="rulesAnswer">
-            <div class="rounded p-2 text-xs leading-relaxed max-h-20 overflow-y-auto"
+            <div class="rounded p-2 text-xs leading-relaxed max-h-24 overflow-y-auto"
                  style="background:#0e1810; border:1px solid #1a4028; color:#90d0a8;"
                  x-text="rulesAnswer"></div>
+          </template>
+        </div>
+
+        <!-- Party -->
+        <div x-show="quickTab === 'party'">
+          <template x-if="partyLoading">
+            <div class="text-xs text-center py-3" style="color:#5a4a2a;">
+              <span class="spinner" style="border-top-color:#b48c3c;"></span>
+            </div>
+          </template>
+          <template x-if="!partyLoading && partyCards.length === 0">
+            <div class="text-xs text-center py-3" style="color:#3a3020;">No world/party.md found</div>
+          </template>
+          <template x-for="pc in partyCards" :key="pc.name">
+            <div class="rounded mb-2 p-2 cursor-pointer transition-all"
+                 @click="activeCharacter = pc.name; playMode = true"
+                 :style="activeCharacter === pc.name
+                   ? 'background:#1a2010; border:1px solid #3a6020;'
+                   : 'background:#111008; border:1px solid #2a2410;'">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold" style="color:#d4a840;" x-text="pc.name"></span>
+                <span x-show="pc.devotion" class="text-xs px-1.5 py-0.5 rounded"
+                      style="background:#0a1020; color:#6080b0; border:1px solid #1a2840; font-size:0.58rem; font-weight:700;"
+                      x-text="pc.devotion"></span>
+                <span x-show="activeCharacter === pc.name" class="ml-auto text-xs"
+                      style="color:#50a030; font-size:0.6rem;">▶ active</span>
+              </div>
+              <div class="flex flex-wrap gap-1">
+                <template x-for="stat in pc.stats" :key="stat.label">
+                  <span class="text-xs px-1.5 rounded"
+                        style="background:#181408; border:1px solid #3a3010; color:#a09040; font-family:monospace; font-size:0.62rem;"
+                        x-text="stat.label + ' ' + stat.val"></span>
+                </template>
+              </div>
+            </div>
           </template>
         </div>
       </div>
@@ -836,6 +1019,16 @@ function campaign() {
     newFilePath: '',
     summarizing: false,
     grandOpening: false,
+    eucatastropheRunning: false,
+
+    // Play mode
+    playMode: false,
+    activeCharacter: '',
+    playerAction: '',
+    partyMembers: [],
+    partyDevotions: {},
+    partyCards: [],
+    partyLoading: false,
 
     // Agents
     runningAgents: [],
@@ -894,6 +1087,10 @@ function campaign() {
       if (this.useSessionApi) return !!(this.selectedDefinitionId() || this.campaignDefs.length > 0);
       return !!this.selectedAgentId;
     },
+    get canPlay() {
+      return !this.runningTask && !!this.activeCampaign
+          && !!this.activeCharacter.trim() && !!this.playerAction.trim();
+    },
     selectedDefinitionId() {
       const agent = this.selectedAgent;
       if (agent?.definition_id) return agent.definition_id;
@@ -951,12 +1148,19 @@ function campaign() {
       const ids = new Set(this.campaignDefs.map(d => d.id));
       return this.definitions.filter(d => !ids.has(d.id));
     },
+    get eucatastropheUnlocked() {
+      return this.sessionDirs.length >= 5;
+    },
     get archivistDef() {
+      // Prefer campaign-specific archivist, then DM, then global archivist
       return this.campaignDefs.find(d => d.name.toLowerCase().includes('archivist'))
+          || this.campaignDefs.find(d => d.name.toLowerCase().includes('dm'))
           || this.definitions.find(d => d.name === 'Campaign Archivist');
     },
     get rulesDef() {
+      // Prefer campaign-specific rules agent, then DM, then global Rule Consultant
       return this.campaignDefs.find(d => d.name.toLowerCase().includes('rule'))
+          || this.campaignDefs.find(d => d.name.toLowerCase().includes('dm'))
           || this.definitions.find(d => d.name === 'Rule Consultant');
     },
 
@@ -1089,6 +1293,9 @@ function campaign() {
       this.archivistInstanceId = null;
       this.rulesAnswer = null;
       this.archivistAnswer = null;
+      this.partyCards = [];
+      this.partyMembers = [];
+      this.partyDevotions = {};
       await this.refreshFiles();
       this._preselectDmDef();
       // Auto-select latest session
@@ -1096,6 +1303,7 @@ function campaign() {
         this.activeSession = this.sessionDirs[this.sessionDirs.length - 1];
         this.sessionDir = this.activeSession;
       }
+      await this.loadParty();
     },
     async refreshFiles() {
       if (!this.activeCampaign) return;
@@ -1109,7 +1317,7 @@ function campaign() {
     },
     async summarizeSession() {
       if (!this.activeCampaign || !this.activeSession || this.summarizing) return;
-      const defId = this.selectedDefinitionId;
+      const defId = this.selectedDefinitionId();
       if (!defId) { alert('No DM agent definition found — spawn one first.'); return; }
       this.summarizing = true;
       try {
@@ -1129,21 +1337,17 @@ function campaign() {
     },
     async grandOpener() {
       if (!this.activeCampaign || !this.activeSession || this.grandOpening) return;
-      const defId = this.selectedDefinitionId;
+      const defId = this.selectedDefinitionId();
       if (!defId) { alert('No agent definition found — spawn one first.'); return; }
       this.grandOpening = true;
       try {
         const r = await fetch(`/api/campaign/${enc(this.activeCampaign)}/grand-opener`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            definition_id: defId,
-            hook_session: this.activeSession,
-          }),
+          body: JSON.stringify({ definition_id: defId, hook_session: this.activeSession }),
         });
         if (!r.ok) throw new Error(await r.text());
         const data = await r.json();
-        // Switch to the new session and open the file
         await this.refreshFiles();
         await this.selectCampaign(this.activeCampaign);
         this.setActiveSession(data.next_session);
@@ -1155,6 +1359,33 @@ function campaign() {
         alert('Grand Opener failed: ' + e.message);
       } finally {
         this.grandOpening = false;
+      }
+    },
+
+    async runEucatastrophe() {
+      if (!this.activeCampaign || this.eucatastropheRunning || !this.eucatastropheUnlocked) return;
+      const defId = this.selectedDefinitionId();
+      if (!defId) { alert('No DM agent definition found.'); return; }
+      this.eucatastropheRunning = true;
+      try {
+        const r = await fetch(`/api/campaign/${enc(this.activeCampaign)}/eucatastrophe`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ definition_id: defId }),
+        });
+        if (!r.ok) throw new Error(await r.text());
+        const data = await r.json();
+        await this.refreshFiles();
+        await this.selectCampaign(this.activeCampaign);
+        this.setActiveSession(data.next_session);
+        setTimeout(async () => {
+          await this.refreshFiles();
+          if (data.output_path) this.openFile(data.output_path);
+        }, 1500);
+      } catch (e) {
+        alert('Eucatastrophe failed: ' + e.message);
+      } finally {
+        this.eucatastropheRunning = false;
       }
     },
 
@@ -1352,6 +1583,89 @@ function campaign() {
       } catch (e) { alert('Error: ' + e.message); }
     },
 
+    // ─ Play Mode ────────────────────────────────────────────────
+    async takeAction() {
+      if (!this.canPlay) return;
+      const sdir = this.sessionDir.trim() || this.activeSession || 'session1';
+      const body = {
+        session_dir: sdir,
+        character: this.activeCharacter.trim(),
+        action: this.playerAction.trim(),
+      };
+      const defId = this.selectedDefinitionId();
+      if (defId) body.definition_id = defId;
+
+      this.thinkingPhase = '🔍 What Happened…';
+      const savedAction = this.playerAction.trim();
+      try {
+        const r = await fetch(`/api/campaign/${enc(this.activeCampaign)}/player-turn`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        if (!r.ok) { alert('Player turn failed: ' + await r.text()); return; }
+        const { task_id } = await r.json();
+        this.runningTask = task_id;
+        this.playerAction = '';
+        this.watchTask(task_id, savedAction);
+      } catch (e) { alert('Error: ' + e.message); }
+      finally { this.thinkingPhase = null; }
+    },
+
+    async loadParty() {
+      if (!this.activeCampaign) return;
+      this.partyLoading = true;
+      try {
+        const r = await fetch(`/api/campaign/${enc(this.activeCampaign)}/file/world/party.md`);
+        if (!r.ok) return;
+        const data = await r.json();
+        const text = typeof data === 'string' ? data : (data.contents || '');
+        if (text) this._parseParty(text);
+      } catch(e) { console.error('loadParty:', e); }
+      finally { this.partyLoading = false; }
+    },
+
+    _parseParty(text) {
+      const cards = [];
+      const members = [];
+      const devotions = {};
+      // Split on ## headings — each is a character
+      const sections = text.split(/^## /m).slice(1);
+      for (const sec of sections) {
+        const nl = sec.indexOf('\n');
+        const name = nl >= 0 ? sec.slice(0, nl).trim() : sec.trim();
+        // Strip italic annotation like *Descendant of…*
+        const cleanName = name.replace(/\s*\n[\s\S]*/, '').replace(/\*[^*]*\*/g, '').trim();
+        if (!cleanName) continue;
+        members.push(cleanName);
+        // Find Devotion line
+        const devotionMatch = sec.match(/Devotion:\s*([A-Z\s]+)/);
+        const devotion = devotionMatch ? devotionMatch[1].trim() : null;
+        if (devotion) devotions[cleanName] = devotion;
+        // Find stat line: **BLADE +4 | PRESENCE +2 | …** (one bold block, pipe-separated)
+        const knownStats = ['BLADE','PRESENCE','LORE','RITUAL','OFFERING','VEIL'];
+        const stats = [...sec.matchAll(/\b([A-Z]{2,})\s+([+-]?\d+)/g)]
+          .map(m => ({ label: m[1], val: m[2] }))
+          .filter(s => knownStats.includes(s.label));
+        cards.push({ name: cleanName, devotion, stats });
+      }
+      this.partyCards = cards;
+      this.partyMembers = members;
+      this.partyDevotions = devotions;
+      // Auto-select first character if none chosen
+      if (!this.activeCharacter && members.length > 0) this.activeCharacter = members[0];
+    },
+
+    async loadLastScene() {
+      if (!this.activeCampaign || !this.activeSession) return;
+      const sessionFiles = this.files.filter(f =>
+        f.subdir === this.activeSession && f.filename.endsWith('.md') &&
+        f.filename !== 'TURNS.md' && !f.filename.startsWith('.')
+      );
+      if (sessionFiles.length === 0) return;
+      const last = sessionFiles[sessionFiles.length - 1];
+      await this.openFile(last.path);
+    },
+
     async runTask() {
       const perms = this.buildPerms();
       try {
@@ -1440,29 +1754,16 @@ function campaign() {
       finally { this.noteBusy = false; }
     },
 
-    async ensureInstance(type) {
-      const def = type === 'archivist' ? this.archivistDef : this.rulesDef;
-      if (!def) return null;
-      const prop = type === 'archivist' ? 'archivistInstanceId' : 'rulesInstanceId';
-      if (this[prop]) {
-        const alive = this.runningAgents.find(a => a.instance_id === this[prop]);
-        if (alive) return this[prop];
-      }
-      const r = await fetch('/api/agents', {
+    // Run a quick query against a campaign definition via the /run endpoint.
+    // Derives permissions from def.default_permissions so both file.read and campaign.read
+    // agents work correctly without hardcoding permission strings.
+    async _quickCampaignRun(def, intent) {
+      const perms = (def.default_permissions || []).length > 0
+        ? def.default_permissions
+        : ['file_read'];
+      const r = await fetch(`/api/campaign/${enc(this.activeCampaign)}/run`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ definition_id: def.id, deployment: 'test' }),
-      });
-      if (!r.ok) return null;
-      const info = await r.json();
-      this[prop] = info.instance_id;
-      await this.loadAgents();
-      return info.instance_id;
-    },
-
-    async submitAndWait(instanceId, intent, permissions) {
-      const r = await fetch('/api/tasks', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ agent_instance_id: instanceId, intent, permissions, max_iterations: 6 }),
+        body: JSON.stringify({ definition_id: def.id, intent, permissions: perms, max_iterations: 6 }),
       });
       if (!r.ok) throw new Error(await r.text());
       const { task_id } = await r.json();
@@ -1473,39 +1774,49 @@ function campaign() {
           if (msg.type === 'complete') { ws.close(); resolve(msg.response); }
           else if (msg.type === 'failed') { ws.close(); reject(new Error(msg.message)); }
         };
-        ws.onerror = () => reject(new Error('ws error'));
+        ws.onerror = () => {};
         const poll = setInterval(async () => {
           try {
             const t = await (await fetch(`/api/tasks/${task_id}`)).json();
-            if (t.status === 'complete') { clearInterval(poll); ws.close(); resolve(t.response); }
-            else if (t.status === 'failed') { clearInterval(poll); ws.close(); reject(new Error(t.error)); }
+            if (t.status === 'complete') { clearInterval(poll); resolve(t.response); }
+            else if (t.status === 'failed') { clearInterval(poll); reject(new Error(t.error || 'failed')); }
           } catch {}
         }, 2000);
       });
     },
 
     async askArchivist() {
-      if (!this.archivistQuery.trim() || this.archivistBusy) return;
+      if (!this.archivistQuery.trim() || this.archivistBusy || !this.activeCampaign) return;
       this.archivistBusy = true; this.archivistAnswer = null;
       try {
-        const id = await this.ensureInstance('archivist');
-        if (!id) { this.archivistAnswer = 'No Campaign Archivist found.'; return; }
-        const resp = await this.submitAndWait(id, this.archivistQuery, [{ custom: 'campaign.read' }, { custom: 'campaign.list' }]);
+        const def = this.archivistDef;
+        if (!def) { this.archivistAnswer = 'No lore agent configured for this campaign.'; return; }
+        // If using the DM as archivist, prepend context so it reads campaign files
+        const isDedicated = def.name.toLowerCase().includes('archivist');
+        const intent = isDedicated
+          ? this.archivistQuery
+          : `Read campaign files and answer this question about the ${this.activeCampaign} campaign: ${this.archivistQuery}`;
+        const resp = await this._quickCampaignRun(def, intent);
         const r = resp?.result;
-        this.archivistAnswer = typeof r === 'string' ? r : (JSON.stringify(r) || '(no answer)');
+        this.archivistAnswer = typeof r === 'string' ? r : (r?.action_summary || JSON.stringify(r) || '(no answer)');
       } catch (e) { this.archivistAnswer = 'Error: ' + e.message; }
       finally { this.archivistBusy = false; }
     },
 
     async askRules() {
-      if (!this.rulesQuery.trim() || this.rulesBusy) return;
+      if (!this.rulesQuery.trim() || this.rulesBusy || !this.activeCampaign) return;
       this.rulesBusy = true; this.rulesAnswer = null;
       try {
-        const id = await this.ensureInstance('rules');
-        if (!id) { this.rulesAnswer = 'No Rule Consultant found.'; return; }
-        const resp = await this.submitAndWait(id, this.rulesQuery, [{ custom: 'rulebook.search' }]);
+        const def = this.rulesDef;
+        if (!def) { this.rulesAnswer = 'No rules agent configured for this campaign.'; return; }
+        // If using the DM, point it at the rules/ directory explicitly
+        const isDedicated = def.name.toLowerCase().includes('rule');
+        const intent = isDedicated
+          ? this.rulesQuery
+          : `Read the rules/ directory in the ${this.activeCampaign} campaign files and answer: ${this.rulesQuery}`;
+        const resp = await this._quickCampaignRun(def, intent);
         const r = resp?.result;
-        this.rulesAnswer = typeof r === 'string' ? r : (JSON.stringify(r) || '(no answer)');
+        this.rulesAnswer = typeof r === 'string' ? r : (r?.action_summary || JSON.stringify(r) || '(no answer)');
       } catch (e) { this.rulesAnswer = 'Error: ' + e.message; }
       finally { this.rulesBusy = false; }
     },
