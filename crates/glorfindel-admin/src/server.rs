@@ -16,7 +16,6 @@ use crate::zmq_bus;
 static FRONTEND: &str = include_str!("admin.html");
 static CAMPAIGN_FRONTEND: &str = include_str!("campaign.html");
 static AGENTIFIER_FRONTEND: &str = include_str!("agentifier.html");
-static JELLYFIN_FRONTEND: &str = include_str!("jellyfin.html");
 
 async fn serve_frontend() -> axum::response::Html<&'static str> {
     axum::response::Html(FRONTEND)
@@ -28,10 +27,6 @@ async fn serve_campaign_frontend() -> axum::response::Html<&'static str> {
 
 async fn serve_agentifier_frontend() -> axum::response::Html<&'static str> {
     axum::response::Html(AGENTIFIER_FRONTEND)
-}
-
-async fn serve_jellyfin_frontend() -> axum::response::Html<&'static str> {
-    axum::response::Html(JELLYFIN_FRONTEND)
 }
 
 pub async fn run(addr: &str, data_dir: PathBuf) -> anyhow::Result<()> {
@@ -72,7 +67,6 @@ pub async fn run(addr: &str, data_dir: PathBuf) -> anyhow::Result<()> {
         .route("/", get(serve_frontend))
         .route("/campaign", get(serve_campaign_frontend))
         .route("/agentifier", get(serve_agentifier_frontend))
-        .route("/jellyfin", get(serve_jellyfin_frontend))
         .nest("/api", api)
         .route("/ws/tasks/:id", get(ws::task_stream))
         .route("/ws/pipeline", get(ws::pipeline_stream))

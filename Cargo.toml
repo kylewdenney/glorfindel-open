@@ -36,9 +36,6 @@ path = "examples/dm_assistant.rs"
 name = "glorfindel-admin"
 path = "src/admin.rs"
 
-[[example]]
-name = "media_server"
-path = "local/media_server.rs"
 
 [dependencies]
 glorfindel-schemas = { path = "crates/glorfindel-schemas" }

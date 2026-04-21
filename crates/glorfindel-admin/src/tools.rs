@@ -5,9 +5,7 @@ use glorfindel_agent::OllamaAgent;
 use glorfindel_schemas::types::Permission;
 use glorfindel_tools::{
     BashTool, CampaignListTool, CampaignReadTool, CampaignWriteTool, DiceRollTool, FileReadTool,
-    FileWriteTool, JellyfinClient, MediaItemTool, MediaLibraryTool, MediaRecentTool,
-    MediaRefreshTool, MediaScanTool, MediaSearchTool, MediaSessionsTool, MediaUsersTool,
-    RulebookTool, SearchTool, Tool, ToolExecutor,
+    FileWriteTool, RulebookTool, SearchTool, Tool, ToolExecutor,
 };
 use serde::Serialize;
 use uuid::Uuid;
@@ -54,16 +52,6 @@ pub fn catalog() -> Vec<ToolCatalogEntry> {
         });
     }
 
-    // Static entries for tools that need runtime config
-    for name in &["media.search", "media.library", "media.recent", "media.sessions",
-                  "media.scan", "media.refresh", "media.item", "media.users"] {
-        entries.push(ToolCatalogEntry {
-            name: name.to_string(),
-            description: format!("{name} — requires jellyfin_url/api_key/user_id in deployed_context"),
-            permissions: vec![Permission::Custom("media.read".into())],
-            requires_campaign_dir: false,
-        });
-    }
     entries.push(ToolCatalogEntry {
         name: "rulebook.search".to_string(),
         description: "Semantic search over indexed rulebook files. Requires rulebook_dir in deployed_context.".to_string(),
@@ -83,7 +71,7 @@ pub fn catalog() -> Vec<ToolCatalogEntry> {
 /// Build a `ToolExecutor` from a list of tool names and optional configuration.
 ///
 /// - `campaign_dir`: legacy shorthand for campaign.* tools
-/// - `deployed_context`: general config (jellyfin creds, rulebook_dir, sub_agents map, …)
+/// - `deployed_context`: general config (rulebook_dir, sub_agents map, …)
 /// - `definitions`: full definition map, required to build sub-agents from deployed_context.sub_agents
 pub async fn build_executor(
     tool_names: &[String],
@@ -105,17 +93,6 @@ pub async fn build_executor(
     let effective_campaign_dir: Option<String> = ctx_str("campaign_dir")
         .or_else(|| campaign_dir.map(String::from));
 
-    // Build JellyfinClient once if any media tool is requested
-    let jellyfin: Option<JellyfinClient> = {
-        let url = ctx_str("jellyfin_url");
-        let key = ctx_str("jellyfin_api_key");
-        let uid = ctx_str("jellyfin_user_id");
-        match (url, key, uid) {
-            (Some(u), Some(k), Some(i)) => Some(JellyfinClient::new(u, k, i)),
-            _ => None,
-        }
-    };
-
     for name in tool_names {
         match name.as_str() {
             "file.read"   => executor.register(Box::new(FileReadTool)),
@@ -134,39 +111,6 @@ pub async fn build_executor(
                     None => tracing::warn!(tool = %name, "campaign.* requires campaign_dir — skipping"),
                 }
             }
-
-            "media.search"   => match &jellyfin {
-                Some(j) => executor.register(Box::new(MediaSearchTool::new(j.clone()))),
-                None    => tracing::warn!("media.search requires jellyfin config in deployed_context — skipping"),
-            },
-            "media.library"  => match &jellyfin {
-                Some(j) => executor.register(Box::new(MediaLibraryTool::new(j.clone()))),
-                None    => tracing::warn!("media.library requires jellyfin config — skipping"),
-            },
-            "media.recent"   => match &jellyfin {
-                Some(j) => executor.register(Box::new(MediaRecentTool::new(j.clone()))),
-                None    => tracing::warn!("media.recent requires jellyfin config — skipping"),
-            },
-            "media.sessions" => match &jellyfin {
-                Some(j) => executor.register(Box::new(MediaSessionsTool::new(j.clone()))),
-                None    => tracing::warn!("media.sessions requires jellyfin config — skipping"),
-            },
-            "media.scan"     => match &jellyfin {
-                Some(j) => executor.register(Box::new(MediaScanTool::new(j.clone()))),
-                None    => tracing::warn!("media.scan requires jellyfin config — skipping"),
-            },
-            "media.refresh"  => match &jellyfin {
-                Some(j) => executor.register(Box::new(MediaRefreshTool::new(j.clone()))),
-                None    => tracing::warn!("media.refresh requires jellyfin config — skipping"),
-            },
-            "media.item"     => match &jellyfin {
-                Some(j) => executor.register(Box::new(MediaItemTool::new(j.clone()))),
-                None    => tracing::warn!("media.item requires jellyfin config — skipping"),
-            },
-            "media.users"    => match &jellyfin {
-                Some(j) => executor.register(Box::new(MediaUsersTool::new(j.clone()))),
-                None    => tracing::warn!("media.users requires jellyfin config — skipping"),
-            },
 
             "rulebook.search" => {
                 let rulebook_dir = ctx_str("rulebook_dir");
