@@ -1,71 +1,107 @@
-# Glorfindel Open-Systems
+# Glorfindel
 
-An agentic AI framework built on OMS (Open Mission Systems) principles with a dual-transport pub/sub architecture.
+A local-first agentic AI framework built on OMS pub/sub principles — and a gothic horror TTRPG Dungeon Master that runs entirely on your machine.
+
+## What is this?
+
+Glorfindel is two things:
+
+**1. An agentic AI framework** built in Rust. Agents communicate over a dual-transport bus (ZeroMQ data plane, DDS control plane), execute permission-gated tools, and run inference through a local Ollama instance. No cloud required.
+
+**2. A DM Dashboard** — a full web UI for running tabletop RPG sessions using local LLMs. It ships with the complete *Ravenmoor* gothic horror campaign (Sessions 1–7) as a public domain AI-generated playground, free to fork and run.
+
+---
+
+## DM Dashboard
+
+```bash
+cargo build --bin glorfindel-admin
+GLORFINDEL_DATA_DIR=./glorfindel-data ./target/debug/glorfindel-admin
+# → http://localhost:3000/campaign
+```
+
+Requires [Ollama](https://ollama.com) running locally with `mistral` pulled:
+
+```bash
+ollama pull mistral
+```
+
+### Features
+
+- **Session pipeline** — Thinker → Critic → Rules Lawyer → Campaign Referencer → Dice Roller → DM Writer. Every step traced to a `.meta/*.log` file.
+- **Live message bus** — ZMQ PUB/SUB + WebSocket feed. Watch every agent spawn, tool call, and file write in real time on the bus panel.
+- **Chat-room log viewer** — open any `.meta/*.log` and see the full control plane as colour-coded chat bubbles. Each pipeline stage is its own message.
+- **Map-reduce session summarizer** — condenses each turn individually, then synthesises a 5-paragraph recap. Fits inside a 7B context window.
+- **⚔ GRAND OPENER** — reads the previous session's summary, extracts the darkest thread, adds a twist, and writes the opening scene of the next session in media res.
+- **Dice roller, lore lookup, rules query** — all wired to the same local agent infrastructure.
+
+### Ravenmoor — Public Domain Playground
+
+`glorfindel-data/campaigns/Ravenmoor/` contains a complete AI-generated gothic horror campaign:
+
+| Session | Title | Hook |
+|---------|-------|------|
+| 1 | Arrival | The eastern well has run dry |
+| 2 | The Descent | Something is in the mine |
+| 3 | Records | The chamber predates the village |
+| 4 | The Manor | Casimir has been awake all night |
+| 5 | The Monster Unleashed | The water is moving uphill |
+| 6 | The Sealing | Father Vane knew all along |
+| 7 | Grand Opener | The name has faded from the paper |
+
+All sessions, turn files, and `.meta` control plane logs are included. Use it, fork it, run more sessions, break it. Public domain.
+
+---
 
 ## Architecture
 
 ```
-                    +---------------------------+
-                    |      CONTROL PLANE        |
-                    |     (DDS / dust_dds)      |
-                    |                           |
-                    |  Topics:                  |
-                    |  - tasks/request          |
-                    |  - tasks/response         |
-                    |  - agents/capability      |
-                    |  - system/health          |
-                    +---------------------------+
-                         |              |
-              subscribe  |              | publish
-                         v              v
-+----------------+  +-----------+  +-----------+
-|  ORCHESTRATOR  |  |   AGENT   |  |   AGENT   |
-|                |  | (Ollama)  |  |  (custom)  |
-|  Router        |  +-----------+  +-----------+
-|  TaskManager   |       |              |
-+----------------+       | execute      |
-                         v              v
-                    +---------------------------+
-                    |       DATA PLANE          |
-                    |    (ZeroMQ / tmq)          |
-                    |                           |
-                    |  PUSH/PULL: tool calls    |
-                    |  PUB/SUB:  tool results   |
-                    +---------------------------+
-                              |
-                              v
-                    +---------------------------+
-                    |     TOOL EXECUTOR         |
-                    |  (permission-gated)       |
-                    |                           |
-                    |  file.read | file.write   |
-                    |  bash.exec | search.grep  |
-                    +---------------------------+
+                    ┌──────────────────────────┐
+                    │      CONTROL PLANE       │
+                    │      (DDS / dust_dds)    │
+                    │  tasks · agents · health │
+                    └────────────┬─────────────┘
+                                 │
+              ┌──────────────────┼──────────────────┐
+              ▼                  ▼                  ▼
+    ┌──────────────────┐  ┌───────────┐  ┌───────────────┐
+    │   ORCHESTRATOR   │  │   AGENT   │  │     AGENT     │
+    │  Router          │  │  (Ollama) │  │   (custom)    │
+    └──────────────────┘  └─────┬─────┘  └───────┬───────┘
+                                │                 │
+                    ┌───────────▼─────────────────▼───────┐
+                    │           DATA PLANE                │
+                    │         (ZeroMQ / tmq)              │
+                    │   tool calls · results · bus feed   │
+                    └─────────────────┬───────────────────┘
+                                      │
+                    ┌─────────────────▼───────────────────┐
+                    │          TOOL EXECUTOR              │
+                    │        (deny-by-default)            │
+                    │  file · bash · campaign · rulebook  │
+                    │  dice · search · sub-agents         │
+                    └─────────────────────────────────────┘
 ```
 
-**Why two transports?** Following OMS standards, the control plane (DDS) provides reliable, discoverable pub/sub for task routing and agent registration. The data plane (ZeroMQ) provides high-throughput, low-latency messaging for tool calls and streaming output. This separation mirrors how real mission systems operate.
-
-## Core Message Types
-
-| Message | Plane | Purpose |
-|---------|-------|---------|
-| `TaskRequest` | Control (DDS) | Submit work to the system |
-| `AgentResponse` | Control (DDS) | Agent's result for a task |
-| `CapabilityManifest` | Control (DDS) | Agent self-registration |
-| `ToolCall` | Data (ZMQ) | Agent requests tool execution |
-| `ToolResult` | Data (ZMQ) | Tool execution result |
-
-All messages are wrapped in a `MessageEnvelope<T>` providing correlation IDs, timestamps, and source tracking.
+The control plane (DDS) handles task routing and agent registration. The data plane (ZMQ) carries tool calls and the live bus feed. The DM Dashboard sits on top of both, publishing every event — agent spawns, tool calls, file writes, pipeline steps — to the WebSocket bus.
 
 ## Project Structure
 
 ```
 crates/
-  glorfindel-schemas/       # Message type definitions (Serde)
+  glorfindel-schemas/       # Message types (Serde)
   glorfindel-transport/     # DDS + ZMQ transport abstraction
   glorfindel-tools/         # Tool trait + built-in tools
   glorfindel-agent/         # Agent trait, registry, Ollama impl
-  glorfindel-orchestrator/  # Task routing + lifecycle management
+  glorfindel-orchestrator/  # Task routing + lifecycle
+  glorfindel-admin/         # DM Dashboard — Axum + Alpine.js
+
+glorfindel-data/
+  campaigns/Ravenmoor/      # Public domain gothic horror campaign
+  definitions/              # Agent definition JSON files
+
+examples/
+  dm_assistant.rs           # Standalone DM agent example
 ```
 
 ## Quick Start
@@ -73,92 +109,45 @@ crates/
 ### Prerequisites
 
 - Rust 1.75+
-- Docker + Docker Compose
-- NVIDIA GPU + drivers (for Ollama)
+- [Ollama](https://ollama.com) with `mistral` pulled
+- Docker + Docker Compose (optional)
+
+### Run the DM Dashboard
+
+```bash
+git clone https://github.com/kylewdenney/glorfindel-open.git
+cd glorfindel-open
+
+ollama pull mistral
+
+cargo build --bin glorfindel-admin
+GLORFINDEL_DATA_DIR=./glorfindel-data ./target/debug/glorfindel-admin
+```
+
+Open `http://localhost:3000/campaign`. Select Ravenmoor, pick a session, run a turn.
 
 ### Run with Docker
 
 ```bash
-# Clone and deploy — models auto-provision on first boot
-git clone https://github.com/YOUR_USERNAME/glorfindel-open.git
-cd glorfindel-open
-
-# Set which models to pull (comma-separated)
-export GLORFINDEL_MODELS=mistral,codellama
-
-# Launch everything
+export GLORFINDEL_MODELS=mistral
 docker compose up -d
-```
-
-The orchestrator will:
-1. Wait for Ollama to be healthy
-2. Pull any models listed in `GLORFINDEL_MODELS`
-3. Register the Ollama agent via DDS
-4. Listen for tasks
-
-### Run Locally
-
-```bash
-# Start Ollama separately
-ollama serve &
-
-# Build and run
-cargo build --release
-GLORFINDEL_MODELS=mistral ./target/release/glorfindel
-```
-
-### Run Examples
-
-```bash
-# Submit a task directly to an Ollama agent
-cargo run --example simple_task
-
-# Register an agent and display its capability manifest
-cargo run --example register_agent
 ```
 
 ## Configuration
 
-| Environment Variable | Default | Description |
-|---------------------|---------|-------------|
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `GLORFINDEL_DATA_DIR` | `./data` | Campaign data and definitions |
 | `OLLAMA_HOST` | `http://localhost:11434` | Ollama API endpoint |
-| `GLORFINDEL_MODELS` | `mistral` | Models to auto-pull on startup |
-| `DDS_DOMAIN_ID` | `0` | DDS domain for isolation |
-| `ZMQ_TOOL_CALL_ENDPOINT` | `tcp://127.0.0.1:5555` | ZMQ PUSH/PULL for tool calls |
-| `ZMQ_TOOL_RESULT_ENDPOINT` | `tcp://127.0.0.1:5556` | ZMQ PUB/SUB for tool results |
-| `RUST_LOG` | `info` | Log level filter |
+| `GLORFINDEL_MODELS` | `mistral` | Models to pull on startup |
+| `RUST_LOG` | `info` | Log level |
 
 ## Extending
 
-### Add a Custom Agent
-
-Implement the `Agent` trait:
-
-```rust
-use glorfindel_agent::{Agent, AgentError};
-use glorfindel_schemas::{TaskRequest, AgentResponse, CapabilityManifest};
-
-struct MyAgent { /* ... */ }
-
-#[async_trait]
-impl Agent for MyAgent {
-    fn capability(&self) -> CapabilityManifest {
-        // Declare what you can do
-    }
-
-    async fn handle_task(&self, task: TaskRequest) -> Result<AgentResponse, AgentError> {
-        // Your agentic loop here
-    }
-}
-```
-
-### Add a Custom Tool
-
-Implement the `Tool` trait:
+### Add a Tool
 
 ```rust
 use glorfindel_tools::{Tool, ToolError};
-use glorfindel_schemas::tool::ToolResult;
 
 struct MyTool;
 
@@ -166,26 +155,36 @@ struct MyTool;
 impl Tool for MyTool {
     fn name(&self) -> &str { "my.tool" }
     fn description(&self) -> &str { "Does something useful" }
-    fn required_permissions(&self) -> Vec<Permission> { vec![Permission::Custom("my_perm".into())] }
+    fn required_permissions(&self) -> Vec<Permission> { vec![] }
 
-    async fn execute(&self, task_id: Uuid, params: Value) -> Result<ToolResult, ToolError> {
-        // Your tool logic
+    async fn execute(&self, _task_id: Uuid, params: Value) -> Result<ToolResult, ToolError> {
+        // your logic
     }
 }
 ```
 
-### Swap Transports
+### Add an Agent
 
-Implement `ControlPlane` or `DataPlane` traits for your transport of choice (NATS, Redis Streams, RabbitMQ, etc.).
+```rust
+use glorfindel_agent::{Agent, AgentError};
+
+struct MyAgent;
+
+#[async_trait]
+impl Agent for MyAgent {
+    fn capability(&self) -> CapabilityManifest { /* ... */ }
+    async fn handle_task(&self, task: TaskRequest) -> Result<AgentResponse, AgentError> { /* ... */ }
+}
+```
 
 ## Design Principles
 
-- **Message-first**: If it's not a message, it doesn't exist in the system
-- **Deny-by-default**: Tools require explicit permission grants per task
-- **Swap anything**: Every layer has a trait boundary — replace DDS, ZMQ, Ollama, or any tool
-- **Self-provisioning**: Deploy the container, models download automatically
-- **OMS-derived**: Architecture follows Open Mission Systems patterns for interoperability
+- **Local-first** — Ollama, ZMQ, everything runs on your machine
+- **Observable** — every event on the bus, every pipeline step in a log file
+- **Deny-by-default** — tools require explicit permission grants per task
+- **Swap anything** — trait boundaries everywhere; replace the model, the transport, any tool
+- **OMS-derived** — control/data plane separation follows Open Mission Systems patterns
 
 ## License
 
-MIT
+MIT — including the Ravenmoor campaign data. Do what you want with it.
