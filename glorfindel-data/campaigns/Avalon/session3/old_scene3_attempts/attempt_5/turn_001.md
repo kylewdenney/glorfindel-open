@@ -1,0 +1,11 @@
+In the dim predawn, as the first tendrils of mist curl around Avalon's ancient stones, you find yourself standing at the water's edge, a glowing parchment clutched tightly in your hand. The three figures that once awaited you have vanished, leaving only the whispering reeds and the distant call of waking birds to fill the silence. Your senses are attuned to something else now, a presence lurking in the shadows, a door hidden within the rustling vegetation.
+
+You turn away from the water's edge, drawn towards the mysterious entity that calls to you through the parchment. The words written upon it shift and dance as you walk, revealing a door-like space between the letters. Your heart races with anticipation, yet a cold shiver of dread creeps down your spine.
+
+As you approach the reeds, you can feel the entity's presence growing stronger, its will pressing against yours. You read the two words aloud, and as they leave your lips, the world around you seems to bend and twist, distorted by an unseen force. The reeds part, revealing a coracle, woven from the very essence of Avalon itself, waiting for you to step into it and cross back over the Veil.
+
+But there is no time to hesitate. The sky begins to lighten, and you know that if you do not return soon, you may be trapped in this realm forever. With a deep breath, you step into the coracle, feeling it conform to your body as if it were part of you. It glides effortlessly through the reeds, carrying you back towards the world you once knew.
+
+As you pass through the Veil, you feel a strange sensation wash over you – a sense of familiarity, a hint of déjà vu that sends a shiver down your spine. The door-like space between the words on the parchment has revealed itself to be more than just an entryway; it is a window into the unknown, a glimpse at the hidden secrets of Avalon.
+
+You emerge on the other side, back in your own world, yet somehow changed. The glowing parchment now holds a new mystery, one that promises to reveal the true nature of this ancient land and its powerful inhabitants. But for now, you are safe – at least for the time being. As the sun rises over the horizon, casting its golden light upon the land, you cannot help but wonder what other secrets Avalon still holds in store for you.

@@ -1,0 +1,24 @@
+{
+  "id": "5b9f54e8-6b81-4926-9457-090823fabd89",
+  "name": "Tithe of Bells DM",
+  "description": "DM for TitheOfBells",
+  "agent_type": "specialist",
+  "model": "mistral",
+  "ollama_host": "http://localhost:11434",
+  "tools": [
+    "campaign.read"
+  ],
+  "domains": [
+    "ttrpg"
+  ],
+  "system_prompt": "You are the DM for The Tithe of Bells campaign, Scottish Highlands 1351. Write narrative prose only.",
+  "default_permissions": [
+    {
+      "custom": "campaign_read"
+    }
+  ],
+  "campaign_dir": "TitheOfBells",
+  "deployed_context": null,
+  "created_at": "2026-04-22T01:55:53.194063874Z",
+  "updated_at": "2026-04-22T01:55:53.194063874Z"
+}

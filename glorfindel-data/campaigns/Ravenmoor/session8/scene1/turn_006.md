@@ -1,0 +1,9 @@
+In the damp, inky darkness of the Aldwick Mine, Vera's senses heighten as she extends her awareness with the subtle art of Detect Magic. Her gaze lingers on the rough-hewn tunnel walls, the damp air heavy with an unnatural chill, and the pooled water that reflects no light. The silence is deafening, broken only by the distant drip of water and the faint echoes of her own breath.
+
+As she focuses, a shiver runs through her, and she feels a prickling sensation on her skin—a presence that seems to pulse with an otherworldly energy. The air around her shimmers subtly, as if in response to some unseen force. Vera's heart quickens, but she maintains her concentration, her eyes narrowing as she attempts to discern the nature of this malevolent presence.
+
+The ground beneath her feet seems to warp slightly, and a creeping sensation crawls up her spine. She senses something is wrong—not just with the mine, but with the very fabric of reality itself. A chill settles over her as she realizes that her grandmother's word for such places may have been prophetic: this is a nexus, a place where the veil between worlds grows thin.
+
+Vera feels a growing sense of unease—this mine is not just cursed; it is a gateway to something far more sinister. As she stands there, bathed in the eerie glow of her own magic, she can't help but wonder if they have all walked into a trap. But there's no turning back now. The party has come too far, and the fate of Ravenmoor hangs in the balance.
+
+As Vera's eyes meet those of her companions, she knows they are all thinking the same thing: They must press on, despite the mounting dread that threatens to consume them. With a determined nod, they take up their weapons and plunge deeper into the darkness, their steps echoing ominously in the oppressive silence of the Aldwick Mine.

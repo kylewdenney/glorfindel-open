@@ -1,0 +1,9 @@
+As Caius ap Llywarch closes his eyes and focuses on the Devotion of THE SWORD, a faint pulsating sensation echoes within him. The world around him seems to blur momentarily, as if veiled by an unseen force. He feels a connection, a thread stretching out from his soul towards another.
+
+With a sudden jolt, the connection strengthens, and Caius' awareness shifts. He finds himself standing on hallowed ground, within the mystical realm of Avalon. The verdant landscape sprawls before him, filled with ancient trees and shimmering pools. A sense of timeless tranquility envelops him, yet a subtle undercurrent of unease pulses through the air.
+
+In the distance, he sees a figure cloaked in white, standing by a tranquil lake. It is Sioned. Caius takes a step forward, reaching out with his senses to confirm her presence. But as he does so, the connection falters and the sensation fades away. His eyes snap open, and he finds himself back in Camelot's yard, once again surrounded by the clamor of everyday life.
+
+Caius attempts to use his Devotion once more, but this time, his efforts yield nothing. The SWORD refuses to allow him a clear connection to Avalon, as if it senses something amiss within the mystical realm. Caius feels a growing sense of frustration and determination, knowing that he must find a way to bridge the gap between worlds and uncover the secrets hidden in Avalon.
+
+As he steps back into Camelot's yard, he takes one last look at the transformed landscape shimmering on the horizon. He knows that it will not be easy, but Caius ap Llywarch is a warrior of the Sword, and he will not rest until he has found his answers in Avalon.

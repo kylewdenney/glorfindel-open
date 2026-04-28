@@ -1,0 +1,28 @@
+{
+  "Vera Nighthollow": {
+    "dread": 1,
+    "cdp": 2,
+    "conditions": []
+  },
+  "Dorian Ashgrove": {
+    "dread": 1,
+    "cdp": 1,
+    "conditions": [
+      "the angles are wrong and I can prove it means the proof falls apart"
+    ]
+  },
+  "Emmett Grave": {
+    "dread": 1,
+    "cdp": 1,
+    "conditions": [
+      "Counted"
+    ]
+  },
+  "Sister Isolde Carrow": {
+    "dread": 1,
+    "cdp": 1,
+    "conditions": [
+      "Counted"
+    ]
+  }
+}

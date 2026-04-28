@@ -1,0 +1,11 @@
+In the quiet, mist-laden landscape of the ancient land, Elen ferch Maelog sets out on her quest to uncover the secrets of gunpowder. With a keen eye and an insatiable curiosity, she navigates through the winding paths that lead her to the humble abode of the nearest alchemist. Upon arrival, she presents herself with a polite demeanor, concealing the urgency that fuels her search beneath a veil of calm composure.
+
+The alchemist, a weathered man with a lined face and deep-set eyes, greets Elen warmly, sensing the air of intrigue that surrounds her. As they converse in hushed tones within his dimly lit workshop, he shares his knowledge of various concoctions and elixirs, but gunpowder remains an enigma to him.
+
+Elen then proposes a trade: she will offer information about her own studies in exchange for the alchemist's assistance in recreating gunpowder. The alchemist hesitates, sensing that there is more to Elen than meets the eye, but ultimately agrees to help her in this endeavor.
+
+Together they pour over ancient texts and scrolls, comparing notes and theories. As the day turns into night, Elen attempts to invoke her Devotion, THE VEIL, in an attempt to perceive hidden knowledge about gunpowder. The dice rolls once more, as she casts her mind beyond the veil of reality.
+
+But alas, fate is not on her side today. The dice outcome reveals a **FAILURE**, and Elen's efforts are met with frustration. Despite her best efforts, she cannot perceive the hidden knowledge that would bring about the creation of gunpowder. Disappointed but undeterred, she thanks the alchemist for his assistance and departs, vowing to continue her search until she uncovers the secrets of this mysterious substance.
+
+As Elen returns to her home near the lake, she ponders over the events that transpired. She knows that the answer lies somewhere within her reach, and with renewed determination, she sets out once more on her quest for knowledge, guided by her Devotion and driven by the echoes of ancient magic that resound through the veil between worlds.

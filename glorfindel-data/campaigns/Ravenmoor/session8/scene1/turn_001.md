@@ -1,0 +1,9 @@
+In the dim light of the Aldwick Inn, the air hung heavy with tension as Sister Isolde Carrow stood before Father Dorian Vane, the priest of St. Aldric, who had been possessed by some malevolent force. With a trembling hand, she raised her silver holy symbol towards the tormented man, not in faith but in desperation. Her voice echoed through the room as she called upon St. Aldric to drive away the darkness that gripped Father Vane.
+
+The air grew colder, the very walls seemed to shudder, and a low growl emanated from the possessed priest. The eyes of all present fixed on Isolde, waiting with bated breath for the outcome of her bold act. As she spoke, the darkness within Father Vane recoiled, his body convulsing violently as he fought against the unholy force that had taken hold of him.
+
+Isolde's voice grew stronger, more resolute, as she continued to command the evil spirit to depart. The room trembled with each word she spoke, the very ground beneath them shaking in response to her pleas. Finally, with a final cry of defiance, Father Vane collapsed to the floor, the darkness that had possessed him fleeing from his body.
+
+The room erupted into cheers and prayers, relief washing over everyone present. Dorian Ashgrove, the disgraced investigator, stepped forward to examine Father Vane, his leather notebook in hand as he jotted down notes on the events that had just transpired. Emmett Grave, the graverobber/archaeologist, stood by quietly, watching with keen interest as the others reacted to the exorcism.
+
+Vera Nighthollow, the witch, felt a shiver run through her as she watched Isolde's display of faith. She could sense the power that lay within the fallen cleric and knew that it was a force to be reckoned with. As the others continued to celebrate, Vera slipped away from the crowd, her mind racing with thoughts of what this new development might mean for their ongoing investigation into the cursed village of Ravenmoor.

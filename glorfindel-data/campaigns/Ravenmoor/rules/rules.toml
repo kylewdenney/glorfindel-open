@@ -1,0 +1,312 @@
+# Ravenmoor — Structured Rules Lookup Table
+#
+# This file is the authoritative source for all mechanical numbers.
+# The Rust pipeline parses it directly; LLMs receive the prose/trigger text
+# as context for interpretation but never invent DCs or modifiers.
+#
+# ROLL format (output by RulesAssessor):
+#   ROLL|CharacterName|check_type|tier|reason
+#   - check_type: cosmic_dread | fear | <skill_name>
+#   - tier:       see tiers per check_type below
+#   - reason:     brief phrase, what failure means narratively
+
+# ─── Check Types ──────────────────────────────────────────────────────────────
+
+[[check_types]]
+id          = "cosmic_dread"
+ability     = "Intelligence"
+description = "Direct encounter with the Thing from Below — its body, voice, geometry, implications"
+prose       = """
+The mind breaks before the nerves. The Thing predates human neurology.
+Intelligence, not Wisdom, is the save. The character is not afraid —
+they are beginning to understand, and understanding is the damage."""
+
+  [[check_types.tiers]]
+  id           = "evidence"
+  dc           = 11
+  triggers     = ["impossible geometry", "wrong mathematics", "angles that cannot exist", "the map"]
+  on_fail      = "Gain 1 CDP. The character sees angles that are not there."
+  on_success   = "Compartmentalises. Knows something new that cannot be unknowed."
+  fail_effects = ["cdp+1", "dread+1"]
+  succ_effects = []
+
+  [[check_types.tiers]]
+  id           = "fragment"
+  dc           = 15
+  triggers     = ["fragment of its body", "emanation", "direct physical contact", "its voice clearly"]
+  on_fail      = "Gain 1 CDP. Something in the mind shifts and does not shift back."
+  on_success   = "Compartmentalises. The memory will surface later."
+  fail_effects = ["cdp+1", "dread+1"]
+  succ_effects = []
+
+  [[check_types.tiers]]
+  id           = "attention"
+  dc           = 19
+  triggers     = ["it has noticed you specifically", "its attention turns here", "it looked at you"]
+  on_fail      = "Gain 1 CDP. The character now knows they have been counted."
+  on_success   = "Compartmentalises. Acts normally, but something has changed."
+  fail_effects = ["cdp+1", "dread+1"]
+  succ_effects = []
+
+  [[check_types.tiers]]
+  id           = "true_form"
+  dc           = 23
+  triggers     = ["direct perception of its true form", "saw what it actually is"]
+  on_fail      = "Gain 1 CDP. One previously held belief becomes uncertain."
+  on_success   = "Compartmentalises. Will need to sleep soon."
+  fail_effects = ["cdp+1", "dread+1"]
+  succ_effects = []
+
+  [[check_types.tiers]]
+  id           = "comprehension"
+  dc           = 27
+  triggers     = ["understands what it is and what it means", "the full implication lands"]
+  on_fail      = "Gain 1 CDP. Goals may begin to change. Work with DM."
+  on_success   = "Compartmentalises. Something fundamental is different now."
+  fail_effects = ["cdp+1", "dread+2"]
+  succ_effects = []
+
+# ──────────────────────────────────────────────────────────────────────────────
+
+[[check_types]]
+id          = "fear"
+ability     = "Wisdom"
+description = "Supernatural horror — undead, possession, unnatural death"
+prose       = """
+The body's terror response. Wisdom, not Intelligence.
+The character is not thinking — they are reacting."""
+
+  [[check_types.tiers]]
+  id           = "unsettling"
+  dc           = 10
+  triggers     = ["minor supernatural", "unnatural movement", "disturbing presence", "wrong silence"]
+  on_fail      = "Frightened for 1 round."
+  on_success   = "Holds. Unnerved but functional."
+  fail_effects = ["condition:Frightened"]
+  succ_effects = []
+
+  [[check_types.tiers]]
+  id           = "disturbing"
+  dc           = 13
+  triggers     = ["spectral entity", "fresh corpse reanimated", "possession symptoms", "unnatural wound"]
+  on_fail      = "Frightened. Disadvantage on next action."
+  on_success   = "Holds with effort."
+  fail_effects = ["condition:Frightened", "dread+1"]
+  succ_effects = []
+
+  [[check_types.tiers]]
+  id           = "terrifying"
+  dc           = 16
+  triggers     = ["direct undead attack", "active possession witnessed", "something killed wrongly"]
+  on_fail      = "Frightened. Must use action to flee or freeze this turn."
+  on_success   = "Holds. That cost something."
+  fail_effects = ["condition:Frightened", "dread+1"]
+  succ_effects = []
+
+  [[check_types.tiers]]
+  id           = "soul_shaking"
+  dc           = 19
+  triggers     = ["entity fully manifested", "confronting something impossible and present"]
+  on_fail      = "Paralysed 1 round, then Frightened. Disadvantage on Wisdom saves for the rest of scene."
+  on_success   = "Holds. Costs 1 Dread."
+  fail_effects = ["condition:Paralysed", "condition:Frightened", "dread+1"]
+  succ_effects = ["dread+1"]
+
+# ──────────────────────────────────────────────────────────────────────────────
+
+[[check_types]]
+id          = "skill"
+ability     = "{resolved_from_character_table}"
+description = "Standard skill check using the character's relevant listed ability"
+prose       = "Use the exact modifier from the character table. No guessing."
+
+  [[check_types.tiers]]
+  id           = "easy"
+  dc           = 8
+  triggers     = ["routine", "no pressure", "familiar task", "obvious"]
+  on_fail      = "Minor setback or delay."
+  on_success   = "Straightforward success."
+  fail_effects = []
+  succ_effects = []
+
+  [[check_types.tiers]]
+  id           = "moderate"
+  dc           = 12
+  triggers     = ["moderate difficulty", "standard challenge", "hidden but findable"]
+  on_fail      = "Partial result or setback."
+  on_success   = "Clear success."
+  fail_effects = []
+  succ_effects = []
+
+  [[check_types.tiers]]
+  id           = "hard"
+  dc           = 16
+  triggers     = ["difficult", "under pressure", "expertly hidden", "unusual circumstances"]
+  on_fail      = "Failure with consequence."
+  on_success   = "Success with possible detail."
+  fail_effects = []
+  succ_effects = []
+
+  [[check_types.tiers]]
+  id           = "extreme"
+  dc           = 20
+  triggers     = ["near-impossible", "exceptional feat", "legendary difficulty"]
+  on_fail      = "Failure."
+  on_success   = "Exceptional success."
+  fail_effects = []
+  succ_effects = []
+
+# ─── Characters ───────────────────────────────────────────────────────────────
+
+[[characters]]
+name = "Sister Isolde Carrow"
+
+  # Skill modifiers
+  [[characters.abilities]]
+  name     = "Medicine"
+  modifier = 5
+
+  [[characters.abilities]]
+  name     = "Religion"
+  modifier = 4
+
+  [[characters.abilities]]
+  name     = "Insight"
+  modifier = 4
+
+  # Save modifiers (used for cosmic_dread and fear checks)
+  [[characters.abilities]]
+  name     = "INT_SAVE"
+  modifier = 1
+
+  [[characters.abilities]]
+  name     = "WIS_SAVE"
+  modifier = 4
+
+  # Special rules (affect roll resolution)
+  [[characters.special_rules]]
+  id          = "advantage_fear_undead"
+  description = "Advantage on Fear Saves (Wisdom) vs. undead"
+
+  [[characters.special_rules]]
+  id          = "disadvantage_wisdom_suffering"
+  description = "Disadvantage on Wisdom saves when witnessing suffering"
+
+# ──────────────────────────────────────────────────────────────────────────────
+
+[[characters]]
+name = "Dorian Ashgrove"
+
+  [[characters.abilities]]
+  name     = "Investigation"
+  modifier = 6
+
+  [[characters.abilities]]
+  name     = "Perception"
+  modifier = 4
+
+  [[characters.abilities]]
+  name     = "History"
+  modifier = 4
+
+  [[characters.abilities]]
+  name     = "INT_SAVE"
+  modifier = 3
+
+  [[characters.abilities]]
+  name     = "WIS_SAVE"
+  modifier = 2
+
+  [[characters.special_rules]]
+  id          = "disadvantage_social_sober"
+  description = "Disadvantage on social checks when sober"
+
+  [[characters.special_rules]]
+  id          = "informant_network"
+  description = "Has a network of informants (1d4 days to get a reply)"
+
+# ──────────────────────────────────────────────────────────────────────────────
+
+[[characters]]
+name = "Emmett Grave"
+
+  [[characters.abilities]]
+  name     = "Sleight of Hand"
+  modifier = 5
+
+  [[characters.abilities]]
+  name     = "Thieves' Tools"
+  modifier = 5
+
+  [[characters.abilities]]
+  name     = "Arcana"
+  modifier = 3
+
+  [[characters.abilities]]
+  name     = "History"
+  modifier = 3
+
+  [[characters.abilities]]
+  name     = "INT_SAVE"
+  modifier = 0
+
+  [[characters.abilities]]
+  name     = "WIS_SAVE"
+  modifier = 0
+
+  [[characters.special_rules]]
+  id          = "immune_frightened"
+  description = "Immune to the Frightened condition — fear saves vs. undead auto-succeed on Frightened outcome"
+
+  [[characters.special_rules]]
+  id          = "not_immune_cosmic"
+  description = "NOT immune to Cosmic Dread Saves — has seen worse, not this"
+
+  [[characters.special_rules]]
+  id          = "identify_undead"
+  description = "Can identify undead type on DC 12 Arcana check"
+
+# ──────────────────────────────────────────────────────────────────────────────
+
+[[characters]]
+name = "Vera Nighthollow"
+
+  [[characters.abilities]]
+  name     = "Nature"
+  modifier = 5
+
+  [[characters.abilities]]
+  name     = "Arcana"
+  modifier = 5
+
+  [[characters.abilities]]
+  name     = "Animal Handling"
+  modifier = 4
+
+  [[characters.abilities]]
+  name     = "Deception"
+  modifier = 4
+
+  [[characters.abilities]]
+  name     = "INT_SAVE"
+  modifier = 4
+
+  [[characters.abilities]]
+  name     = "WIS_SAVE"
+  modifier = 3
+
+  [[characters.special_rules]]
+  id          = "advantage_cosmic_dread"
+  description = "Advantage on all Cosmic Dread Saves (Intelligence) — grandmother's knowledge"
+
+  [[characters.special_rules]]
+  id          = "disadvantage_urban"
+  description = "Disadvantage on checks in cities; Advantage in wilderness/ruins"
+
+  [[characters.special_rules]]
+  id          = "detect_magic"
+  description = "Detect Magic at will — does NOT detect the Thing, senses only absence"
+
+  [[characters.special_rules]]
+  id          = "brew_potions"
+  description = "Can brew potions (1 hour, herbalism kit, DC 12 Arcana)"

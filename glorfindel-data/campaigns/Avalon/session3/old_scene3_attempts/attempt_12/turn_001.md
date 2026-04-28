@@ -1,0 +1,9 @@
+In the heart of Avalon's twilight realm, where ancient whispers echo through time and shadows dance in the flickering light, you find yourself drawn towards the reeds that border the standing pool. The parchment in your hands glows faintly with an eerie luminescence, guiding your steps as you tread upon this strange land.
+
+As you approach the reeds, a sense of foreboding washes over you like the cold waves of the sea. It is here that the door awaits—a threshold between worlds, shrouded in mystery and draped in fear. The two words from the parchment resonate in your mind as they echo from your lips: "Dyrnwyn, Ailow."
+
+The reeds part before you, revealing a narrow coracle, barely bigger than a bath tub, tied to a willow tree. A soft wind whispers through the leaves, urging you towards the water. Three figures stand motionless on the opposite shore, their faces obscured by hooded cloaks and shadows cast by the setting sun. They watch your every move with undeniable intent.
+
+A chill creeps up your spine as you consider your options: venture across the water in the coracle, risking a confrontation with the enigmatic figures waiting on the other side; search for another door within this strange land; or face whatever lies hidden within the reeds. The parchment's glow pulses stronger, urging you to step into the unknown.
+
+With a deep breath, you take hold of the coracle's sides and push off from the shore, your heart pounding in time with the gentle lapping of waves against the hull. As the reeds close behind you, leaving only darkness and whispers in their wake, you can't help but wonder if this decision will lead you closer to home or deeper into the realm of the Fae.

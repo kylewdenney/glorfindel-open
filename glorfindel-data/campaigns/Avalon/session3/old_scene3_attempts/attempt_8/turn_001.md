@@ -1,0 +1,7 @@
+In the dim and dripping embrace of Avalon's hallowed reeds, you tread with purpose, parchment clutched in trembling hands. The words that once revealed a doorway now guide your steps as you approach the murky water's edge. The waiting figures loom ominously, their silent gaze unnerving, but you remain steadfast, focused on the task at hand.
+
+As you near the reeds, you feel an eerie chill envelop you. The air thickens, and the once distant whispers grow louder—a cacophony of ancient voices that echo through time. You recite the words, your voice wavering but firm. A moment passes, and the world around you seems to shudder, as if the very earth is reacting to your utterance.
+
+With a sudden burst of light, a door appears within the reeds—a gateway to the mortal realm. You step through, the cold water closing behind you with a mournful splash. As you emerge on the other side, the waiting figures vanish, replaced by the familiar sight of the standing pool and its surrounding chapel. The sky is just beginning to lighten, and you know that time is running out.
+
+With renewed determination, you make your way back towards the chapel, the parchment clutched tightly in hand. You feel a presence behind you—something sinister lurking within the reeds. But you do not falter. Instead, you push onward, driven by an ancient power that courses through your veins and guides your steps. The fate of Avalon hangs in the balance, and you are determined to return home before the dawn breaks and the Veil between worlds is sealed once more.

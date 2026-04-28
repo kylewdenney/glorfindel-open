@@ -1,7 +1,8 @@
 # Build artifacts
 /target/
 
-# Runtime data — personal campaigns excluded, Ravenmoor playground included
+# Runtime data — local/ is for personal/private campaigns, never committed
+glorfindel-data/local/
+# Legacy per-campaign ignores (kept for safety on older checkouts)
 glorfindel-data/campaigns/shire/
-"glorfindel-data/campaigns/Claude playtime/"
 glorfindel-data/campaigns/Claude playtime/

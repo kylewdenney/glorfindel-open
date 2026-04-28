@@ -1,4 +1,6 @@
 pub mod agent_tool;
+pub mod agent_worker;
+pub mod pipeline_agents;
 pub mod api;
 pub mod persist;
 pub mod server;

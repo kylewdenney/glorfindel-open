@@ -734,6 +734,7 @@ dependencies = [
  "glorfindel-agent",
  "glorfindel-schemas",
  "glorfindel-tools",
+ "glorfindel-transport",
  "rand",
  "reqwest",
  "serde",
@@ -741,6 +742,7 @@ dependencies = [
  "thiserror 2.0.18",
  "tmq",
  "tokio",
+ "toml",
  "tower 0.4.13",
  "tower-http 0.5.2",
  "tracing",
@@ -2190,8 +2192,15 @@ dependencies = [
  "serde",
  "serde_spanned",
  "toml_datetime",
+ "toml_write",
  "winnow",
 ]
+
+[[package]]
+name = "toml_write"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5d99f8c9a7727884afe522e9bd5edbfc91a3312b36a77b5fb8926e4c31a41801"
 
 [[package]]
 name = "tower"

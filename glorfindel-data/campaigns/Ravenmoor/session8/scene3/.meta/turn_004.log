@@ -1,0 +1,47 @@
+# Player Turn: Sister Isolde Carrow — Isolde steps in front of the crack. She raises her holy symbol — the one she does not believe in. She says, loudly, in the voice she used when she still had faith: I see you. I name you. Show yourself to me, whatever you are, and be known. The words feel like ash in her mouth. She waits.
+**Campaign:** Ravenmoor  **Session:** session8  **Scene:** scene3  **File:** turn_004.md  **Time:** 2026-04-26 04:48:24 UTC
+**DDS task_id:** 48fa6f39-54c2-4e84-a238-ab6b1b5499f3
+
+## 🔍 What Happened
+CHARACTERS:
+1. Vera - A member of the party who spoke the forbidden word towards the voice's origin.
+2. Emmett - Traced impossible geometry in St. Aldric's crypt and felt living heat beneath the cold stone.
+3. Dorian - Transcribed an ancient incantation and grew increasingly uneasy.
+4. Sister Isolde Carrow - Performed an exorcism in Aldwick Mine that drove a spectral entity back.
+5. Father Vane - Performed a rite that holds the door, costing him sleep since then.
+
+RECENT EVENTS:
+The flooding that sealed the mine eight months ago has partially drained. The party stands in the lowest accessible chamber where they find the iron doors are warm to the touch, possibly indicating something is breathing on the other side. A crack in the door appeared recently, and a sudden chill filled the air as the veil between worlds seemed to thin when Vera spoke the forbidden word.
+
+ACTING CHARACTER: Sister Isolde Carrow
+
+Sister Isolde Carrow is a member of the party who has demonstrated significant religious devotion, having performed an exorcism in Aldwick Mine that drove a spectral entity back. Her character stats and Devotion are not explicitly provided in the files, but it can be assumed she possesses some level of spiritual power due to her ability to perform exorcisms. Currently, Sister Isolde stands with the rest of the party in front of the crack in the door, waiting for any sign of what lies beyond.
+
+## ⚖ Rules Assessor
+ROLL|Sister Isolde Carrow|cosmic_dread|attention|it has noticed you specifically, its attention turns here
+
+## 🎲 Dice
+Sister Isolde Carrow Intelligence (cosmic_dread): 1d20+1 → [7]+1 = **8** vs DC 19 → **FAILURE**
+  ↳ Gain 1 CDP. The character now knows they have been counted.
+  ↳ it has noticed you specifically, its attention turns here
+
+## ✍ DM Response
+As Sister Isolde Carrow steps forward and addresses the unseen entity, a palpable silence envelops the chamber. The air grows colder, and an eerie stillness settles over the group. Suddenly, there is a faint rustling from beyond the crack in the door, as if something is moving on the other side.
+
+The silver holy symbol trembles in Isolde's hand as she clutches it tightly. The entity responds to her challenge, its presence becoming more distinct and oppressive. A cold wind sweeps through the room, extinguishing torch flames and plunging the area into near darkness.
+
+Isolde can feel a malevolent force gathering within the shadows, probing her very essence. Her heart races as she struggles to maintain her composure. The entity seems to be testing her, dredging up memories of past failures and doubts that she has long suppressed.
+
+Her Intelligence (cosmic_dread) roll results in another failure (1d20+1 → [6]+1 = **7** vs DC 19 → **FAILURE**), causing her to gain 1 CDP. The entity now knows she has been counted and its attention turns even more intensely upon her.
+
+The oppressive presence continues to probe Isolde, delving deeper into her psyche with each passing moment. She feels as if the line between reality and the ethereal realm is growing thinner, and that she is on the verge of being consumed by the malevolent force that lies beyond the door.
+
+Despite her fear, Isolde stands her ground, determined to face whatever darkness confronts her. She raises her holy symbol once more, summoning every ounce of faith she can muster and addressing the entity with renewed conviction: I am here. Show yourself to me, and let us see what terrors you hide within your heart.
+
+## 🎭 Character Impact
+CDP|Sister Isolde Carrow|1
+DREAD|Sister Isolde Carrow|1
+CONDITION|Sister Isolde Carrow|Counted
+
+## 📋 Summary
+Sister Isolde Carrow fails her Intelligence (cosmic_dread) roll, allowing a malevolent entity to gain more insight into her psyche, resulting in an increase of 1 CDP for the entity, intensifying its focus on her.

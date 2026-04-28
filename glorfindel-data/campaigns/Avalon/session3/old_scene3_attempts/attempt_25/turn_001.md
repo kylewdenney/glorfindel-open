@@ -1,0 +1,13 @@
+In the dwindling twilight of Avalon's shimmering shore, three ethereal figures materialize before you, their forms shifting like waves on the edge of perception. Their eyes, luminous pools of otherworldly light, fixate on the parchment in your hands, and a hush descends upon the air as they regard you with an intensity that chills the marrow.
+
+You place the ledger before them, its pages quivering with an unspoken energy. Your voice, steady and resolute, echoes across the water, carrying a promise of defiance against the ethereal chill. The words you speak hang suspended between you and your enigmatic audience, as if weaving a web of intent that binds you to them.
+
+The figures regard one another, their countenances unreadable behind veils of mist and shadow. One steps forward, its silhouette taking on the form of an ancient crone, her visage etched with lines deeper than time itself. She reaches out a gnarled hand, fingers long and spindly as she takes hold of your ledger. Her touch is cold, like the frost that claims Avalon's heart, and you feel a chill creep through your bones as she peruses its contents.
+
+The crone withdraws her hand, and her eyes meet yours once more. She speaks in a voice that seems to emanate from the very soil beneath your feet, a whisper carried on the wind yet somehow resonating within your soul. "Your price," she intones, "is your own freedom."
+
+You feel a sudden, visceral tug at the edges of your being, as if some unseen force seeks to ensnare you in its grasp. You struggle against it, drawing upon every ounce of willpower you possess to stand firm against the encroaching darkness. The crone's eyes narrow, and her lips twist into a semblance of a smile that sends shivers down your spine.
+
+"You have until dawn," she hisses, "to make your choice." With that, the figures dissipate like smoke, leaving you alone upon the shore, the cold embrace of Avalon's darkness closing in around you. The water laps at your feet, and the reeds rustle ominously behind you, a constant reminder that something is following in your wake.
+
+As the stars begin to twinkle overhead, you make your decision. You will not be bound by this ancient debt. Turning your back on Avalon's shadows, you take one last look at the shore and step into the coracle that awaits you, the waters parting before you as if in deference to your resolve. The dawn is breaking, and with it comes the promise of a new day, and perhaps, a chance to break free from the chains that bind you.

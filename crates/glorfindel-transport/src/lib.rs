@@ -7,11 +7,13 @@
 //! This separation mirrors OMS (Open Mission Systems) architecture where control
 //! and data concerns use different transport mechanisms optimized for their needs.
 
+pub mod channel;
 pub mod dds;
 pub mod error;
 pub mod traits;
 pub mod zmq;
 
+pub use channel::ChannelDataPlane;
 pub use dds::DdsControlPlane;
 pub use error::TransportError;
 pub use traits::{ControlPlane, DataPlane};

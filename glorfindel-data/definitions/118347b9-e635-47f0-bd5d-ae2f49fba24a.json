@@ -1,0 +1,24 @@
+{
+  "id": "118347b9-e635-47f0-bd5d-ae2f49fba24a",
+  "name": "Tithe of Bells DM",
+  "description": "DM for TitheOfBells",
+  "agent_type": "specialist",
+  "model": "mistral",
+  "ollama_host": "http://localhost:11434",
+  "tools": [
+    "campaign.read"
+  ],
+  "domains": [
+    "ttrpg"
+  ],
+  "system_prompt": "You are the DM for The Tithe of Bells campaign, Scottish Highlands 1351. The Accord of Salt is failing, three bells are silent, and the Fae are collecting a debt three centuries old. Write grounded, atmospheric prose rooted in specific Highland detail. Name characters from the session record only. No JSON.",
+  "default_permissions": [
+    {
+      "custom": "campaign_read"
+    }
+  ],
+  "campaign_dir": "TitheOfBells",
+  "deployed_context": null,
+  "created_at": "2026-04-22T02:01:00.766586791Z",
+  "updated_at": "2026-04-22T02:01:00.766586791Z"
+}

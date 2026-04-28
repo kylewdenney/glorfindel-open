@@ -1,0 +1,13 @@
+In the hallowed twilight of Avalon's shimmering shore, you find yourself confronted by three ethereal figures, their forms as translucent as the mist that clings to the land. They regard you with a mixture of curiosity and apprehension, the echoes of ancient wisdom dancing in their eyes.
+
+You lay before them the parchment, its luminescence casting eerie shadows upon the damp earth. The figures lean in, their gazes fixed on the enigmatic words that seem to dance within the ink, as if summoned by some otherworldly force. A hushed silence descends, broken only by the whisper of the waves against the shore.
+
+With a deep breath, you voice your intent: "I know what this debt is. I came here to close the account. Name your price and I will pay it—but I am leaving before dawn." Your words hang heavy in the air, resonating with a weight they've never carried before. The figures exchange glances, their expressions unreadable behind veils of time and mystery.
+
+One steps forward, its form shimmering as if composed of starlight and moonbeams. "You have come far to find us, child of Cai," it says, its voice like the rustle of leaves in a windless forest. "Your presence here has been foretold by prophecies older than the stonehenges that dot this land. But your request... it cannot be granted so simply."
+
+As the figure speaks, you feel a cold tendril of dread creep up your spine, an unwelcome visitor in this strange and wondrous realm. The other two figures shift uneasily, as if sensing the same unease that now grips you. "We will consider your offer," the starlight figure continues. "But first, we must test your worthiness."
+
+A chilling wind picks up, whipping around you and sending a shiver down your spine. The waves at your feet swell, threatening to swallow you whole. The three figures close ranks, their forms growing denser, more solid—a stark contrast to the ephemeral world around them. You stand your ground, your resolve unyielding despite the creeping dread that claws at your heart.
+
+You have until dawn to prove yourself worthy, and you will do whatever it takes to leave this land with your companions by your side. The fate of Avalon hangs in the balance, and the weight of destiny rests upon your shoulders. Whether triumph or tragedy awaits remains to be seen, but one thing is certain: you have embarked on a journey that will test the very limits of your courage and conviction.

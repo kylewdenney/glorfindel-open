@@ -1,0 +1,9 @@
+In the eerie twilight of Avalon, the silhouettes of the waiting figures fade into the encroaching shadows as Sioned ferch Cai, armed with nothing but her unwavering conviction and the mystical parchment that led her to this realm, approaches the enigmatic door revealed by the arcane words etched upon it. The reeds rustle ominously behind her, a haunting reminder of the Otherworldly presence lurking in the marshland depths.
+
+As Sioned steps closer, the two cryptic words she uttered seem to resonate through time and space, vibrating with an energy that feels both primal and divine. The air around the door shimmers, the Veil between worlds growing thinner, and in that moment of heightened sensitivity, Sioned perceives the other-shape of the thing in the reeds — it is a door after all, not just a manifestation of her imagination or fear.
+
+With a newfound determination, she reaches out and touches the pulsating threshold. The Veil surges around her fingers like liquid silk, tingling with an electric charge that hums in harmony with her very essence. As Sioned's hand passes through the door, it feels as if she is merging not just with Avalon but also with the ancient mythos that has shaped this land for millennia.
+
+The world shifts around her, and the once ominous reeds give way to a tranquil grove bathed in moonlight. Sioned finds herself standing before an ancient oak tree, its gnarled roots spreading wide as if reaching out to embrace her. She can feel a strange connection with the land, as though she has been here before and yet is seeing it for the first time all at once.
+
+The grove seems to beckon her forward, inviting her deeper into Avalon's heart. But there is still much to learn about this world and the role she is destined to play within it. The journey has only just begun, and Sioned ferch Cai must navigate its treacherous waters with wisdom, courage, and the unwavering faith that guides her every step.

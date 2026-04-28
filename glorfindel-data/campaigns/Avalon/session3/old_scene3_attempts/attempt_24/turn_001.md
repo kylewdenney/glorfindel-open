@@ -1,0 +1,11 @@
+In the hush of twilight, the grey shore of Avalon unfurls before you like a tapestry woven from dreams and whispers. The coracle, an ancient vessel bound by magic, waits for your return as patiently as the sea itself. You walk straight to the three figures at the water's edge, their ethereal forms glowing with an otherworldly light.
+
+You open the ledger, its parchment brittle yet holding the weight of the impossible entry. With a deliberate motion, you lay it flat before them like a deed of settlement. Your voice, steady and unwavering, echoes across the shore as you declare, "I know what this debt is. I came here to close the account."
+
+The figures exchange a glance, their expressions inscrutable beneath layers of time and sorrow. One steps forward, his form shifting and twisting like a shroud caught in the wind. He speaks in a voice that seems to emanate from the very air around you, "You have come far, child of Kay. Your lineage is known to us, though your purpose remains unclear."
+
+You stand firm, your eyes never leaving theirs, and continue, "Name your price and I will pay it—but I am leaving before dawn." The figures exchange glances once more, the silence stretching between you like a chasm. Then, the one who spoke earlier replies, "Your courage is commendable, Sioned ferch Cai. Your devotion to the Table has brought you here, but it may not be enough to secure your return."
+
+As you speak of closing accounts and leaving before dawn, the world around you seems to shift subtly, the air thickening with an unspoken threat. The figures at the water's edge are no longer just ethereal apparitions; they are tangible beings, their power palpable as it pulses through the very earth beneath your feet.
+
+You stand your ground, your resolve unwavering. This is a game of wits and wills, and you are determined to play it to the end. But as twilight deepens into night, the question remains: will your devotion be enough to secure your return, or will Avalon claim you as its own?

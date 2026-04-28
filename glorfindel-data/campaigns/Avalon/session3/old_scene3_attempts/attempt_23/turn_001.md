@@ -1,0 +1,9 @@
+In the waning twilight of Avalon's dreamscape, you find yourself standing before three ethereal figures, their visages as ephemeral as the mist that surrounds them. The glowing parchment, now a beacon in your trembling hands, reveals the two cryptic words that have transported you to this realm.
+
+You lay it flat before them like a deed of settlement, your voice steady yet tinged with trepidation. "I know what this debt is," you say, addressing the intangible as if they were solid beings. "I came here to close the account." Your words hang in the air, weaving around the figures as if trying to bind them to their promise.
+
+A moment of silence passes, the only sound the distant lapping of waves against the shore. Then, one figure steps forward, a spectral vision that seems to shift and twist like moonlight on water. "Your knowledge is commendable," it intones, its voice an echo of ancient wisdom. "But we have no need for payment."
+
+A sudden gust of wind whips through the scene, snatching the parchment from your hands and sending it billowing across the sands. The figure continues, "You have fulfilled your part of the bargain by crossing into our realm. Now, return to yours before dawn or be forever trapped here."
+
+The sky above darkens as if in response to their words, the first stars beginning to twinkle amidst the gathering gloom. You feel a chill run down your spine, and the sense of something following in the reeds grows more urgent. Time is running out, and you must act quickly. Will you be able to find a way back before dawn claims you for Avalon? Or will you become another lost soul bound to this mystical land?

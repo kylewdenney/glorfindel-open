@@ -1,0 +1,9 @@
+In the twilight of Avalon's hallowed shore, you find yourself drawn towards a presence that hums with ancient power—the door, as you sense it, in the parchment. The air around you thickens, and the whispering reeds behind seem to shift, their hushed voices growing louder.
+
+With every step towards the looming threshold, the two words from the parchment echo in your mind: "Selys Nimue." The wind picks up, carrying with it an icy chill that sends a shiver down your spine. You press on, knowing that every second counts as the sky darkens further, and the light of the mortal realm begins to fade.
+
+As you approach the reeds, the sound of crunching leaves and rustling branches fills the air behind you. A sense of unease washes over you, but you do not turn back. Instead, you focus on the words, reciting them with a voice that carries across the water. The coracle at the shoreline seems to shudder in response, and the figures waiting on its edge stir restlessly.
+
+With each word spoken, the reeds around you part, revealing a pathway hidden within. As you step onto it, the air crackles with energy, and you feel an indescribable pull that draws you forward. The coracle begins to move, the figures stepping gracefully into the water as it glides smoothly towards the open sea.
+
+The door is closing, and you must make a choice: chase after the coracle, offering something in hopes of gaining their aid; try to trick them with your cunning; or search for another door while remaining vigilant against whatever pursues you from the reeds. The fate of the mortal realm hangs in the balance, and the decision rests with you.

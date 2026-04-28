@@ -1,0 +1,11 @@
+In the fading twilight of Avalon, you, Sioned ferch Cai, tread cautiously towards the insidious whisper of reeds that haunt the marsh's edge. The parchment clutched tightly in your hand glows with a fierce intensity, casting long shadows that dance upon the earthen floor beneath your feet. With each step closer to the reeds, the air around you seems to grow heavier, more suffocating, as if the very marshland itself is trying to swallow you whole.
+
+As you recite the glowing words from the parchment, the air crackles with an energy that sends shivers down your spine. The whispering reeds part before you like a winding serpent unwinding, revealing something unnatural and grotesque lurking within. It slithers towards you, a shadowy figure that seems to be made of both water and mud, its eyes burning with an eerie green light.
+
+You can feel the weight of its malevolent intent, and your heart races as it draws nearer. Suddenly, the three figures who had been waiting at the water's edge step forward, their expressions inscrutable behind the veils that shroud their faces. They raise their hands, and a wind whips up from the marsh, driving the creature back into the reeds with a wail of anguish that sends a shiver through you to your very soul.
+
+The air clears, and the three figures approach you, their voices barely audible above the wind. They speak in words that seem to come from nowhere and everywhere at once, offering you a choice: pay them, trick them, or find another way back to your world. You can feel the power pulsing beneath their delicate veils, the weight of centuries pressing down upon them like an unseen hand.
+
+You make your decision, and as you do, you can feel the world around you shift, the fabric of reality quivering in response to your choice. The three figures nod, and the wind dies down once more, leaving you alone with the whispering reeds and the ever-present threat of the creature that lurks within them.
+
+The sun begins to rise, casting a golden glow across the marshland, and you know that time is running out. You must make your choice quickly, for the light will soon chase away the darkness and seal your fate. The world watches, waiting to see which path you will choose, and what consequences that decision will bring.

@@ -1,0 +1,9 @@
+In the dim glow of Emmett's lantern, the tunnel walls transform, revealing a series of intricate symbols and markings that were previously hidden in the shadows. The chalk in his hand glides effortlessly across the stone, as if guided by some unseen force. Each symbol he traces resonates, sending vibrations through the cold stone, echoing like the distant tolling of a bell.
+
+As Emmett continues to mark the walls, the tunnel begins to shift subtly. The air grows colder, and an oppressive silence settles over the group. Suddenly, the lantern flickers, casting eerie shadows on the party's faces. The once warm glow dims, leaving them in near darkness. Emmett, undeterred, continues to trace the symbols with his chalk.
+
+Suddenly, a faint light begins to emanate from the wall where he has been working, growing steadily brighter until it illuminates the entire tunnel. The walls themselves seem to pulse with an ethereal energy, and a feeling of unease settles over the party. Emmett's heart races as he realizes that they have stumbled upon something far older and more powerful than anything he has ever encountered before.
+
+The pulsing light grows stronger, and the air in the tunnel becomes thick with an otherworldly energy. Suddenly, a voice echoes through the tunnel, its tone both ancient and malevolent. "You have awakened what was slumbering," it intones, "and now you must face its wrath." The ground beneath them shakes, sending rocks cascading down from the ceiling. Emmett grabs hold of his companions, pulling them to safety just as a massive stone block slams into the spot where they were standing moments ago.
+
+As the dust settles, the party realizes that they have awakened something truly terrifying. Whatever lies ahead will not be easy, but Emmett knows that he and his companions are the only ones who can stop it. With renewed determination, they press on into the dark tunnel, ready to face whatever horrors await them.

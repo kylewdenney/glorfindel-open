@@ -8,6 +8,9 @@ use axum::{
 use tower_http::cors::CorsLayer;
 use tower_http::trace::TraceLayer;
 
+use glorfindel_transport::ControlPlane;
+
+use crate::agent_worker;
 use crate::api::{agents, campaign, definitions, tasks, tools, ws};
 use crate::persist;
 use crate::state::AppState;
@@ -39,6 +42,26 @@ pub async fn run(addr: &str, data_dir: PathBuf) -> anyhow::Result<()> {
 
     // Spawn ZMQ campaign event publisher (non-fatal if ZMQ unavailable)
     tokio::spawn(zmq_bus::run_publisher(state.task_events.subscribe()));
+
+    // Spawn DDS task worker — receives TaskRequests published by campaign handlers
+    match state.control_plane.subscribe_tasks().await {
+        Ok(task_rx) => {
+            tokio::spawn(agent_worker::run_task_worker(task_rx, state.clone()));
+        }
+        Err(e) => {
+            tracing::warn!(error = %e, "DDS task subscription failed — scene_player_turn will not process");
+        }
+    }
+
+    // Spawn DDS response dispatcher — receives AgentResponses and resolves tasks
+    match state.control_plane.subscribe_responses().await {
+        Ok(response_rx) => {
+            tokio::spawn(agent_worker::run_response_dispatcher(response_rx, state.clone()));
+        }
+        Err(e) => {
+            tracing::warn!(error = %e, "DDS response subscription failed — task completion won't broadcast");
+        }
+    }
 
     let api = Router::new()
         .route("/definitions", get(definitions::list).post(definitions::create))

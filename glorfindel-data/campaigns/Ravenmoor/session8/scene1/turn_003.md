@@ -1,0 +1,13 @@
+As Emmett Grave crouches over Father Vane's lifeless form, his keen eyes scan the priest's body for any signs of the supernatural entity that had just vacated it. The cold rain pelts down upon them, a relentless symphony of droplets against the wooden planks of their makeshift camp. The village of Ravenmoor looms in the distance, its grey silhouette barely discernible through the swirling mist.
+
+Emmett's fingers trace along Father Vane's skin, searching for any markings or wounds that might provide a clue as to what had transpired. He finds nothing out of the ordinary, just a faint pallor that speaks of the strain of the possession. Emmett's heart races, not from fear, but from the thrill of uncovering a mystery.
+
+Suddenly, he feels a cold draft pass by him, as if something had just slipped away into the night. He shivers, his fingers tightening around Father Vane's wrist. There, etched faintly upon the priest's skin, is a strange symbol that Emmett has never seen before. It looks like an ancient rune, but one that seems to shift and change as he stares at it.
+
+Emmett's mind races, trying to decipher the meaning of this symbol. He remembers stories told by his grandmother about the dark magic that once dwelled in these marshes. He knows that Ravenmoor is a place where the line between life and death is thin, and the echoes of the dead linger long after they should have passed on.
+
+The village seems to grow quiet around them as Emmett studies the symbol. The wind dies down, and the rain slows to a drizzle. He feels a presence watching him, an otherworldly malevolence that seems to emanate from the very earth beneath them. But Emmett Grave is not easily intimidated. He's seen corpses with stranger things on them than this, and he will not be deterred from uncovering the truth.
+
+He takes out his leather notebook, his mind racing as he tries to commit the symbol to memory. He knows that he must find out what it means, and how it is connected to the possession of Father Vane. The entity that took over the priest may have left its mark on him, but Emmett Grave will not let it escape without a fight.
+
+The rain begins to pick up again as Emmett continues his examination. He knows that they must act quickly if they hope to prevent another possession, and perhaps even save Ravenmoor from the clutches of whatever dark force is lurking within its borders. As the cold rain beats down upon them, Emmett Grave feels a renewed sense of purpose. He will not rest until he has uncovered the truth about this symbol, and the darkness that it seems to represent.

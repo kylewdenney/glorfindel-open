@@ -39,10 +39,13 @@ pub struct DdsControlPlane {
 // DDS wrapper type for serialized message envelopes.
 // dust_dds requires types to implement DdsType, so we wrap our JSON-serialized
 // envelopes in a simple container.
+// payload is Vec<u8> (CDR octet sequence) rather than String — CDR bounded strings
+// default to 256 bytes in dust_dds, which is far too small for intent payloads.
+// Octet sequences are unbounded by default.
 #[derive(Debug, Clone, Serialize, Deserialize, DdsType)]
 struct DdsMessage {
     topic: String,
-    payload_json: String,
+    payload: Vec<u8>,
 }
 
 impl DdsControlPlane {
@@ -51,12 +54,12 @@ impl DdsControlPlane {
         Self { domain_id }
     }
 
-    fn serialize_envelope<T: Serialize>(envelope: &MessageEnvelope<T>) -> Result<String, TransportError> {
-        serde_json::to_string(envelope).map_err(|e| TransportError::Serialization(e.to_string()))
+    fn serialize_envelope<T: Serialize>(envelope: &MessageEnvelope<T>) -> Result<Vec<u8>, TransportError> {
+        serde_json::to_vec(envelope).map_err(|e| TransportError::Serialization(e.to_string()))
     }
 
-    fn deserialize_envelope<T: for<'de> Deserialize<'de>>(json: &str) -> Result<MessageEnvelope<T>, TransportError> {
-        serde_json::from_str(json).map_err(|e| TransportError::Serialization(e.to_string()))
+    fn deserialize_envelope<T: for<'de> Deserialize<'de>>(bytes: &[u8]) -> Result<MessageEnvelope<T>, TransportError> {
+        serde_json::from_slice(bytes).map_err(|e| TransportError::Serialization(e.to_string()))
     }
 
     fn reliable_writer_qos() -> DataWriterQos {
@@ -93,7 +96,7 @@ impl ControlPlane for DdsControlPlane {
         let json = Self::serialize_envelope(&task)?;
         let msg = DdsMessage {
             topic: TOPIC_TASKS_REQUEST.into(),
-            payload_json: json,
+            payload: json,
         };
 
         let participant = DomainParticipantFactory::get_instance()
@@ -173,12 +176,12 @@ impl ControlPlane for DdsControlPlane {
             };
 
             loop {
-                match reader.read(32, ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE) {
+                match reader.take(32, ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE) {
                     Ok(samples) => {
                         for sample in samples {
                             if let Ok(data) = sample.data() {
                                 match DdsControlPlane::deserialize_envelope::<TaskRequest>(
-                                    &data.payload_json,
+                                    &data.payload,
                                 ) {
                                     Ok(envelope) => {
                                         if tx.send(envelope).await.is_err() {
@@ -208,7 +211,7 @@ impl ControlPlane for DdsControlPlane {
         let json = Self::serialize_envelope(&manifest)?;
         let msg = DdsMessage {
             topic: TOPIC_AGENTS_CAPABILITY.into(),
-            payload_json: json,
+            payload: json,
         };
 
         let participant = DomainParticipantFactory::get_instance()
@@ -299,12 +302,12 @@ impl ControlPlane for DdsControlPlane {
             };
 
             loop {
-                match reader.read(32, ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE) {
+                match reader.take(32, ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE) {
                     Ok(samples) => {
                         for sample in samples {
                             if let Ok(data) = sample.data() {
                                 match DdsControlPlane::deserialize_envelope::<CapabilityManifest>(
-                                    &data.payload_json,
+                                    &data.payload,
                                 ) {
                                     Ok(envelope) => {
                                         if tx.send(envelope).await.is_err() {
@@ -334,7 +337,7 @@ impl ControlPlane for DdsControlPlane {
         let json = Self::serialize_envelope(&response)?;
         let msg = DdsMessage {
             topic: TOPIC_TASKS_RESPONSE.into(),
-            payload_json: json,
+            payload: json,
         };
 
         let participant = DomainParticipantFactory::get_instance()
@@ -419,12 +422,12 @@ impl ControlPlane for DdsControlPlane {
             };
 
             loop {
-                match reader.read(32, ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE) {
+                match reader.take(32, ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE) {
                     Ok(samples) => {
                         for sample in samples {
                             if let Ok(data) = sample.data() {
                                 match DdsControlPlane::deserialize_envelope::<AgentResponse>(
-                                    &data.payload_json,
+                                    &data.payload,
                                 ) {
                                     Ok(envelope) => {
                                         if tx.send(envelope).await.is_err() {

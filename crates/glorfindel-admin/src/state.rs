@@ -6,8 +6,10 @@ use chrono::{DateTime, Utc};
 use glorfindel_agent::Agent;
 use glorfindel_schemas::agent::{AgentResponse, CapabilityManifest};
 use glorfindel_schemas::types::{AgentType, Permission, Status};
+use glorfindel_transport::DdsControlPlane;
+use glorfindel_schemas::agent::AgentResponse as SchemaAgentResponse;
 use serde::{Deserialize, Serialize};
-use tokio::sync::{broadcast, RwLock};
+use tokio::sync::{broadcast, oneshot, RwLock};
 use uuid::Uuid;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -91,6 +93,11 @@ pub struct AppState {
     pub tasks: Arc<RwLock<HashMap<Uuid, TaskRecord>>>,
     pub task_events: broadcast::Sender<TaskEvent>,
     pub data_dir: PathBuf,
+    /// DDS control plane — task dispatch and response collection.
+    pub control_plane: Arc<DdsControlPlane>,
+    /// Pending oneshot senders for DDS sub-tasks awaited by the DM Manager pipeline.
+    /// Keyed by sub-task_id; the response dispatcher routes completed sub-tasks here.
+    pub pending_sub_tasks: Arc<RwLock<HashMap<Uuid, oneshot::Sender<SchemaAgentResponse>>>>,
 }
 
 impl AppState {
@@ -103,6 +110,8 @@ impl AppState {
             tasks: Arc::new(RwLock::new(HashMap::new())),
             task_events: tx,
             data_dir,
+            control_plane: Arc::new(DdsControlPlane::new(0)),
+            pending_sub_tasks: Arc::new(RwLock::new(HashMap::new())),
         }
     }
 }

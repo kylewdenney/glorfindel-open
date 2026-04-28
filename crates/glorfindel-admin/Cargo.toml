@@ -10,6 +10,7 @@ reqwest = { version = "0.12", features = ["json"] }
 glorfindel-schemas = { path = "../glorfindel-schemas" }
 glorfindel-tools = { path = "../glorfindel-tools" }
 glorfindel-agent = { path = "../glorfindel-agent" }
+glorfindel-transport = { path = "../glorfindel-transport" }
 serde = { workspace = true }
 serde_json = { workspace = true }
 tokio = { workspace = true }
@@ -25,3 +26,4 @@ futures = "0.3"
 anyhow = "1"
 rand = "0.8"
 tmq = "0.5"
+toml = "0.8"

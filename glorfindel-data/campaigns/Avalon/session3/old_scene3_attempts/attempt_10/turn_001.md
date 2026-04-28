@@ -1,0 +1,13 @@
+In the hushed silence of Avalon's twilight, you, Sioned ferch Cai, find yourself standing at the water's edge, your gaze fixed upon a coracle that defies the laws of nature, suspended above the murky depths. The waiting figures remain unacknowledged, their presence a distant hum in the air. Your focus is on the door, the pulsating essence of it shimmering within the reeds. With every step you take towards this enigmatic threshold, the parchment clutched tightly in your hands, you can feel the words resonate with an energy that seems to be guiding you.
+
+As you reach out and touch the door, a wave of dizziness washes over you, and the world around you seems to shift subtly. The hum of the waiting figures intensifies, their ethereal forms becoming more tangible in your perception. You feel a sudden surge of recognition, as though you have encountered them before, but the memory remains elusive.
+
+The door responds to your touch, opening ever so slightly, revealing a dark abyss beyond it. The air is thick with anticipation, and you sense that whatever lies beyond this threshold will not be easily tamed or understood. With a deep breath, you step through the door, the parchment held high, the two glowing words illuminating your path as you delve deeper into Avalon's mysteries.
+
+The landscape transforms around you, the twilight giving way to an eerie, moonlit forest. The air is cool and damp, the scent of ancient growth heavy in your nostrils. You can hear a distant rhythmic thrumming that seems to echo within your chest, resonating with the beating of your heart.
+
+Suddenly, you come upon three figures standing before you, their faces shrouded by hooded cloaks. They do not move or speak, but their presence is palpable, a sense of power emanating from them that makes your knees tremble. You feel as though you are standing on the precipice of something far greater than yourself, and the weight of it leaves you breathless.
+
+As you continue to walk towards them, you can feel the ground beneath you shifting, the forest giving way to a stone path that leads deeper into Avalon's heart. The three figures remain silent, their eyes following your every move as you pass by. In the distance, you can see a bright light, illuminating a towering citadel that seems to beckon you forward.
+
+You are not alone in this journey, for the thing in the reeds has followed you through the door and now moves stealthily along the edge of the forest, its presence felt but unseen. As you walk deeper into Avalon, you cannot help but wonder what awaits you beyond the citadel's walls, and whether your encounter with the three figures will prove to be a blessing or a curse.

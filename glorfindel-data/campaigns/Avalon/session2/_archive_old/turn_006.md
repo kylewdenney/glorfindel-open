@@ -1,0 +1,9 @@
+In the dim light of a small, clandestine chapel, Peredur map Gwrtheyrn kneels before an intricately carved stone statue of the Emperor of Mankind. His fervent prayers echo off the stone walls, filling the space with a palpable sense of intensity. After a moment, the air around him seems to shimmer, and the statue's eyes glow faintly with an otherworldly light.
+
+As Peredur continues his supplication, he feels a sudden surge of energy coursing through his veins. The glow from the statue intensifies, bathing the chapel in a soft, ethereal light. Time seems to slow as he reaches out to touch the cold stone statue, feeling a connection form between them.
+
+In response to Peredur's prayer, the Emperor of Mankind imparts upon him a vision: a series of vivid images depicting the secrets necessary to slay Nimue, The Lady of the Lake. Peredur sees ancient rituals and powerful relics, hidden deep within the heart of Avalon itself. He feels his mind expanding, absorbing this newfound knowledge with an intensity that leaves him breathless.
+
+As the vision fades, Peredur rises from his knees, a determined look in his eyes. He knows what he must do. With a newfound sense of purpose, he prepares to embark on a dangerous journey into Avalon, seeking out the relics and rituals that will enable him to confront Nimue and fulfill his Devotion: THE GRAIL.
+
+The world, however, remains unaware of Peredur's plans. As he sets out, the Veil between Avalon and Brita remains firmly in place, hiding the true dangers that await him on the other side. Peredur must be careful, for one misstep could cost him dearly in his quest to slay Nimue.

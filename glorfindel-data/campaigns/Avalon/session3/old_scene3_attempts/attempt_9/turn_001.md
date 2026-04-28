@@ -1,0 +1,11 @@
+In the twilight hush of Avalon's shore, Sioned ferch Cai found herself standing before a door that was not there one moment and loomed menacingly the next, its presence whispered in the wind by the two words on her parchment. The coracle, a rickety vessel fashioned from woven reeds and bound with sinew, lay abandoned at the water's edge, a palpable offering for those who dared to venture beyond the Veil.
+
+With a deep breath, you stepped towards the ethereal threshold, its surface shimmering like moonlit waters. The words on your parchment seemed to hum with anticipation, urging you forward. As you neared, a chill crept into the air, and the reeds around the door began to rustle and part, revealing an amalgamation of darkness that slithered towards you like tendrils.
+
+The shadowy figure writhed and twisted, its form shifting between the likenesses of creatures both familiar and alien. It was a creature born from nightmares, a manifestation of the hidden horrors that dwelled in Avalon's depths. Your heart pounded in your chest as the darkness approached, but you did not falter.
+
+With a voice that seemed to echo across time itself, it spoke: "Who dares to defy the ruler's decree?" The question hung heavy in the air, carrying with it an undercurrent of ancient power and malevolence. Your heart raced as you stood before this dark emissary, your resolve unwavering despite the terror that threatened to engulf you.
+
+In a voice that betrayed no fear, you replied, "I am Sioned ferch Cai, descendant of King Arthur's cousin Gawain. I have come to claim my birthright and return to the land of men." The darkness paused for a moment before receding back into the reeds, leaving you standing alone before the door to Avalon.
+
+As you approached the threshold, the shimmering surface rippled beneath your touch like water yielding to a gentle breeze. With a final, resolute step, you crossed into the realm of the Fae, the world of eternal twilight and ancient magic that lay hidden behind the Veil.

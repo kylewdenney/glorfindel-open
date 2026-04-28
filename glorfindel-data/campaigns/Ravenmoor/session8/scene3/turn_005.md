@@ -1,0 +1,9 @@
+In the dim light of the chamber, Dorian Ashgrove's trembling hands pour the contents of his flask into an outstretched palm, as if offering a peace to the darkness that loomed beyond the cracked door. His eyes dart from the crevice to the parchment in front of him, where he meticulously writes and underlines his revelation: "the angles are wrong and I can prove it."
+
+The cold wind that swept through the room during Sister Isolde's exorcism continues to whisper around Dorian, making his parchment dance with spectral tendrils. He clutches it tightly, eyes locked on the written words, attempting to ignore the unseen entity that seems to grow more active with each passing moment.
+
+The ink on the parchment begins to smudge and flow, as if responding to the eerie presence. Dorian's heart races as he watches his own handwriting morph into a foreign language, one that he has never seen before but somehow recognizes. He fights the urge to look at the crack in the door, focusing instead on deciphering the shifting text before him.
+
+As Dorian struggles to comprehend the implications of this revelation, the chamber seems to hum with an unnatural energy. The torches flicker and sputter, their flames growing dimmer by the second. A sudden gust of icy wind extinguishes one completely, plunging the room into darkness save for the faint glow from the remaining torches.
+
+Dorian's hand, still clutching the parchment, shakes violently as he realizes that whatever lies beyond that door is growing stronger. He can feel it watching him, feeding off his fear and confusion. With a trembling breath, Dorian closes his eyes, focusing on the words before him. He must find a way to prove that the angles are wrong, or risk losing himself to the darkness forever.

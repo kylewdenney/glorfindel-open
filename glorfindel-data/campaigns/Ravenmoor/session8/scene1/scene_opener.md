@@ -1,0 +1,9 @@
+Underneath the pallid glow of Ravenmoor's spectral moonlight, the party huddled around their diminished campfire, seeking solace in its flickering warmth. The ashen silence was shattered by Father Vane's sudden convulsion, his eyes flashing open with a demonic intensity that pierced the heart of every present. The malevolent force within him was no longer hidden, its twisted form writhing behind his eyes like a shadow dancing on a moonlit night.
+
+The party froze, their breath caught in their throats as Father Vane's sinister smile widened, revealing teeth that seemed to have grown sharper and more menacing. His once-familiar face contorted into an unholy visage, its eyes glowing with an otherworldly malice that sent a wave of dread coursing through the gathered adventurers.
+
+Emmett's grip tightened on his sword, while Dorian Ashgrove ceased his scribbling, his eyes wide and unblinking as he stared at the possessed priest. Sister Isolde Carrow clung to her faith, her voice trembling as she called upon the power of her goddess, but even she could not ignore the icy chill that settled in her heart.
+
+Vera Nighthollow's eyes narrowed, a predatory glint appearing within them as she sensed the true nature of their enemy. The air was thick with unspoken dread as Father Vane spoke, his voice a chilling whisper that seemed to echo through the very fabric of reality.
+
+"You have been led astray," he intoned, "but now, you shall face the truth." With those words, the possessed priest lunged at the party, his twisted form seeming to defy both logic and reason as it hurtled toward them with unnatural speed. In the days following their harrowing encounter, the party must confront not only Father Vane but the malevolent force that now controlled him — a force that threatens not only Ravenmoor but the entire realm. Can they defeat an enemy that controls one of their own, and at what cost to themselves and their fragile alliance?

@@ -1,0 +1,21 @@
+As Dorian Ashgrove begins to sketch what he sees through the crack in the door, his mind is filled with a sense of unease that only intensifies as he tries to capture the impossible geometry on paper. The light from the other side seems to dance and warp, defying all logic and reason. He feels a cold chill run down his spine, and the air around him grows heavy and oppressive.
+
+Suddenly, the crack in the door widens, revealing a figure on the other side. It is a woman, dressed in tattered robes that are stained with what appears to be blood. Her face is twisted into a mask of terror and agony, and her eyes burn with an otherworldly light. Dorian's heart races as he watches her struggle against an unseen force, her body twisting and contorting in ways that defy the laws of nature.
+
+Suddenly, the figure collapses to the ground, and the door slams shut with a deafening crash. Dorian feels a wave of relief wash over him, but he knows that whatever he just witnessed is far from over. He looks around at his fellow party members - Vera, Emmett, Father Vane, and Sister Isolde - and sees the same fear and confusion in their eyes.
+
+As they stand there, frozen in terror, Dorian can't help but feel a sense of dread settling over him. He knows that whatever is on the other side of that door is not of this world, and he fears that if they don't find a way to stop it, Ravenmoor may never be the same again. He resolves to continue his transcription and analysis of the ancient incantations, hoping that they may hold the key to defeating whatever darkness has been unleashed upon them.
+
+As the group continues to explore the mine, they come across a chamber filled with strange symbols etched into the walls. Dorian recognizes them as being similar to the ones he has been transcribing, and he feels a sense of urgency to decipher their meaning before it's too late. He begins to work feverishly, his mind racing as he tries to piece together the puzzle that lies before him.
+
+As he delves deeper into the incantations, Dorian begins to feel a strange presence lurking in the shadows. It seems to be watching him, whispering dark secrets into his ear and filling him with a sense of despair and hopelessness. He tries to shake it off, but the feeling only grows stronger as he continues to work.
+
+Finally, after what feels like an eternity, Dorian believes he has cracked the code. He reads aloud the incantation he has deciphered, and as he does so, the air around him grows colder and darker. The shadows seem to coalesce into a tangible form, and Dorian can feel the presence of something malevolent watching him from the darkness.
+
+Suddenly, the ground beneath them begins to shake violently, and the mine trembles as if in the grip of an earthquake. The party is thrown to the ground, and debris showers down around them. Dorian clings to his notebook, terrified that he may lose the precious knowledge he has gained.
+
+As the shaking subsides, the group slowly makes their way back to the surface, battered and bruised but still alive. They emerge from the mine to find Ravenmoor in chaos - the villagers are running screaming through the streets, their faces twisted with terror. The dead are rising from their graves, their eyes burning with an otherworldly light.
+
+Dorian can only watch in horror as the village he once called home is torn apart by a darkness beyond comprehension. He knows that whatever they have unleashed upon Ravenmoor cannot be contained, and he fears that there may be no hope of stopping it. But he also knows that he must try, for the sake of himself and his fellow party members, and for the sake of Ravenmoor itself.
+
+As Dorian prepares to face the darkness once more, he can't help but feel a sense of despair settling over him. He knows that the odds are stacked against them, and that they may not survive this ordeal. But he also knows that they have no choice - they must fight on, or risk losing everything they hold dear. And so, with a heavy heart, Dorian Ashgrove takes up his pen once more, determined to uncover the truth behind the darkness that has befallen Ravenmoor, and find a way to banish it forever.
