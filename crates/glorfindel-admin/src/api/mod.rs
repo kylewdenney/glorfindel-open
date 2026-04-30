@@ -1,6 +1,7 @@
 pub mod agents;
 pub mod campaign;
 pub mod definitions;
+pub mod graph;
 pub mod tasks;
 pub mod tools;
 pub mod ws;

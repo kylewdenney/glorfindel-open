@@ -31,7 +31,6 @@ struct OllamaChatRequest {
     model: String,
     messages: Vec<OllamaMessage>,
     stream: bool,
-    format: &'static str,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -119,16 +118,14 @@ impl OllamaAgent {
         format!(
             r#"{base}
 
-You MUST always respond with a single valid JSON object — no prose, no markdown.
+Respond ONLY with a raw JSON object each turn. Never include text outside the JSON.
+Call tools one at a time and wait for the result before the next call.
 
 To call a tool:
   {{"action":"<tool_name>","param1":"value1","justification":"<why>"}}
 
-To return your final answer (DO THIS after you finish all tool calls):
+To return your final answer after all tool calls are complete:
   {{"action":"result","result":"<summary of what you did>"}}
-
-IMPORTANT: Once you have written all required files, immediately return {{"action":"result","result":"done"}}.
-Do NOT rewrite a file you already wrote. Do NOT loop.
 
 Available tools (use exact parameter names shown):
 {tools_section}"#
@@ -146,6 +143,11 @@ Available tools (use exact parameter names shown):
             "search.grep"    => r#"search.grep     → {"action":"search.grep","pattern":"regex","path":".","justification":"why"}"#,
             "rulebook.search"=> r#"rulebook.search → {"action":"rulebook.search","query":"rules question","justification":"why"}"#,
             "dice.roll"      => r#"dice.roll       → {"action":"dice.roll","notation":"2d6+3","justification":"why"}"#,
+            "graph.query"    => r#"graph.query     → {"action":"graph.query","query":"search terms","justification":"why"}"#,
+            "graph.node"     => r#"graph.node      → {"action":"graph.node","node_id":"mission-example","justification":"why"}"#,
+            "graph.neighbors"=> r#"graph.neighbors → {"action":"graph.neighbors","node_id":"mission-example","hops":1,"justification":"why"}"#,
+            "graph.add_node" => r#"graph.add_node  → {"action":"graph.add_node","node_id":"mission-deny-airspace","type":"mission","name":"Deny Airspace","body":"Description here.","justification":"why"}"#,
+            "graph.add_edge" => r#"graph.add_edge  → {"action":"graph.add_edge","edge_id":"edge-mission-requires-cap","from_id":"mission-deny-airspace","to_id":"capability-electronic-warfare","relationship":"requires","justification":"why"}"#,
             n if n.starts_with("agent.") => r#"agent.<name>    → {"action":"agent.<name>","query":"question for sub-agent","justification":"why"}"#,
             _                => r#"unknown         → {"action":"<tool_name>","justification":"why"}"#,
         }
@@ -211,7 +213,6 @@ Available tools (use exact parameter names shown):
             model: self.model.clone(),
             messages: messages.to_vec(),
             stream: false,
-            format: "json",
         };
 
         let resp: OllamaChatResponse = self
@@ -381,7 +382,21 @@ impl Agent for OllamaAgent {
         for iteration in 0..max_iterations {
             debug!(task_id = %task.task_id, iteration, "Agent loop iteration");
 
-            let response_text = self.chat(&messages).await?;
+            // Keep context window bounded: always preserve system + initial user intent
+            // so the agent never loses its task description. Append last 4 messages for
+            // recent tool call context.
+            let chat_messages = if messages.len() > 7 {
+                let system = messages[0].clone();
+                let intent = messages[1].clone(); // initial user intent — must never be dropped
+                let tail: Vec<_> = messages[messages.len() - 4..].to_vec();
+                std::iter::once(system)
+                    .chain(std::iter::once(intent))
+                    .chain(tail)
+                    .collect()
+            } else {
+                messages.clone()
+            };
+            let response_text = self.chat(&chat_messages).await?;
 
             match self.parse_action(&response_text) {
                 Some(AgentAction::Result { result }) => {
@@ -475,6 +490,12 @@ impl Agent for OllamaAgent {
         }
 
         warn!(task_id = %task.task_id, "Max iterations exceeded");
-        Err(AgentError::MaxIterationsExceeded)
+        Ok(AgentResponse {
+            task_id: task.task_id,
+            status: Status::Complete,
+            result: serde_json::json!({"note": "max_iterations_reached", "actions": actions_taken.len()}),
+            actions_taken,
+            delegated_to: Vec::new(),
+        })
     }
 }

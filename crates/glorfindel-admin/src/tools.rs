@@ -5,7 +5,8 @@ use glorfindel_agent::OllamaAgent;
 use glorfindel_schemas::types::Permission;
 use glorfindel_tools::{
     BashTool, CampaignListTool, CampaignReadTool, CampaignWriteTool, DiceRollTool, FileReadTool,
-    FileWriteTool, RulebookTool, SearchTool, Tool, ToolExecutor,
+    FileWriteTool, GraphAddEdgeTool, GraphAddNodeTool, GraphNeighborsTool, GraphNodeTool,
+    GraphQueryTool, RulebookTool, SearchTool, Tool, ToolExecutor,
 };
 use serde::Serialize;
 use uuid::Uuid;
@@ -49,6 +50,25 @@ pub fn catalog() -> Vec<ToolCatalogEntry> {
             description: t.description().to_string(),
             permissions: t.required_permissions(),
             requires_campaign_dir: true,
+        });
+    }
+
+    for (tool_name, desc) in &[
+        ("graph.query",     "Search graph nodes by keyword. Requires graph_data_dir in deployed_context."),
+        ("graph.node",      "Get a graph node by ID. Requires graph_data_dir in deployed_context."),
+        ("graph.neighbors", "Get nodes within N hops. Requires graph_data_dir in deployed_context."),
+        ("graph.add_node",  "Add a node to the knowledge graph. Requires graph.write permission."),
+        ("graph.add_edge",  "Add a directed edge between nodes. Requires graph.write permission."),
+    ] {
+        entries.push(ToolCatalogEntry {
+            name: tool_name.to_string(),
+            description: desc.to_string(),
+            permissions: if tool_name.contains("add_") {
+                vec![Permission::Custom("graph.write".into())]
+            } else {
+                vec![]
+            },
+            requires_campaign_dir: false,
         });
     }
 
@@ -131,6 +151,19 @@ pub async fn build_executor(
             }
 
             "dice.roll" => executor.register(Box::new(DiceRollTool)),
+
+            "graph.query" | "graph.node" | "graph.neighbors" | "graph.add_node" | "graph.add_edge" => {
+                let data_dir = ctx_str("graph_data_dir")
+                    .unwrap_or_else(|| "/data".into());
+                match name.as_str() {
+                    "graph.query"    => executor.register(Box::new(GraphQueryTool::new(&data_dir))),
+                    "graph.node"     => executor.register(Box::new(GraphNodeTool::new(&data_dir))),
+                    "graph.neighbors"=> executor.register(Box::new(GraphNeighborsTool::new(&data_dir))),
+                    "graph.add_node" => executor.register(Box::new(GraphAddNodeTool::new(&data_dir))),
+                    "graph.add_edge" => executor.register(Box::new(GraphAddEdgeTool::new(&data_dir))),
+                    _ => {}
+                }
+            }
 
             name if name.starts_with("agent.") => {
                 let sub_name = &name["agent.".len()..];

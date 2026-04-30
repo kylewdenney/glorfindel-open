@@ -11,7 +11,7 @@ use tower_http::trace::TraceLayer;
 use glorfindel_transport::ControlPlane;
 
 use crate::agent_worker;
-use crate::api::{agents, campaign, definitions, tasks, tools, ws};
+use crate::api::{agents, campaign, definitions, graph, tasks, tools, ws};
 use crate::persist;
 use crate::state::AppState;
 use crate::zmq_bus;
@@ -76,6 +76,9 @@ pub async fn run(addr: &str, data_dir: PathBuf) -> anyhow::Result<()> {
         .route("/tasks", get(tasks::list).post(tasks::submit))
         .route("/tasks/:id", get(tasks::get))
         .route("/tools", get(tools::list))
+        .route("/graph/nodes", get(graph::list_nodes).post(graph::create_node))
+        .route("/graph/edges", get(graph::list_edges).post(graph::create_edge))
+        .route("/graph/ingest", axum::routing::post(graph::ingest_file))
         .route("/campaign", get(campaign::list_campaigns))
         .route("/campaign/:name/files", get(campaign::list_files))
         .route("/campaign/:name/file/*file_path", get(campaign::read_file).put(campaign::write_file))
