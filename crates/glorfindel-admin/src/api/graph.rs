@@ -3,6 +3,7 @@ use std::sync::Arc;
 
 use axum::{
     extract::State,
+    extract::Path as AxumPath,
     Json,
 };
 use chrono::Utc;
@@ -155,6 +156,7 @@ pub async fn create_node(
         meta.insert("name".to_string(), n.clone());
     }
     meta.insert("created".to_string(), Utc::now().format("%Y-%m-%dT%H:%M:%S").to_string());
+    meta.insert("status".to_string(), "pending".to_string());
     for (k, v) in &body.extra {
         if let Some(s) = v.as_str() {
             meta.insert(k.clone(), s.to_string());
@@ -210,6 +212,7 @@ pub async fn create_edge(
     meta.insert("to".to_string(), body.to_id.clone());
     meta.insert("relationship".to_string(), relationship.clone());
     meta.insert("created".to_string(), Utc::now().format("%Y-%m-%dT%H:%M:%S").to_string());
+    meta.insert("status".to_string(), "pending".to_string());
 
     let body_text = body.body.clone().unwrap_or_default();
     let content = format_frontmatter(&meta, &body_text);
@@ -389,4 +392,106 @@ pub async fn ingest_file(
     });
 
     Ok(Json(IngestResponse { task_id, agent_instance_id: instance_id }))
+}
+
+// ── PATCH /api/graph/nodes/:id ────────────────────────────────────────────────
+
+#[derive(Debug, Deserialize)]
+pub struct PatchNodeBody {
+    pub name: Option<String>,
+    #[serde(rename = "type")]
+    pub node_type: Option<String>,
+    pub body: Option<String>,
+    pub status: Option<String>,
+    #[serde(flatten)]
+    pub extra: HashMap<String, serde_json::Value>,
+}
+
+pub async fn patch_node(
+    State(state): State<Arc<AppState>>,
+    AxumPath(node_id): AxumPath<String>,
+    Json(body): Json<PatchNodeBody>,
+) -> Result<Json<serde_json::Value>, ApiError> {
+    let nodes_dir = state.data_dir.join("nodes");
+    let path = nodes_dir.join(format!("{node_id}.md"));
+    if !path.exists() {
+        return Err(ApiError::NotFound(format!("node not found: {node_id}")));
+    }
+    let text = tokio::fs::read_to_string(&path).await
+        .map_err(|e| ApiError::Internal(e.to_string()))?;
+    let (mut meta, existing_body) = parse_frontmatter(&text);
+    if let Some(n) = body.name { meta.insert("name".to_string(), n); }
+    if let Some(t) = body.node_type { meta.insert("type".to_string(), t); }
+    if let Some(s) = body.status { meta.insert("status".to_string(), s); }
+    for (k, v) in &body.extra {
+        if let Some(s) = v.as_str() { meta.insert(k.clone(), s.to_string()); }
+    }
+    let new_body = body.body.unwrap_or(existing_body);
+    let content = format_frontmatter(&meta, &new_body);
+    tokio::fs::write(&path, content).await
+        .map_err(|e| ApiError::Internal(e.to_string()))?;
+    Ok(Json(meta_to_json(meta, new_body)))
+}
+
+// ── DELETE /api/graph/nodes/:id ───────────────────────────────────────────────
+
+pub async fn delete_node(
+    State(state): State<Arc<AppState>>,
+    AxumPath(node_id): AxumPath<String>,
+) -> Result<Json<serde_json::Value>, ApiError> {
+    let nodes_dir = state.data_dir.join("nodes");
+    let path = nodes_dir.join(format!("{node_id}.md"));
+    if !path.exists() {
+        return Err(ApiError::NotFound(format!("node not found: {node_id}")));
+    }
+    tokio::fs::remove_file(&path).await
+        .map_err(|e| ApiError::Internal(e.to_string()))?;
+    Ok(Json(serde_json::json!({"ok": true})))
+}
+
+// ── PATCH /api/graph/edges/:id ────────────────────────────────────────────────
+
+#[derive(Debug, Deserialize)]
+pub struct PatchEdgeBody {
+    pub relationship: Option<String>,
+    pub status: Option<String>,
+    pub body: Option<String>,
+}
+
+pub async fn patch_edge(
+    State(state): State<Arc<AppState>>,
+    AxumPath(edge_id): AxumPath<String>,
+    Json(body): Json<PatchEdgeBody>,
+) -> Result<Json<serde_json::Value>, ApiError> {
+    let edges_dir = state.data_dir.join("edges");
+    let path = edges_dir.join(format!("{edge_id}.md"));
+    if !path.exists() {
+        return Err(ApiError::NotFound(format!("edge not found: {edge_id}")));
+    }
+    let text = tokio::fs::read_to_string(&path).await
+        .map_err(|e| ApiError::Internal(e.to_string()))?;
+    let (mut meta, existing_body) = parse_frontmatter(&text);
+    if let Some(r) = body.relationship { meta.insert("relationship".to_string(), r); }
+    if let Some(s) = body.status { meta.insert("status".to_string(), s); }
+    let new_body = body.body.unwrap_or(existing_body);
+    let content = format_frontmatter(&meta, &new_body);
+    tokio::fs::write(&path, content).await
+        .map_err(|e| ApiError::Internal(e.to_string()))?;
+    Ok(Json(meta_to_json(meta, new_body)))
+}
+
+// ── DELETE /api/graph/edges/:id ───────────────────────────────────────────────
+
+pub async fn delete_edge(
+    State(state): State<Arc<AppState>>,
+    AxumPath(edge_id): AxumPath<String>,
+) -> Result<Json<serde_json::Value>, ApiError> {
+    let edges_dir = state.data_dir.join("edges");
+    let path = edges_dir.join(format!("{edge_id}.md"));
+    if !path.exists() {
+        return Err(ApiError::NotFound(format!("edge not found: {edge_id}")));
+    }
+    tokio::fs::remove_file(&path).await
+        .map_err(|e| ApiError::Internal(e.to_string()))?;
+    Ok(Json(serde_json::json!({"ok": true})))
 }
