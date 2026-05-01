@@ -2,8 +2,7 @@ use std::collections::HashMap;
 use std::sync::Arc;
 
 use axum::{
-    extract::State,
-    extract::Path as AxumPath,
+    extract::{Path as AxumPath, State},
     Json,
 };
 use chrono::Utc;
@@ -156,7 +155,6 @@ pub async fn create_node(
         meta.insert("name".to_string(), n.clone());
     }
     meta.insert("created".to_string(), Utc::now().format("%Y-%m-%dT%H:%M:%S").to_string());
-    meta.insert("status".to_string(), "pending".to_string());
     for (k, v) in &body.extra {
         if let Some(s) = v.as_str() {
             meta.insert(k.clone(), s.to_string());
@@ -212,7 +210,6 @@ pub async fn create_edge(
     meta.insert("to".to_string(), body.to_id.clone());
     meta.insert("relationship".to_string(), relationship.clone());
     meta.insert("created".to_string(), Utc::now().format("%Y-%m-%dT%H:%M:%S").to_string());
-    meta.insert("status".to_string(), "pending".to_string());
 
     let body_text = body.body.clone().unwrap_or_default();
     let content = format_frontmatter(&meta, &body_text);
@@ -398,9 +395,9 @@ pub async fn ingest_file(
 
 #[derive(Debug, Deserialize)]
 pub struct PatchNodeBody {
-    pub name: Option<String>,
     #[serde(rename = "type")]
     pub node_type: Option<String>,
+    pub name: Option<String>,
     pub body: Option<String>,
     pub status: Option<String>,
     #[serde(flatten)]
@@ -413,24 +410,33 @@ pub async fn patch_node(
     Json(body): Json<PatchNodeBody>,
 ) -> Result<Json<serde_json::Value>, ApiError> {
     let nodes_dir = state.data_dir.join("nodes");
-    let path = nodes_dir.join(format!("{node_id}.md"));
-    if !path.exists() {
-        return Err(ApiError::NotFound(format!("node not found: {node_id}")));
-    }
-    let text = tokio::fs::read_to_string(&path).await
+    tokio::fs::create_dir_all(&nodes_dir).await
         .map_err(|e| ApiError::Internal(e.to_string()))?;
-    let (mut meta, existing_body) = parse_frontmatter(&text);
-    if let Some(n) = body.name { meta.insert("name".to_string(), n); }
+    let path = nodes_dir.join(format!("{node_id}.md"));
+
+    // Upsert: read existing file if present, otherwise bootstrap a minimal stub.
+    let (mut meta, existing_body) = match tokio::fs::read_to_string(&path).await {
+        Ok(text) => parse_frontmatter(&text),
+        Err(_) => {
+            let mut m = HashMap::new();
+            m.insert("id".to_string(), node_id.clone());
+            m.insert("created".to_string(), Utc::now().format("%Y-%m-%dT%H:%M:%S").to_string());
+            (m, String::new())
+        }
+    };
+
     if let Some(t) = body.node_type { meta.insert("type".to_string(), t); }
-    if let Some(s) = body.status { meta.insert("status".to_string(), s); }
+    if let Some(n) = body.name      { meta.insert("name".to_string(), n); }
+    if let Some(s) = body.status    { meta.insert("status".to_string(), s); }
     for (k, v) in &body.extra {
         if let Some(s) = v.as_str() { meta.insert(k.clone(), s.to_string()); }
     }
-    let new_body = body.body.unwrap_or(existing_body);
-    let content = format_frontmatter(&meta, &new_body);
-    tokio::fs::write(&path, content).await
+
+    let body_text = body.body.unwrap_or(existing_body);
+    tokio::fs::write(&path, format_frontmatter(&meta, &body_text)).await
         .map_err(|e| ApiError::Internal(e.to_string()))?;
-    Ok(Json(meta_to_json(meta, new_body)))
+
+    Ok(Json(meta_to_json(meta, body_text)))
 }
 
 // ── DELETE /api/graph/nodes/:id ───────────────────────────────────────────────
@@ -439,13 +445,25 @@ pub async fn delete_node(
     State(state): State<Arc<AppState>>,
     AxumPath(node_id): AxumPath<String>,
 ) -> Result<Json<serde_json::Value>, ApiError> {
-    let nodes_dir = state.data_dir.join("nodes");
-    let path = nodes_dir.join(format!("{node_id}.md"));
-    if !path.exists() {
-        return Err(ApiError::NotFound(format!("node not found: {node_id}")));
-    }
+    let path = state.data_dir.join("nodes").join(format!("{node_id}.md"));
     tokio::fs::remove_file(&path).await
-        .map_err(|e| ApiError::Internal(e.to_string()))?;
+        .map_err(|_| ApiError::NotFound(format!("node {node_id} not found")))?;
+
+    // Cascade: remove any edge files that reference this node
+    let edges_dir = state.data_dir.join("edges");
+    if let Ok(mut rd) = tokio::fs::read_dir(&edges_dir).await {
+        while let Ok(Some(entry)) = rd.next_entry().await {
+            let ep = entry.path();
+            if ep.extension().and_then(|e| e.to_str()) != Some("md") { continue; }
+            if let Ok(text) = tokio::fs::read_to_string(&ep).await {
+                let (meta, _) = parse_frontmatter(&text);
+                let touches_node = meta.get("from").map(|s| s == &node_id).unwrap_or(false)
+                    || meta.get("to").map(|s| s == &node_id).unwrap_or(false);
+                if touches_node { let _ = tokio::fs::remove_file(&ep).await; }
+            }
+        }
+    }
+
     Ok(Json(serde_json::json!({"ok": true})))
 }
 
@@ -454,8 +472,10 @@ pub async fn delete_node(
 #[derive(Debug, Deserialize)]
 pub struct PatchEdgeBody {
     pub relationship: Option<String>,
-    pub status: Option<String>,
     pub body: Option<String>,
+    pub status: Option<String>,
+    #[serde(flatten)]
+    pub extra: HashMap<String, serde_json::Value>,
 }
 
 pub async fn patch_edge(
@@ -463,21 +483,23 @@ pub async fn patch_edge(
     AxumPath(edge_id): AxumPath<String>,
     Json(body): Json<PatchEdgeBody>,
 ) -> Result<Json<serde_json::Value>, ApiError> {
-    let edges_dir = state.data_dir.join("edges");
-    let path = edges_dir.join(format!("{edge_id}.md"));
-    if !path.exists() {
-        return Err(ApiError::NotFound(format!("edge not found: {edge_id}")));
-    }
+    let path = state.data_dir.join("edges").join(format!("{edge_id}.md"));
     let text = tokio::fs::read_to_string(&path).await
-        .map_err(|e| ApiError::Internal(e.to_string()))?;
+        .map_err(|_| ApiError::NotFound(format!("edge {edge_id} not found")))?;
+
     let (mut meta, existing_body) = parse_frontmatter(&text);
+
     if let Some(r) = body.relationship { meta.insert("relationship".to_string(), r); }
-    if let Some(s) = body.status { meta.insert("status".to_string(), s); }
-    let new_body = body.body.unwrap_or(existing_body);
-    let content = format_frontmatter(&meta, &new_body);
-    tokio::fs::write(&path, content).await
+    if let Some(s) = body.status       { meta.insert("status".to_string(), s); }
+    for (k, v) in &body.extra {
+        if let Some(s) = v.as_str() { meta.insert(k.clone(), s.to_string()); }
+    }
+
+    let body_text = body.body.unwrap_or(existing_body);
+    tokio::fs::write(&path, format_frontmatter(&meta, &body_text)).await
         .map_err(|e| ApiError::Internal(e.to_string()))?;
-    Ok(Json(meta_to_json(meta, new_body)))
+
+    Ok(Json(meta_to_json(meta, body_text)))
 }
 
 // ── DELETE /api/graph/edges/:id ───────────────────────────────────────────────
@@ -486,12 +508,9 @@ pub async fn delete_edge(
     State(state): State<Arc<AppState>>,
     AxumPath(edge_id): AxumPath<String>,
 ) -> Result<Json<serde_json::Value>, ApiError> {
-    let edges_dir = state.data_dir.join("edges");
-    let path = edges_dir.join(format!("{edge_id}.md"));
-    if !path.exists() {
-        return Err(ApiError::NotFound(format!("edge not found: {edge_id}")));
-    }
+    let path = state.data_dir.join("edges").join(format!("{edge_id}.md"));
     tokio::fs::remove_file(&path).await
-        .map_err(|e| ApiError::Internal(e.to_string()))?;
+        .map_err(|_| ApiError::NotFound(format!("edge {edge_id} not found")))?;
+
     Ok(Json(serde_json::json!({"ok": true})))
 }
